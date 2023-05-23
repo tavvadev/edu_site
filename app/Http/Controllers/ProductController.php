@@ -33,6 +33,12 @@ class ProductController extends Controller
         return view('products.index',compact('products'))
             ->with('i', (request()->input('page', 1) - 1) * 5);
     }
+    public function invoices(): View
+    {
+        $products = Product::leftjoin('categories as c',"products.category_id","=",'c.id')->paginate(15);
+        return view('products.index',compact('products'))
+            ->with('i', (request()->input('page', 1) - 1) * 5);
+    }
     
     /**
      * Show the form for creating a new resource.
