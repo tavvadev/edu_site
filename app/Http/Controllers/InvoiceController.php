@@ -31,6 +31,7 @@ class InvoiceController extends Controller
             'invoice_status.required' => 'invoice_status is required'
         ]
     );
+    
     //dd($request->invoice_data);
     if ($validator->passes()) {
        // return response()->json(['status' => 200, 'Success' => 'Success']);
