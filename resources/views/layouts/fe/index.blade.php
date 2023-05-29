@@ -1,7 +1,4 @@
 @extends('layouts.master')
-
-
-
      @section('content')    
      <section class="statics-sec">
             <h2 class="display-5 text-center fw-bold title-clr">Statistics</h2>

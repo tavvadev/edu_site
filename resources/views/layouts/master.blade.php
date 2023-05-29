@@ -8,9 +8,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>Education</title>
-    git config --global user.name "shiva129"
-
-    git config --global user.email "shiva.dothi@gmail.com"
+    
 
 
     <!-- Fonts -->
