@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Schoolusers;
+use App\Models\Schools;
+
 
 
 use Illuminate\Http\Request;
@@ -26,15 +28,29 @@ class LoginController extends Controller
             $user = Auth::user();
             $schools = [];
             $request->session()->put('user.info', $user);
-            $results = Schoolusers::where('user_id', $user->id)->get();
-            // echo '<pre>';print_r($results);exit;
+                        
             $role = User::leftJoin('roles','roles.id','=','users.role_id')->where('users.id', $user->id)->first('roles.name as roleName');
-
-            foreach ($results as $res) {
-                $schools[] = $res->school_id;
-            }
-            $request->session()->put('user.schools', $schools);
             $request->session()->put('user.role', $role->roleName);
+            //echo $role->roleName;exit;
+            if($role->roleName == 'FAO' || $role->roleName == 'APC') {
+                // Find the district of this logged in User/Role if they are distrcit level officer.
+                $district_details = User::leftJoin('districts','districts.id','=','users.district_id')->where('users.id', $user->id)->first('districts.*');    
+                
+                $district_details = User::leftJoin('districts','districts.id','=','users.district_id')->where('users.id', $user->id)->first('districts.*');
+                // get all the schools and villages in this district
+                $schoolResults = Schools::where('district_id', $user->district_id)->get();
+                foreach($schoolResults as $school) {
+                    $schools[] = $school->id;
+                }
+                $request->session()->put('user.schools', $schools);
+            } else {
+
+                $results = Schoolusers::where('user_id', $user->id)->get();
+                foreach ($results as $res) {
+                    $schools[] = $res->school_id;
+                }
+                $request->session()->put('user.schools', $schools);
+            }
 
             // Get the session ID
             $sessionId = $request->session()->getId();
