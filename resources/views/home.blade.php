@@ -14,7 +14,7 @@
                         </div>
                     @endif
 
-                    {{ __('You re logged in sdfasdf!') }}
+                    {{ __('You re logged in ') }} {{session('user.role')}}
                 </div>
             </div>
         </div>

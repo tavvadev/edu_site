@@ -29,17 +29,11 @@ class HomeController extends Controller
     public function index(Request $request): View
     {
         $user = Auth::user();
-        // echo '<pre>';print_r($user);
-        // Perform additional session-related tasks
-        // ...
-        $schools = [];
-        $results = Schoolusers::where('user_id', $user->id)->get();
-        foreach ($results as $res) {
-            // echo $res->school_id.' --- '.$res->user_id.' <br/>';
-            array_push($schools,$res->school_id);
-        }
-        $data = $request->session()->all();
-        // echo '<pre>';print_r($data);exit;
+        $user = $request->session()->get('user.info');
+        $schools = $request->session()->get('user.schools');
+        $role = $request->session()->get('user.role');
+        // echo $role;
+        // echo '<pre>';print_r($schools);print_r($user->name);exit;
 
         return view('home');
     }

@@ -23,24 +23,21 @@ class LoginController extends Controller
 
         if (Auth::attempt($credentials)) {
             // Authentication successful
-            // Perform additional logic if needed
             $user = Auth::user();
-            // echo '<pre>';print_r($user);
-            // Perform additional session-related tasks
-            // ...
             $schools = [];
+            $request->session()->put('user.info', $user);
             $results = Schoolusers::where('user_id', $user->id)->get();
+            // echo '<pre>';print_r($results);exit;
+            $role = User::leftJoin('roles','roles.id','=','users.role_id')->where('users.id', $user->id)->first('roles.name as roleName');
+
             foreach ($results as $res) {
-                array_push($schools,$res->school_id);
+                $schools[] = $res->school_id;
             }
-            $request->session()->put('users.schools', $schools);
+            $request->session()->put('user.schools', $schools);
+            $request->session()->put('user.role', $role->roleName);
 
             // Get the session ID
             $sessionId = $request->session()->getId();
-
-            // echo '<pre>';print_r( $user);
-            // echo $sessionId;
-            // exit;
             // Return the authenticated user and session ID
             // return response()->json([
             //     'user' => $user,
