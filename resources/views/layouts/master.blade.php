@@ -21,7 +21,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
     <!-- Scripts -->
-  <!--   @vite(['resources/sass/app.scss', 'resources/js/app.js']) -->
+   @vite(['resources/sass/app.scss', 'resources/js/app.js']) 
 </head>
 <body>
 
@@ -113,9 +113,9 @@
             </div>
 
           </header>
-
-
+          
           <section id="myCarousel" class="carousel slide" data-bs-ride="carousel">
+          @if($_SERVER['REQUEST_URI'] == '/') 
             <div class="carousel-indicators">
               <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="0" class="" aria-label="Slide 1"></button>
               <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="1" aria-label="Slide 2" class="active" aria-current="true"></button>
@@ -164,7 +164,9 @@
               <span class="carousel-control-next-icon" aria-hidden="true"></span>
               <span class="visually-hidden">Next</span>
             </button>
+            @endif
           </section>
+          
           @yield('content')
         <footer>
           <div class="container text-center">

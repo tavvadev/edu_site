@@ -2,7 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\InvoiceController;
+use App\Http\Controllers\ApiController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -17,4 +17,4 @@ use App\Http\Controllers\InvoiceController;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
-Route::any('/createInvoice', [InvoiceController::class, 'createInvoice']);
+Route::any('/createInvoice', [ApiController::class, 'createInvoice']);
