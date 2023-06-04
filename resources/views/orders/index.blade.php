@@ -34,7 +34,7 @@
         </tr>
 	    @foreach ($products as $order)
         <?php
-        echo "<pre>";print_r($order);exit;
+       // echo "<pre>";print_r($order);exit;
         ?>
         
 	    <tr>
