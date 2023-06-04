@@ -44,7 +44,7 @@
             <td>{{ $order->hm_name }}</td>
             <td>{{ $order->hm_contact_num }}</td>
 	        <td>
-            <a class="btn btn-info" href="orders/category/1">View Order</a>
+            <a class="btn btn-info" href="#">View Order</a>-->
 	        </td>
 	    </tr>
 	    @endforeach
