@@ -26,7 +26,7 @@
     @endif
 
 
-    <form action="{{ route('api.create') }}" method="POST">
+    <form action="{{ route('orders.store') }}" method="POST">
     	@csrf
        
          <div class="row">
