@@ -38,6 +38,11 @@ class OrderController extends Controller
      */
     public function index(): View
     {
+        $data = request()->session()->all();
+        // echo $data['user'];exit;
+        // echo '<pre>';print_r($data['user']['schools']);
+        // print_r($data['user']['role']);
+        // echo '<pre>';print_r($data['user']['info']->id);exit;
         $products = Orders::leftjoin('schools as s',"orders.school_id","=",'s.id')->paginate(15);
         return view('orders.index',compact('products'))
                 ->with('i', (request()->input('page', 1) - 1) * 5);

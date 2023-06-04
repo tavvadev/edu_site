@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.master')
 
 
 @section('content')
@@ -26,7 +26,7 @@
     @endif
 
 
-    <form action="{{ route('orders.store') }}" method="POST">
+    <form action="/api/createInvoice" method="POST">
     	@csrf
        
          <div class="row">

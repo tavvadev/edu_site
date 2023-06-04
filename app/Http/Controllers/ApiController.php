@@ -10,24 +10,24 @@ class ApiController extends Controller
 {
     //
     public function createInvoice(Request $request){
-        /*   echo '<pre>';
-          print_r($request->all());exit; */
+        //    echo '<pre>';
+        //   print_r($request->all());exit; 
           $validator = \Validator::make($request->all(), 
           [
-              'invoice_num'         =>     'required|min:1|regex:/^[a-zA-Z\s]*$/',
-              'supplier_id'          =>     'required|min:1|',
+            //   'invoice_num'         =>     'required|min:1|regex:/^[a-zA-Z\s]*$/',
+            //   'supplier_id'          =>     'required|min:1|',
               'school_id'            =>     'required|min:1|',
-              'requester_id'         =>   'required|min:1|',
-             'approved_by'          => 'required|min:1|',
-             'total_qty'        => 'required|min:1|',
-              'invoice_status'    =>'required|min:1|',
+            //   'requester_id'         =>   'required|min:1|',
+            //  'approved_by'          => 'required|min:1|',
+            //  'total_qty'        => 'required|min:1|',
+            //   'invoice_status'    =>'required|min:1|',
           ],
           [
               'invoice_num.required' => 'invoice_num is required',
-              'supplier_id.required' => 'supplier_id format is invalid',
+            //   'supplier_id.required' => 'supplier_id format is invalid',
               'school_id.required' => 'school_id is required',
               'requester_id.required' => 'requester_id is required',
-              'approved_by.required' => 'approved_by is required',
+            //   'approved_by.required' => 'approved_by is required',
               'total_qty.required' => 'total_qty is required',
               'invoice_status.required' => 'invoice_status is required'
           ]
@@ -45,7 +45,7 @@ class ApiController extends Controller
                           'total_qty'=>$request->total_qty,
                           'invoice_status'=>$request->invoice_status
                            ];
-                //  print_r($request['products']); exit;         
+        //   echo '<pre>';print_r($request['products']); exit;         
           $invoice_data = Invoices::create($invoice_data);
           $invoice_id =  $invoice_data->id;
           $total = 0;
