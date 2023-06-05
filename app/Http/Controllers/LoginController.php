@@ -22,7 +22,7 @@ class LoginController extends Controller
     public function login(Request $request)
     {
         $credentials = $request->only('login_id', 'password');
-
+        // echo $request->type;
         if (Auth::attempt($credentials)) {
             // Authentication successful
             $user = Auth::user();
@@ -54,11 +54,14 @@ class LoginController extends Controller
 
             // Get the session ID
             $sessionId = $request->session()->getId();
-            // Return the authenticated user and session ID
-            // return response()->json([
-            //     'user' => $user,
-            //     'sessionId' => $sessionId
-            // ]);
+            if($request->type=='mobile') {
+                // Return the authenticated user and session ID
+                return response()->json([
+                    'user' => $user,
+                    'sessionId' => $sessionId
+                ]);
+            }
+            
 
 
             return redirect()->intended('/home');

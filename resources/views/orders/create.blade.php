@@ -26,23 +26,25 @@
     @endif
 
 
-    <form action="{{ route('orders.store') }}" method="POST">
+    <form action="/order/create" method="POST">
     	@csrf
        
          <div class="row">
+            <?php $i=0; ?>
             @foreach ($product as $product)
             <?php 
+
          //   echo "<pre>";print_r(Session::all());exit;
             ?>
                 <div class="col-xs-6 col-sm-6 col-md-6">
                 
                     <div class="form-group">
-                    {{ $product->name }}<input type="text" id="item_qty" name="item_qty[]" class="form-control" placeholder="Qty">
-                    <input type="hidden" name="prodct_id[]" class="form-control" value="{{ $product->id }}" >
+                    {{ $product->name }}<input type="text" id="item_qty" name="products[{{$i}}][quantity]" class="form-control" placeholder="Qty">
+                    <input type="hidden" name="products[{{$i}}][product_id]" class="form-control" value="{{ $product->id }}" >
                     <input type="hidden" name="school_id" class="form-control" value="1" >
                     </div>
                 </div>
-               
+               <?php $i++; ?>
             @endforeach
             
 

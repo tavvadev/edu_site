@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Orders;
 use App\Models\Product;
 use App\Models\Category;
+use App\Models\Invoices;
+use App\Models\InvoiceProducts;
 use App\Models\Orderproducts;
 
 
@@ -107,5 +109,68 @@ class OrderController extends Controller
         return redirect()->route('orders.index')
                         ->with('success','Order created successfully.');
     }
+
+    public function createOrder(Request $request){
+        $data = request()->session()->all();
+        // echo $data['user'];exit;
+        // echo $request->school_id;
+        // echo '<pre>';print_r($data['user']['schools'][0]);
+        // // print_r($data['user']['role']);
+        // echo '<pre>';print_r($data['user']['info']->id);
+        echo '<pre>';
+        // print_r($request->all());exit; 
+            $validator = \Validator::make($request->all(), 
+            [
+              //   'invoice_num'         =>     'required|min:1|regex:/^[a-zA-Z\s]*$/',
+              //   'supplier_id'          =>     'required|min:1|',
+                'school_id'            =>     'required|min:1|',
+              //   'requester_id'         =>   'required|min:1|',
+              //  'approved_by'          => 'required|min:1|',
+              //  'total_qty'        => 'required|min:1|',
+              //   'invoice_status'    =>'required|min:1|',
+            ],
+            [
+                'invoice_num.required' => 'invoice_num is required',
+              //   'supplier_id.required' => 'supplier_id format is invalid',
+                'school_id.required' => 'school_id is required',
+                'requester_id.required' => 'requester_id is required',
+              //   'approved_by.required' => 'approved_by is required',
+                'total_qty.required' => 'total_qty is required',
+                'invoice_status.required' => 'invoice_status is required'
+            ]
+        );
+        
+        //dd($request->invoice_data);
+        if ($validator->passes()) {
+            $total = 0;
+            // echo '<pre>';print_r($request['products']);exit;
+           // return response()->json(['status' => 200, 'Success' => 'Success']);
+           foreach($request['products'] as $key =>$val){
+            $total+=$val['quantity'];
+        }
+            $invoice_data = [ 
+                            'invoice_data'=>$request->invoice_data,
+                            'supplier_id'=>$request->supplier_id,
+                            'school_id'=>$data['user']['schools'][0],
+                            'requester_id'=>$data['user']['info']->id,
+                            // 'approved_by'=>$request->approved_by,
+                            'total_qty'=>$total,
+                            'invoice_status'=>$request->invoice_status
+                             ];
+          //   echo '<pre>';print_r($request['products']); exit;         
+            $invoice_data = Invoices::create($invoice_data);
+            $invoice_id =  $invoice_data->id;
+            $total = 0;
+            foreach($request['products'] as $key =>$val){
+                $invoice_pr_data = ['invoice_id'=>$invoice_id,'product_id'=>$val['product_id'],'quantity'=>$val['quantity']];
+                $invoice_products = InvoiceProducts::create($invoice_pr_data);  
+            }
+            return redirect()->route('orders.index')
+            ->with('success','Order created successfully.');
+        }else{
+            return response()->json(['status' => 401, 'error' => $validator->errors()]);
+             
+            }
+        }
     
 }

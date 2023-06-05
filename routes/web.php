@@ -22,11 +22,14 @@ use App\Http\Controllers\OrderController;
 |
 */
 
+Route::get('createOrder', [OrderController::class, 'createOrder']);
+
+
 Route::get('/', function () {
     return view('welcome');
 });
   
-Auth::routes();
+// Auth::routes();
   
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 
@@ -35,6 +38,8 @@ Route::post('/login', [LoginController::class, 'login']);
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 Route::any('/orders/addorder/{{id}}', [OrderController::class, 'addorder']);
 Route::get('orders/category', [OrderController::class, 'category']);
+Route::any('order/create', [OrderController::class, 'createOrder']);
+
 
 
 
