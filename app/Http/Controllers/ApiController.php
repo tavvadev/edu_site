@@ -69,13 +69,7 @@ class ApiController extends Controller
   }
     //
     public function createOrder(Request $request){
-      // echo '<pre>';print_r($request['products']); exit;
-      // // echo $data['user'];exit;
-      // echo '<pre>';print_r($data['user']['schools']);
-      // print_r($data['user']['role']);
-      // echo '<pre>';print_r($data['user']['info']->id);exit;
-      //      echo '<pre>';
-      //     print_r($request->all());exit; 
+
           $validator = \Validator::make($request->all(), 
           [
             //   'invoice_num'         =>     'required|min:1|regex:/^[a-zA-Z\s]*$/',
@@ -113,7 +107,6 @@ class ApiController extends Controller
               'total_qty'=>$total,
               'invoice_status'=>$request->invoice_status
               ];
-        //   echo '<pre>';print_r($request['products']); exit;         
           $invoice_data = Invoices::create($invoice_data);
           $invoice_id =  $invoice_data->id;
           
@@ -133,7 +126,16 @@ class ApiController extends Controller
            
           }
       }
-      public function ssss() {
-        echo 'sadfasdf';exit;
+      public function orders(Request $request) {
+        $schools = $request->schools;
+        $orders = Invoices::leftjoin('schools as s',"orders.school_id","=",'s.id')
+        ->leftjoin('districts as d',"s.district_id","=",'d.id')
+        ->leftjoin('villages as v',"s.village_id","=",'v.id')
+        ->whereIn('s.id', $schools)->select("d.dist_name","v.village_name","s.*","orders.id as orderId")
+        ->get();
+        $totalOrders = count($orders);
+        $allResults['orders'] = $orders;
+        $allResults['total'] = $totalOrders;
+        return response()->json($allResults);
     }
 }
