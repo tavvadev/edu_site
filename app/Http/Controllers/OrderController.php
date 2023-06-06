@@ -123,7 +123,7 @@ class OrderController extends Controller
             [
               //   'invoice_num'         =>     'required|min:1|regex:/^[a-zA-Z\s]*$/',
               //   'supplier_id'          =>     'required|min:1|',
-                'school_id'            =>     'required|min:1|',
+                // 'school_id'            =>     'required|min:1|',
               //   'requester_id'         =>   'required|min:1|',
               //  'approved_by'          => 'required|min:1|',
               //  'total_qty'        => 'required|min:1|',
@@ -132,7 +132,7 @@ class OrderController extends Controller
             [
                 'invoice_num.required' => 'invoice_num is required',
               //   'supplier_id.required' => 'supplier_id format is invalid',
-                'school_id.required' => 'school_id is required',
+                // 'school_id.required' => 'school_id is required',
                 'requester_id.required' => 'requester_id is required',
               //   'approved_by.required' => 'approved_by is required',
                 'total_qty.required' => 'total_qty is required',
