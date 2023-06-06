@@ -7,7 +7,7 @@
 <div class="main-bg">
 <div class="container pt-5 pb-4">
     <div class="row">
-                <h2 class="fw-bold fs-3 pb-3 text-primary ">Categories</h2>
+                <h2 class="fw-bold fs-3 pb-3 title-clr ">Categories</h2>
     </div>
     @if ($message = Session::get('success'))
         <div class="alert alert-success">
