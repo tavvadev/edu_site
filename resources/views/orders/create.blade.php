@@ -64,7 +64,7 @@ class="px-1" width="48" height="48" alt="backarrow"/> Back
     </form>
     </div>
     </div>
-<p class="text-center text-primary"><small>Tutorial by edutechsolutions</small></p>
+<!-- <p class="text-center text-primary"><small>Tutorial by edutechsolutions</small></p> -->
 </div>
 </div>
 @endsection
