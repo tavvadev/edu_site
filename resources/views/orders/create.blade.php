@@ -36,7 +36,7 @@ class="px-1" width="48" height="48" alt="backarrow"/> Back
 
     <div class="row justify-content-center">
    <div class="col-md-6">
-    <form action="{{ route('orders.store') }}" class="card cat-crd p-4 p-md-5" method="POST">
+    <form action="/order/create" class="card cat-crd p-4 p-md-5" method="POST">
     	@csrf
          <div class="row">
             <?php $i=0; ?>
@@ -47,12 +47,11 @@ class="px-1" width="48" height="48" alt="backarrow"/> Back
                 <div class="col-md-12">
                     <div class="form-group mb-4">
                     <label class="fw-bold">{{ $product->name }}</label>
-                    <input type="text" id="item_qty" name="item_qty[]" class="form-control" placeholder="Qty">
-                    <input type="hidden" name="prodct_id[]" class="form-control" value="{{ $product->id }}" >
-                    <input type="hidden" name="school_id" class="form-control" value="1" >
+                    <input type="text" id="item_qty" name="products[{{$i}}][quantity]" class="form-control" placeholder="Qty">
+                    <input type="hidden" name="products[{{$i}}][product_id]" class="form-control" value="{{ $product->id }}" >
                     </div>
                 </div>
-
+            <?php $i++;?>
             @endforeach
 
 
