@@ -650,6 +650,7 @@ border-radius:2px ;
         width: 100%;
         height: auto;
         min-height: 120px;
+        box-shadow: 0px 2px 20px -12px #d1d1d1;
     }
     .top-login-sec {
         background: rgb(6,37,92);
@@ -1149,8 +1150,8 @@ background-blend-mode: soft-light;
                 left: 0;
                 right: 0;
                 bottom: 0;
-                background: rgb(255,251,238);
-                background: linear-gradient(118deg, rgba(255,251,238,0.8883928571428571) 7%, rgba(235,243,249,1) 83%);
+                background: rgb(233,241,251);
+                background: linear-gradient(118deg, rgba(233,241,251,0.8183648459383753) 0%, rgba(255,255,255,0.7455357142857143) 52%, rgba(241,224,173,0.4822303921568627) 100%);
                 height: 100%;
                 z-index: -1;
                 min-height: 100vh;
@@ -1207,7 +1208,7 @@ margin:auto;
  .main-bg form .form-group input[type="text"]{
      border: none !important;
      height: 45px !important;
-     background:rgb(215 214 214 / 20%) !important;
+     background:rgb(215 214 214 / 26%) !important;
      border-radius: 8px !important;
      font-size: 16px;
      font-weight: 600;
