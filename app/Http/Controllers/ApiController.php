@@ -8,6 +8,8 @@ use App\Models\InvoiceProducts;
 use App\Models\User;
 use App\Models\Schoolusers;
 use App\Models\Schools;
+use App\Models\Category;
+use App\Models\Product;
 use Illuminate\Support\Str;
 
 
@@ -158,5 +160,16 @@ class ApiController extends Controller
         $allResults['orders'] = $orders;
         $allResults['total'] = $totalOrders;
         return response()->json($allResults);
+    }
+    public function categories() {
+        $categories = Category::orderBy('id','DESC')->get();
+        return response()->json($categories);
+    }
+    public function getproducts(Request $request) {
+        // echo '<pre>';print_r($request->id);exit;
+        $products = Product::select('*')
+        ->where('category_id', '=', $request->id)
+        ->get();
+        return response()->json($products);
     }
 }
