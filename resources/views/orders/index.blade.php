@@ -7,20 +7,16 @@
                 <h2>Orders</h2>
             </div>
             <div class="pull-right">
-               
-                <a class="btn btn-success" href="/orders/category"> Create New Order</a>
-               
+               <a class="btn btn-success" href="/orders/category"> Create New Order</a>
             </div>
         </div>
     </div>
-
 
     @if ($message = Session::get('success'))
         <div class="alert alert-success">
             {{ $message }}
         </div>
     @endif
-
 
     <table class="table table-bordered">
         <tr>
@@ -35,7 +31,7 @@
         <?php
        // echo "<pre>";print_r($order);exit;
         ?>
-        
+
 	    <tr>
 	        <td>{{ ++$i }}</td>
             <td>{{ $order->id }}</td>
