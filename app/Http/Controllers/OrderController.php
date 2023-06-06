@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Orders;
 use App\Models\Product;
 use App\Models\Category;
+use App\Models\User;
+use App\Models\Schoolusers;
+use App\Models\Schools;
 use App\Models\Invoices;
 use App\Models\InvoiceProducts;
 use App\Models\Orderproducts;
@@ -44,8 +47,33 @@ class OrderController extends Controller
         // echo $data['user'];exit;
         // echo '<pre>';print_r($data['user']['schools']);
         // print_r($data['user']['role']);
-        // echo '<pre>';print_r($data['user']['info']->id);exit;
-        $products = Orders::leftjoin('schools as s',"orders.school_id","=",'s.id')->paginate(15);
+        $user_id = $data['user']['info']->id;
+        //echo '<pre>';print_r($data['user']['info']->id);exit;
+
+        $schools =[];
+        // Get the schools using the user id.....
+        $role = User::leftJoin('roles','roles.id','=','users.role_id')->where('users.id', $user_id)->first('roles.name as roleName');
+            //echo $role->roleName;exit;
+            if($role->roleName == 'FAO' || $role->roleName == 'APC') {
+                // Find the district of this logged in User/Role if they are distrcit level officer.
+                $district_details = User::leftJoin('districts','districts.id','=','users.district_id')->where('users.id', $user->id)->first('districts.*');    
+                
+                $district_details = User::leftJoin('districts','districts.id','=','users.district_id')->where('users.id', $user->id)->first('districts.*');
+                // get all the schools and villages in this district
+                $schoolResults = Schools::where('district_id', $user->district_id)->get();
+                foreach($schoolResults as $school) {
+                    $schools[] = $school->id;
+                }
+            } else {
+
+                $results = Schoolusers::where('user_id', $user_id)->get();
+                foreach ($results as $res) {
+                    $schools[] = $res->school_id;
+                }
+            }
+
+        $products = Orders::leftjoin('schools as s',"orders.school_id","=",'s.id')
+        ->select('orders.id as oid','orders.total_qty','orders.invoice_status','s.school_name','s.UDISE_code','s.hm_name',"s.hm_contact_num")->paginate(15);
         return view('orders.index',compact('products'))
                 ->with('i', (request()->input('page', 1) - 1) * 5);
     }
@@ -171,11 +199,30 @@ class OrderController extends Controller
                 
             }
             return redirect()->route('orders.index')
-            ->with('success','Order created successfully.');
+            ->with('success','Order created successfully.Order ID:'.$invoice_id);
         }else{
             return response()->json(['status' => 401, 'error' => $validator->errors()]);
              
             }
+        }
+        public function view(Request $request): View
+        {
+            if($request->id!=''){
+                $orderId = $request->id;
+            }
+            
+            $orderDetails = Invoices::leftjoin('schools as s',"orders.school_id","=",'s.id')
+            ->leftjoin('districts as d',"s.district_id","=",'d.id')
+            ->leftjoin('villages as v',"s.village_id","=",'v.id')
+            ->where('orders.id', $orderId)->select("d.dist_name","v.village_name","orders.*","orders.id as orderId","s.*")
+            ->first();
+            
+                $results = InvoiceProducts::where('invoice_id', $orderDetails->orderId)->get();
+                $orderDetails['products'] = $results;
+            
+            //echo '<pre>';print_r($orderDetails);exit;
+            return view('orders.view',compact('orderDetails'));
+            
         }
     
 }

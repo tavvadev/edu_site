@@ -20,12 +20,10 @@
 
     <table class="table table-bordered">
         <tr>
-            <th>No</th>
             <th>Order Id</th>
             <th>School</th>
             <th>HM</th>
             <th>Contact Number</th>
-            <th width="280px">Action</th>
         </tr>
 	    @foreach ($products as $order)
         <?php
@@ -33,14 +31,10 @@
         ?>
 
 	    <tr>
-	        <td>{{ ++$i }}</td>
-            <td>{{ $order->id }}</td>
+            <td><a href="/order/view/{{ $order->oid }}">{{ $order->oid }}</a></td>
             <td>{{ $order->school_name }}</td>
             <td>{{ $order->hm_name }}</td>
             <td>{{ $order->hm_contact_num }}</td>
-	        <td>
-            <a class="btn btn-info" href="#">View Order</a>
-	        </td>
 	    </tr>
 	    @endforeach
     </table>
