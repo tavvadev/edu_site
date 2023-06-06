@@ -45,7 +45,8 @@ class OrderController extends Controller
         // echo '<pre>';print_r($data['user']['schools']);
         // print_r($data['user']['role']);
         // echo '<pre>';print_r($data['user']['info']->id);exit;
-        $products = Orders::leftjoin('schools as s',"orders.school_id","=",'s.id')->paginate(15);
+        $products = Orders::leftjoin('schools as s',"orders.school_id","=",'s.id')
+        ->select('orders.id as oid','orders.total_qty','orders.invoice_status','s.school_name','s.UDISE_code','s.hm_name',"s.hm_contact_num")->paginate(15);
         return view('orders.index',compact('products'))
                 ->with('i', (request()->input('page', 1) - 1) * 5);
     }
