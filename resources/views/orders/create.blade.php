@@ -39,6 +39,7 @@ class="px-1" width="48" height="48" alt="backarrow"/> Back
     <form action="{{ route('orders.store') }}" class="card cat-crd p-4 p-md-5" method="POST">
     	@csrf
          <div class="row">
+            <?php $i=0; ?>
             @foreach ($product as $product)
             <?php
          //   echo "<pre>";print_r(Session::all());exit;
