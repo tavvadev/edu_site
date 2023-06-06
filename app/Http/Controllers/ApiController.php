@@ -156,8 +156,14 @@ class ApiController extends Controller
         ->leftjoin('villages as v',"s.village_id","=",'v.id')
         ->whereIn('s.id', $schools)->select("d.dist_name","v.village_name","s.*","orders.id as orderId")
         ->get();
-        $totalOrders = count($orders);
-        $allResults['orders'] = $orders;
+        $allOrders = [];
+        foreach($orders as $order) {
+            $allOrders[$order->orderId] = $order;
+            $results = InvoiceProducts::where('invoice_id', $order->orderId)->get();
+            $allOrders[$order->orderId]['products'] = $results;
+        }
+        $totalOrders = count($allOrders);
+        $allResults['orders'] = $allOrders;
         $allResults['total'] = $totalOrders;
         return response()->json($allResults);
     }
