@@ -146,7 +146,7 @@ class OrderController extends Controller
             // echo '<pre>';print_r($request['products']);exit;
            // return response()->json(['status' => 200, 'Success' => 'Success']);
            foreach($request['products'] as $key =>$val){
-            if($val['product_id']!='') {
+            if($val['quantity']!='') {
                 $total+=$val['quantity'];
             }
         }
@@ -164,7 +164,7 @@ class OrderController extends Controller
             $invoice_id =  $invoice_data->id;
             $total = 0;
             foreach($request['products'] as $key =>$val){
-                if($val['product_id']!='') {
+                if($val['quantity']!='') {
                     $invoice_pr_data = ['invoice_id'=>$invoice_id,'product_id'=>$val['product_id'],'quantity'=>$val['quantity']];
                     $invoice_products = InvoiceProducts::create($invoice_pr_data);  
                 }
