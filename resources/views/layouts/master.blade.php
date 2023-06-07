@@ -58,6 +58,9 @@
                         <li class="nav-item">
                           <a class="nav-link" href="{{ route('orders.index') }}">Orders</a>
                         </li>
+                        <li class="nav-item">
+                          <a class="nav-link" href="{{ route('users.updateschool') }}">School Location</a>
+                        </li>
                         <!-- <li class="nav-item">
                           <a class="nav-link" href="javascript:void(0)">MIS Report</a>
                         </li>

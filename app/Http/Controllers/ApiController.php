@@ -8,6 +8,8 @@ use App\Models\InvoiceProducts;
 use App\Models\User;
 use App\Models\Schoolusers;
 use App\Models\Schools;
+use App\Models\Category;
+use App\Models\Product;
 use Illuminate\Support\Str;
 
 
@@ -154,9 +156,26 @@ class ApiController extends Controller
         ->leftjoin('villages as v',"s.village_id","=",'v.id')
         ->whereIn('s.id', $schools)->select("d.dist_name","v.village_name","s.*","orders.id as orderId")
         ->get();
-        $totalOrders = count($orders);
-        $allResults['orders'] = $orders;
+        $allOrders = [];
+        foreach($orders as $order) {
+            $allOrders[$order->orderId] = $order;
+            $results = InvoiceProducts::where('invoice_id', $order->orderId)->get();
+            $allOrders[$order->orderId]['products'] = $results;
+        }
+        $totalOrders = count($allOrders);
+        $allResults['orders'] = $allOrders;
         $allResults['total'] = $totalOrders;
         return response()->json($allResults);
+    }
+    public function categories() {
+        $categories = Category::orderBy('id','DESC')->get();
+        return response()->json($categories);
+    }
+    public function getproducts(Request $request) {
+        // echo '<pre>';print_r($request->id);exit;
+        $products = Product::select('*')
+        ->where('category_id', '=', $request->id)
+        ->get();
+        return response()->json($products);
     }
 }

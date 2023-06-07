@@ -39,7 +39,8 @@ Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 Route::any('/orders/addorder/{{id}}', [OrderController::class, 'addorder']);
 Route::get('orders/category', [OrderController::class, 'category']);
 Route::any('order/create', [OrderController::class, 'createOrder']);
-
+Route::any('order/view/{id}', [OrderController::class, 'view'])->name('orders.view');
+Route::any('updateschool', [UserController::class, 'updateschool'])->name('users.updateschool');
 
 
 
