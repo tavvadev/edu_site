@@ -49,6 +49,7 @@ ul {
 .btn-primary {
     background: var(--teritary-clr);
     border: 1px solid var(--teritary-clr);
+    box-shadow: 0px 6px 28px -6px #817c73;
 
 }
 .btn-primary:hover{
@@ -677,19 +678,55 @@ border-radius:2px ;
     height: auto;
     min-height: calc(100vh - 120px);
     float: left;
-    background: #3f4651;
+    background: #475267;
 }
 .login-pg .card {
     max-width: 85% !important;
     margin:auto !important;
+    border-radius: 16px;
+    overflow: hidden;
+    background: transparent;
+    box-shadow:0px 12px 64px -6px #383f4d;
 }
-.login-pg .form {
+.login-pg .form-container {
 height: auto;
 min-height: 100%;
 display: flex;
 align-items: center;
+background: var(--white);
 justify-content: center;
+width: 100%;
 }
+.login-pg .form-container .inner-cont {
+flex: 1 auto;
+padding: 42px 64px;
+}
+.login-pg .form-container .inner-cont .form-group label {
+    font-size: 14px;
+    font-weight: 600;
+}
+.login-pg .form-container .inner-cont .form-check{
+    padding: 0px;
+    display: flex;
+    align-items: center;
+
+
+}
+.login-pg .form-container .inner-cont .form-check .form-check-label{
+ font-size: 14px;
+ font-weight: 600;
+ color: var(--primary);
+
+}
+.login-pg .form-container .inner-cont input[type="text"], .login-pg .form-container .inner-cont  input[type="password"] {
+    border: none !important;
+    height: 45px !important;
+    background: rgb(215 214 214 / 26%) !important;
+    border-radius: 8px !important;
+    font-size: 16px;
+    font-weight: 600;
+    width: 100%;
+    }
 
 /* .login-pg::before {
     z-index: -1;
