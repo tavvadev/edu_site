@@ -15,8 +15,9 @@ class="px-1" width="48" height="48" alt="backarrow"/> Back
 </div>
 </div>
 <p class="fw-normal fs-5 text-capitalize pb-0 mb-0 text-muted text-center">
-        <small>Add number of quantities to </small></p>
-<h2 class="title-clr text-center display-3 fw-bold mb-5">your order</h2>
+        <small> Add number of quantities to order in </small></p>
+<h2 class="title-clr text-center display-3 fw-bold mb-5">{{$category->cat_name}}</h2>
+
     @if ($errors->any())
         <div class="alert alert-danger">
             <strong>Whoops!</strong> There were some problems with your input.<br><br>
@@ -36,6 +37,7 @@ class="px-1" width="48" height="48" alt="backarrow"/> Back
     @csrf
          <div class="row">
             <?php $i=0; ?>
+            <input type="hidden" name="category" value="{{$category->id}}" />
             @foreach ($product as $product)
             <?php
          //   echo "<pre>";print_r(Session::all());exit;

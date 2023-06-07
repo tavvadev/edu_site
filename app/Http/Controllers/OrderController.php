@@ -72,9 +72,19 @@ class OrderController extends Controller
                 }
             }
 
-        $products = Orders::leftjoin('schools as s',"orders.school_id","=",'s.id')
+        $orders = Orders::leftjoin('schools as s',"orders.school_id","=",'s.id')
         ->select('orders.id as oid','orders.invoice_num as order_num','orders.total_qty','orders.invoice_status','s.school_name','s.UDISE_code','s.hm_name',"s.hm_contact_num")->paginate(15);
-        return view('orders.index',compact('products'))
+        $i =0;
+        foreach($orders as $order) {
+            $orders[$i] = $order;
+            $results = InvoiceProducts::leftjoin('products as p',"order_products.invoice_id","=",'p.id')->where('invoice_id', $order->oid)
+            ->select("p.name as product_name","p.units","order_products.*")->get();
+            $orders[$i]['products'] = $results;
+            $i++;
+        }
+        // echo '<pre>';print_r($orders);exit;
+
+        return view('orders.index',compact('orders'))
                 ->with('i', (request()->input('page', 1) - 1) * 5);
     }
 
@@ -89,10 +99,12 @@ class OrderController extends Controller
 
     public function edit($id): View
     {
+        $category = Category::find($id);
         $product = Product::select('*')
                 ->where('category_id', '=', $id)
                 ->get();
-        return view('orders.create',compact('product'));
+        // echo "<pre>";print_r($category);exit;
+        return view('orders.create',compact('product','category'));
     }
     
     
@@ -145,8 +157,8 @@ class OrderController extends Controller
         // echo '<pre>';print_r($data['user']['schools'][0]);
         // // print_r($data['user']['role']);
         //  echo '<pre>';print_r($data['user']);
-        // echo '<pre>';
-        //  print_r($request->all());exit; 
+        echo '<pre>';
+         print_r($request->all());exit; 
             $validator = \Validator::make($request->all(), 
             [
               //   'invoice_num'         =>     'required|min:1|regex:/^[a-zA-Z\s]*$/',
@@ -185,6 +197,7 @@ class OrderController extends Controller
                             'requester_id'=>$data['user']['info']->id,
                             // 'approved_by'=>$request->approved_by,
                             'total_qty'=>$total,
+                            'order_category'=>$request->category,
                             'invoice_status'=>0
                              ];
           //   echo '<pre>';print_r($request['products']); exit;         

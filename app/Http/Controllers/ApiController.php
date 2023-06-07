@@ -107,6 +107,7 @@ class ApiController extends Controller
               'requester_id'=>$request->requester_id,
               // 'approved_by'=>$request->approved_by,
               'total_qty'=>$total,
+              'order_category' => $request->category,
               'invoice_status'=>$request->invoice_status
               ];
           $invoice_data = Invoices::create($invoice_data);

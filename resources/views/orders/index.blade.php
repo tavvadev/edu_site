@@ -53,7 +53,7 @@
         </tr>
         </thead>
         <tbody>
-	    @foreach ($products as $order)
+	    @foreach ($orders as $order)
         <?php
        // echo "<pre>";print_r($order);exit;
         ?>
@@ -70,7 +70,7 @@
     </table>
     </div>
 
-    {!! $products->links() !!}
+    {!! $orders->links() !!}
     </div>
 
 
