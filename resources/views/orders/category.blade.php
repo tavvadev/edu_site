@@ -33,7 +33,6 @@
         @endforeach
     </div>
     {!! $categories->links() !!}
-<!-- <p class="text-center text-primary"><small>Tutorial by edutechsolutions</small></p> -->
 </div>
 </div>
 @endsection

@@ -72,9 +72,20 @@ class OrderController extends Controller
                 }
             }
 
-        $products = Orders::leftjoin('schools as s',"orders.school_id","=",'s.id')
-        ->select('orders.id as oid','orders.total_qty','orders.invoice_status','s.school_name','s.UDISE_code','s.hm_name',"s.hm_contact_num")->paginate(15);
-        return view('orders.index',compact('products'))
+        $orders = Orders::leftjoin('schools as s',"orders.school_id","=",'s.id')
+        ->leftjoin('categories as c',"c.id","=",'orders.order_category')
+        ->select('c.cat_name','orders.id as oid','orders.invoice_num as order_num','orders.total_qty','orders.invoice_status','s.school_name','s.UDISE_code','s.hm_name',"s.hm_contact_num")->paginate(15);
+        $i =0;
+        foreach($orders as $order) {
+            $orders[$i] = $order;
+            $results = InvoiceProducts::leftjoin('products as p',"order_products.invoice_id","=",'p.id')->where('invoice_id', $order->oid)
+            ->select("p.name as product_name","p.units","order_products.*")->get();
+            $orders[$i]['products'] = $results;
+            $i++;
+        }
+        // echo '<pre>';print_r($orders);exit;
+
+        return view('orders.index',compact('orders'))
                 ->with('i', (request()->input('page', 1) - 1) * 5);
     }
 
@@ -89,10 +100,12 @@ class OrderController extends Controller
 
     public function edit($id): View
     {
+        $category = Category::find($id);
         $product = Product::select('*')
                 ->where('category_id', '=', $id)
                 ->get();
-        return view('orders.create',compact('product'));
+        // echo "<pre>";print_r($category);exit;
+        return view('orders.create',compact('product','category'));
     }
     
     
@@ -144,9 +157,9 @@ class OrderController extends Controller
         // echo $request->school_id;
         // echo '<pre>';print_r($data['user']['schools'][0]);
         // // print_r($data['user']['role']);
-        // echo '<pre>';print_r($data['user']['info']->id);
+        //  echo '<pre>';print_r($data['user']);
         // echo '<pre>';
-        // print_r($request->all());exit; 
+        //  print_r($request->all());exit; 
             $validator = \Validator::make($request->all(), 
             [
               //   'invoice_num'         =>     'required|min:1|regex:/^[a-zA-Z\s]*$/',
@@ -178,6 +191,7 @@ class OrderController extends Controller
                 $total+=$val['quantity'];
             }
         }
+        // echo $request->category;exit;
             $invoice_data = [ 
                             'invoice_data'=>$request->invoice_data,
                             'supplier_id'=>$request->supplier_id,
@@ -185,7 +199,8 @@ class OrderController extends Controller
                             'requester_id'=>$data['user']['info']->id,
                             // 'approved_by'=>$request->approved_by,
                             'total_qty'=>$total,
-                            'invoice_status'=>$request->invoice_status
+                            'order_category'=>$request->category,
+                            'invoice_status'=>0
                              ];
           //   echo '<pre>';print_r($request['products']); exit;         
             $invoice_data = Invoices::create($invoice_data);
@@ -198,6 +213,10 @@ class OrderController extends Controller
                 }
                 
             }
+            $order = Invoices::find($invoice_id);
+            $order->invoice_num = $data['user']['info']->login_id.$invoice_id;
+            $order->save();
+
             return redirect()->route('orders.index')
             ->with('success','Order created successfully.Order ID:'.$invoice_id);
         }else{
@@ -214,13 +233,15 @@ class OrderController extends Controller
             $orderDetails = Invoices::leftjoin('schools as s',"orders.school_id","=",'s.id')
             ->leftjoin('districts as d',"s.district_id","=",'d.id')
             ->leftjoin('villages as v',"s.village_id","=",'v.id')
-            ->where('orders.id', $orderId)->select("d.dist_name","v.village_name","orders.*","orders.id as orderId","s.*")
+            ->leftjoin('categories as c',"c.id","=",'orders.order_category')
+            ->where('orders.id', $orderId)->select("d.dist_name","c.cat_name","v.village_name","orders.*","orders.id as orderId","s.*")
             ->first();
             
-                $results = InvoiceProducts::where('invoice_id', $orderDetails->orderId)->get();
+                $results = InvoiceProducts::leftjoin('products as p',"order_products.invoice_id","=",'p.id')->where('invoice_id', $orderDetails->orderId)
+                ->select("p.name as product_name","p.units","order_products.*")->get();
                 $orderDetails['products'] = $results;
             
-            //echo '<pre>';print_r($orderDetails);exit;
+            // echo '<pre>';print_r($orderDetails);exit;
             return view('orders.view',compact('orderDetails'));
             
         }

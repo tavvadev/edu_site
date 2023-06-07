@@ -44,33 +44,37 @@
 
 
         <tr>
-
+            <th>Order Id</th>
+            <th>Indent</th>
             <th>School</th>
             <th>HM</th>
             <th>Contact Number</th>
             <th>Order Id</th>
+            <th>Status</th>
         </tr>
         </thead>
         <tbody>
-	    @foreach ($products as $order)
+	    @foreach ($orders as $order)
         <?php
        // echo "<pre>";print_r($order);exit;
         ?>
 	    <tr>
+            <td>{{ $order->oid }}</td>
+            <td>{{ $order->cat_name }}</td>
             <td>{{ $order->school_name }}</td>
             <td>{{ $order->hm_name }}</td>
             <td>{{ $order->hm_contact_num }}</td>
-            <td class="text-center"><a class=" btn btn-link" role="button" href="/order/view/{{ $order->oid }}">{{ $order->oid }}</a></td>
+            <td class="text-center"><a class=" btn btn-link" role="button" href="/order/view/{{ $order->oid }}">{{ $order->order_num }}</a></td>
+            <td>{{ $order->invoice_status==0?"Pending":($order->invoice_status==1?"Completed":"Ack Pending") }}</td>
 	    </tr>
 	    @endforeach
         </tbody>
     </table>
     </div>
 
-    {!! $products->links() !!}
+    {!! $orders->links() !!}
     </div>
 
-<p class="text-center text-primary"><small>Tutorial by edutechsolutions</small></p>
 
 </div>
 @endsection
