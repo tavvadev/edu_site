@@ -741,7 +741,47 @@ padding: 42px 64px;
    background:#ccc url(../images/campus.jpg) no-repeat;
    background-blend-mode: darken;
 } */
+/* inner pages with table */
 
+.ed-inner-pg {
+    padding: 0px ;
+    margin: 0px;
+    width: 100%;
+    min-height: calc(100vh - 120px);
+    background: rgba(0, 0, 0, 0.05);
+}
+.top-banner {
+    background: var(--primary) url(../images/campus.jpg) no-repeat;
+    object-fit: cover;
+    width: 100%;
+    height: 300px;
+padding: 48px;
+background-blend-mode: luminosity;
+}
+.btn-light {
+    border: 1px solid var(--white);
+    color: var(--primary);
+    background: var(--white);
+}
+/* table styles */
+.tb-sec {
+    padding:      48px;
+    width: 100%;
+
+    height: auto;
+
+margin-top: -140px;
+
+}
+.tb-sec .table-responsive{
+    padding:64px 48px 32px;
+    width: 100%;
+
+    height: auto;
+   background: var(--white);
+    border-radius: 16px;
+
+}
     .conversation-bx h2{
         font-size: 15px;
         font-weight: 600;
