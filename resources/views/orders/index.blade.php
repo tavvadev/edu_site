@@ -62,7 +62,7 @@
             <td>{{ $order->school_name }}</td>
             <td>{{ $order->hm_name }}</td>
             <td>{{ $order->hm_contact_num }}</td>
-            <td class="text-center"><a class=" btn btn-link" role="button" href="/order/view/{{ $order->oid }}">{{ $order->oid }}</a></td>
+            <td class="text-center"><a class=" btn btn-link" role="button" href="/order/view/{{ $order->oid }}">{{ $order->order_num }}</a></td>
             <td>{{ $order->invoice_status==0?"Pending":($order->invoice_status==1?"Completed":"Ack Pending") }}</td>
 	    </tr>
 	    @endforeach
@@ -73,7 +73,6 @@
     {!! $products->links() !!}
     </div>
 
-<p class="text-center text-primary"><small>Tutorial by edutechsolutions</small></p>
 
 </div>
 @endsection

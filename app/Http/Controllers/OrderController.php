@@ -73,7 +73,7 @@ class OrderController extends Controller
             }
 
         $products = Orders::leftjoin('schools as s',"orders.school_id","=",'s.id')
-        ->select('orders.id as oid','orders.total_qty','orders.invoice_status','s.school_name','s.UDISE_code','s.hm_name',"s.hm_contact_num")->paginate(15);
+        ->select('orders.id as oid','orders.invoice_num as order_num','orders.total_qty','orders.invoice_status','s.school_name','s.UDISE_code','s.hm_name',"s.hm_contact_num")->paginate(15);
         return view('orders.index',compact('products'))
                 ->with('i', (request()->input('page', 1) - 1) * 5);
     }
@@ -144,9 +144,9 @@ class OrderController extends Controller
         // echo $request->school_id;
         // echo '<pre>';print_r($data['user']['schools'][0]);
         // // print_r($data['user']['role']);
-        // echo '<pre>';print_r($data['user']['info']->id);
+        //  echo '<pre>';print_r($data['user']);
         // echo '<pre>';
-        // print_r($request->all());exit; 
+        //  print_r($request->all());exit; 
             $validator = \Validator::make($request->all(), 
             [
               //   'invoice_num'         =>     'required|min:1|regex:/^[a-zA-Z\s]*$/',
@@ -185,7 +185,7 @@ class OrderController extends Controller
                             'requester_id'=>$data['user']['info']->id,
                             // 'approved_by'=>$request->approved_by,
                             'total_qty'=>$total,
-                            'invoice_status'=>$request->invoice_status
+                            'invoice_status'=>0
                              ];
           //   echo '<pre>';print_r($request['products']); exit;         
             $invoice_data = Invoices::create($invoice_data);
@@ -198,6 +198,10 @@ class OrderController extends Controller
                 }
                 
             }
+            $order = Invoices::find($invoice_id);
+            $order->invoice_num = $data['user']['info']->login_id.$invoice_id;
+            $order->save();
+
             return redirect()->route('orders.index')
             ->with('success','Order created successfully.Order ID:'.$invoice_id);
         }else{
