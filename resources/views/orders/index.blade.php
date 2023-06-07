@@ -44,11 +44,12 @@
 
 
         <tr>
-
+            <th>Order Id</th>
             <th>School</th>
             <th>HM</th>
             <th>Contact Number</th>
             <th>Order Id</th>
+            <th>Status</th>
         </tr>
         </thead>
         <tbody>
@@ -57,10 +58,12 @@
        // echo "<pre>";print_r($order);exit;
         ?>
 	    <tr>
+            <td>{{ $order->oid }}</td>
             <td>{{ $order->school_name }}</td>
             <td>{{ $order->hm_name }}</td>
             <td>{{ $order->hm_contact_num }}</td>
             <td class="text-center"><a class=" btn btn-link" role="button" href="/order/view/{{ $order->oid }}">{{ $order->oid }}</a></td>
+            <td>{{ $order->invoice_status==0?"Pending":($order->invoice_status==1?"Completed":"Ack Pending") }}</td>
 	    </tr>
 	    @endforeach
         </tbody>

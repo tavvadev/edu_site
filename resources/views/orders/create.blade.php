@@ -46,7 +46,7 @@ class="px-1" width="48" height="48" alt="backarrow"/> Back
                    <div class="col-md-4 d-flex align-items-center">
 
 <span>
-                    <input type="text" id="item_qty" name="products[{{$i}}][quantity]" class="form-control" placeholder="Qty">
+                    <input type="text" id="item_qty" name="products[{{$i}}][quantity]" class="form-control" placeholder="Qty in {{ $product->units }}">
                     <input type="hidden" name="products[{{$i}}][product_id]" class="form-control " value="{{ $product->id }}" >
                     </span>
                     <small class="fw-normal ps-2 text-muted"> {{ $product->units }}</small>

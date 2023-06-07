@@ -159,7 +159,8 @@ class ApiController extends Controller
         $allOrders = [];
         foreach($orders as $order) {
             $allOrders[$order->orderId] = $order;
-            $results = InvoiceProducts::where('invoice_id', $order->orderId)->get();
+            $results = InvoiceProducts::leftjoin('products as p',"order_products.invoice_id","=",'p.id')->where('invoice_id', $order->orderId)
+            ->select("p.name as product_name","p.units","order_products.*")->get();
             $allOrders[$order->orderId]['products'] = $results;
         }
         $totalOrders = count($allOrders);
