@@ -45,6 +45,7 @@
 
         <tr>
             <th>Order Id</th>
+            <th>Indent</th>
             <th>School</th>
             <th>HM</th>
             <th>Contact Number</th>
@@ -59,6 +60,7 @@
         ?>
 	    <tr>
             <td>{{ $order->oid }}</td>
+            <td>{{ $order->cat_name }}</td>
             <td>{{ $order->school_name }}</td>
             <td>{{ $order->hm_name }}</td>
             <td>{{ $order->hm_contact_num }}</td>
