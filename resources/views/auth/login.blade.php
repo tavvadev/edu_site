@@ -59,7 +59,7 @@
 
 
                         <div class="row my-4 pt-4">
-                            <div class="col-md-6 offset-md-3">
+                            <div class="col-md-12">
                                 <button type="submit" class="btn py-3 w-100 btn-primary">
                                     {{ __('Login') }}
                                 </button>
