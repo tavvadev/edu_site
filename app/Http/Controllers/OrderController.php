@@ -157,8 +157,8 @@ class OrderController extends Controller
         // echo '<pre>';print_r($data['user']['schools'][0]);
         // // print_r($data['user']['role']);
         //  echo '<pre>';print_r($data['user']);
-        echo '<pre>';
-         print_r($request->all());exit; 
+        // echo '<pre>';
+        //  print_r($request->all());exit; 
             $validator = \Validator::make($request->all(), 
             [
               //   'invoice_num'         =>     'required|min:1|regex:/^[a-zA-Z\s]*$/',
@@ -190,6 +190,7 @@ class OrderController extends Controller
                 $total+=$val['quantity'];
             }
         }
+        // echo $request->category;exit;
             $invoice_data = [ 
                             'invoice_data'=>$request->invoice_data,
                             'supplier_id'=>$request->supplier_id,
