@@ -79,22 +79,22 @@
     <p>Invoice Date: <input type='date' name="invoice_date" id="invoice_date" /></p>
 
     <div class="col-xs-12 col-sm-12 col-md-12 text-center">
-        <button type="submit" class="btn btn-primary mt-3 px-4 py-3">Update Invoice</button>
+        <button type="submit" class="btn btn-primary mt-3 px-4 py-3">Update</button>
 </div>
-    @else
+    @elseif($user['role'] == 'Supplier' && $orderDetails->invoice_status==1)
     <p>Invoice No: {{$orderDetails->invoice_no}}</p>
     <p>Invoice File: <a href="{{asset('storage/'.$orderDetails->invoice_file_path)}}" target="_blank">{{$orderDetails->invoice_no}}</a></p>
     <p>Invoice Date: {{$orderDetails->invoice_date}}</p>
-    <p>Invoice Status: <a href="javascript:void(0);" class="btn btn-primary">{{$orderDetails->invoice_status == 1?"Waiting for Acknowledge":"Acknowledged"}}</a></p>
+    <p>Invoice Status: <button class="btn btn-success">{{$orderDetails->invoice_status == 1?"Waiting for Acknowledge":"Acknowledged"}}</button></p>
     @endif
 
     @if($user['role'] != 'Supplier')    
     @if($orderDetails->invoice_status == 0) 
-    <button class="btn btn-warning">Pending</button>
+    Status: <span class="pending">Pending</span>
     @elseif($orderDetails->invoice_status == 1) 
-    <button class="btn btn-success">Acknowledged</button>
+    Status: <span class="pending">Invoiced</span>
     @elseif($orderDetails->invoice_status == 2) 
-    <button class="btn btn-failure">Acknowledged</button>
+    Status: <span class="pending">Acknowledged</span>
     @endif
     @endif
     </div>
