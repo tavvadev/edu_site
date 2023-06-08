@@ -54,6 +54,9 @@
             <th>Ordered Qty</th>
             <th>Price</th>
             <th>Deilvered Qty</th>
+            @if($user['role'] == 'HM' && ($orderDetails->invoice_status==1 || $orderDetails->invoice_status==2))
+            <th>Ack Qty</th>
+            @endif
         </tr>
         </thead>
         <tbody>
@@ -66,6 +69,12 @@
             <td><input type="number" name="delivered_qty[{{$product->pid}}]" max="{{$product->quantity}}" min="0" /></td>
             @else
             <td>{{$product->bill_qty}}</td>
+            @endif
+            @if($user['role'] == 'HM' && $orderDetails->invoice_status==1)
+            <td><input type="number" value="{{$product->bill_qty}}" name="ack_qty[{{$product->pid}}]" max="{{$product->quantity}}" min="0" /></td>
+            @endif
+            @if($user['role'] == 'HM' && $orderDetails->invoice_status==2)
+            <td>{{$product->ack_qty}}</td>
             @endif
 	    </tr>
 	    @endforeach
@@ -81,12 +90,17 @@
     <div class="col-xs-12 col-sm-12 col-md-12 text-center">
         <button type="submit" class="btn btn-primary mt-3 px-4 py-3">Update</button>
 </div>
-    @elseif($user['role'] == 'Supplier' && $orderDetails->invoice_status==1)
+    @elseif(($user['role'] == 'Supplier' || $user['role'] == 'HM' || $user['role'] == 'APC') && $orderDetails->invoice_status>0)
     <p>Invoice No: {{$orderDetails->invoice_no}}</p>
     <p>Invoice File: <a href="{{asset('storage/'.$orderDetails->invoice_file_path)}}" target="_blank">{{$orderDetails->invoice_no}}</a></p>
     <p>Invoice Date: {{$orderDetails->invoice_date}}</p>
-    <p>Invoice Status: <button class="btn btn-success">{{$orderDetails->invoice_status == 1?"Waiting for Acknowledge":"Acknowledged"}}</button></p>
     @endif
+    @if($user['role'] == 'HM' && $orderDetails->invoice_status==1)
+    <div class="col-xs-12 col-sm-12 col-md-12 text-center">
+        <button type="submit" class="btn btn-primary mt-3 px-4 py-3">Acknowledge Order</button>
+</div>
+@endif
+
 
     @if($user['role'] != 'Supplier')    
     @if($orderDetails->invoice_status == 0) 
@@ -97,6 +111,11 @@
     Status: <span class="pending">Acknowledged</span>
     @endif
     @endif
+    <div>
+    @if($user['role'] == 'APC' && $orderDetails->invoice_status==0)
+    <button type="submit" class="btn btn-primary mt-3 px-4 py-3">Approve</button>
+    @endif
+    </div>
     </div>
     </div>
 </form>

@@ -51,7 +51,7 @@
             <td>{{ $order->hm_name }}</td>
             <td>{{ $order->hm_contact_num }}</td>
 
-            <td><span class="pending ">{{ $order->invoice_status==0?"Pending":($order->invoice_status==1?"Completed":"Ack Pending") }}</span></td>
+            <td><span class="pending ">{{ $order->invoice_status==0?"Pending":($order->invoice_status==1?"Completed":"Acknoledged") }}</span> @if($order->invoice_status==0) / <span class="pending ">{{ $order->apc_approved_status==0?"Yet to Approve":"Approved by APC" }}</span>@endif</td>
             <td ><a class=" btn btn-link" role="button" href="/order/view/{{ $order->oid }}">{{ $order->order_num }}</a></td>
 	    </tr>
 	    @endforeach
