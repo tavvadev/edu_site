@@ -79,7 +79,7 @@
     <p>Invoice Date: <input type='date' name="invoice_date" id="invoice_date" /></p>
 
     <div class="col-xs-12 col-sm-12 col-md-12 text-center">
-        <button type="submit" class="btn btn-primary mt-3 px-4 py-3">Update Invoice</button>
+        <button type="submit" class="btn btn-primary mt-3 px-4 py-3">Update</button>
 </div>
     @else
     <p>Invoice No: {{$orderDetails->invoice_no}}</p>
