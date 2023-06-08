@@ -47,20 +47,20 @@ class OrderController extends Controller
     {
         $data = request()->session()->all();
         // echo $data['user'];exit;
-        // echo '<pre>';print_r($data['user']['schools']);
+        // echo '<pre>';print_r($data['user']);exit;
         // print_r($data['user']['role']);
         $user_id = $data['user']['info']->id;
         //echo '<pre>';print_r($data['user']['info']->id);exit;
-
+        $user = $data['user']['info'];
         $schools =[];
         // Get the schools using the user id.....
         $role = User::leftJoin('roles','roles.id','=','users.role_id')->where('users.id', $user_id)->first('roles.name as roleName');
             //echo $role->roleName;exit;
             if($role->roleName == 'FAO' || $role->roleName == 'APC') {
                 // Find the district of this logged in User/Role if they are distrcit level officer.
-                $district_details = User::leftJoin('districts','districts.id','=','users.district_id')->where('users.id', $user->id)->first('districts.*');
+                $district_details = User::leftJoin('districts','districts.id','=','users.district_id')->where('users.id', $user_id)->first('districts.*');
 
-                $district_details = User::leftJoin('districts','districts.id','=','users.district_id')->where('users.id', $user->id)->first('districts.*');
+                $district_details = User::leftJoin('districts','districts.id','=','users.district_id')->where('users.id', $user_id)->first('districts.*');
                 // get all the schools and villages in this district
                 $schoolResults = Schools::where('district_id', $user->district_id)->get();
                 foreach($schoolResults as $school) {
@@ -81,7 +81,7 @@ class OrderController extends Controller
 
         $query = Orders::leftjoin('schools as s',"orders.school_id","=",'s.id')
         ->leftjoin('categories as c',"c.id","=",'orders.order_category')
-        ->select('c.cat_name','orders.id as oid','orders.invoice_num as order_num','orders.total_qty','orders.invoice_status','s.school_name','s.UDISE_code','s.hm_name',"s.hm_contact_num");
+        ->select('c.cat_name','orders.id as oid','orders.invoice_num as order_num','orders.total_qty','orders.invoice_status','s.school_name','s.UDISE_code','s.hm_name',"s.hm_contact_num","orders.apc_approved_status","orders.invoice_status");
         $i =0;
         if($role->roleName == 'Supplier') {
             $query->where('apc_approved_status', 1);
@@ -96,7 +96,7 @@ class OrderController extends Controller
         }
         // echo '<pre>';print_r($orders);exit;
 
-        return view('orders.index',compact('orders'))
+        return view('orders.index',compact('orders','user'))
                 ->with('i', (request()->input('page', 1) - 1) * 5);
     }
 
@@ -163,34 +163,60 @@ class OrderController extends Controller
     }
     public function updateorder(Request $request){
         $data = request()->session()->all();
-         // Validate the uploaded file
-         $request->validate([
-            'invoice' => 'required|mimes:pdf|max:2048', // Adjust the allowed file types and size as needed
-        ]);
+        if($data['user']['role'] == 'Supplier') {
+            // Validate the uploaded file
+            $request->validate([
+            'invoice' => 'mimes:pdf|max:2048', // Adjust the allowed file types and size as needed
+            ]);
 
-        if ($request->hasFile('invoice')) {
+            if ($request->hasFile('invoice')) {
             $file = $request->file('invoice');
             $path = $file->store('uploads');
-        }
-        // echo '<pre>';print_r($request->all());exit;
-        foreach($request->delivered_qty as $product_id=>$del_qty) {
+            }
+            // echo '<pre>';print_r($request->all());exit;
+            foreach($request->delivered_qty as $product_id=>$del_qty) {
+            DB::table('order_products')
+            ->where('invoice_id', $request->order_id)
+            ->where('product_id', $product_id)
+            ->update([
+            'bill_qty' => $del_qty,
+            'price' => DB::raw('price *'.$del_qty) 
+            ]);
+            }
+
+            // echo '<pre>';print_r($request->all());exit;
+            $order = Invoices::find($request->order_id);
+            $order->invoice_date = $request->invoice_date;
+            $order->invoice_no = $request->invoice_no;
+            $order->invoice_created_at = date('Y-m-d H:i:s');
+            $order->invoice_file_path = $path;
+            $order->invoice_status = 1;
+            $order->save();
+        } else if($data['user']['role'] == 'HM') {
+            foreach($request->ack_qty as $product_id=>$del_qty) {
                 DB::table('order_products')
                 ->where('invoice_id', $request->order_id)
                 ->where('product_id', $product_id)
                 ->update([
-                'bill_qty' => $del_qty,
-                'price' => DB::raw('price *'.$del_qty) 
+                'ack_qty' => $del_qty
                 ]);
+                }
+    
+                // echo '<pre>';print_r($request->all());exit;
+                $order = Invoices::find($request->order_id);
+                $order->invoice_status = 2;
+                $order->ack_date = date('Y-m-d H:i:s');
+                $order->save();
+        } else if($data['user']['role'] == 'APC') {
+                // echo '<pre>';print_r($request->all());exit;
+                // echo '<pre>';print_r($request->all());exit;
+                $order = Invoices::find($request->order_id);
+                $order->apc_approved_status = 1;
+                $order->apc_approved_date = date('Y-m-d H:i:s');
+                $order->apc_approved_by = $data['user']['info']->id;
+                $order->save();
         }
-       
-        // echo '<pre>';print_r($request->all());exit;
-        $order = Invoices::find($request->order_id);
-        $order->invoice_date = $request->invoice_date;
-        $order->invoice_no = $request->invoice_no;
-        $order->invoice_created_at = date('Y-m-d H:i:s');
-        $order->invoice_file_path = $path;
-        $order->invoice_status = 1;
-        $order->save();
+         
         return redirect()->route('orders.index')
         ->with('success','Order updated successfully.');
         
