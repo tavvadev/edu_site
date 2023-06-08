@@ -90,7 +90,7 @@
     <div class="col-xs-12 col-sm-12 col-md-12 text-center">
         <button type="submit" class="btn btn-primary mt-3 px-4 py-3">Update</button>
 </div>
-    @elseif(($user['role'] == 'Supplier' || $user['role'] == 'HM') && $orderDetails->invoice_status>0)
+    @elseif(($user['role'] == 'Supplier' || $user['role'] == 'HM' || $user['role'] == 'APC') && $orderDetails->invoice_status>0)
     <p>Invoice No: {{$orderDetails->invoice_no}}</p>
     <p>Invoice File: <a href="{{asset('storage/'.$orderDetails->invoice_file_path)}}" target="_blank">{{$orderDetails->invoice_no}}</a></p>
     <p>Invoice Date: {{$orderDetails->invoice_date}}</p>
