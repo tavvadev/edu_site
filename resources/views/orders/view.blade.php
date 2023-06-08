@@ -85,7 +85,7 @@
     <p>Invoice No: {{$orderDetails->invoice_no}}</p>
     <p>Invoice File: <a href="{{asset('storage/'.$orderDetails->invoice_file_path)}}" target="_blank">{{$orderDetails->invoice_no}}</a></p>
     <p>Invoice Date: {{$orderDetails->invoice_date}}</p>
-    <p>Invoice Status: <a href="javascript:void(0);" class="btn btn-primary">{{$orderDetails->invoice_status == 1?"Waiting for Acknowledge":"Acknowledged"}}</a></p>
+    <p>Invoice Status: <button class="btn btn-success">{{$orderDetails->invoice_status == 1?"Waiting for Acknowledge":"Acknowledged"}}</button></p>
     @endif
 
     @if($user['role'] != 'Supplier')    
