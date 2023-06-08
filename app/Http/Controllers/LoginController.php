@@ -43,6 +43,12 @@ class LoginController extends Controller
                     $schools[] = $school->id;
                 }
                 $request->session()->put('user.schools', $schools);
+            } else if($role->roleName == 'Supplier') {
+                $schoolResults = Schools::get();
+                foreach($schoolResults as $school) {
+                    $schools[] = $school->id;
+                }
+                // echo '<pre>';print_r($schools);exit;
             } else {
 
                 $results = Schoolusers::where('user_id', $user->id)->get();
