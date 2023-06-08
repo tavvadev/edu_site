@@ -90,11 +90,11 @@
 
     @if($user['role'] != 'Supplier')    
     @if($orderDetails->invoice_status == 0) 
-    <button class="btn btn-warning">Pending</button>
+    Status: <span class="pending">Pending</span>
     @elseif($orderDetails->invoice_status == 1) 
-    <button class="btn btn-success">Acknowledged</button>
+    Status: <span class="pending">Invoiced</span>
     @elseif($orderDetails->invoice_status == 2) 
-    <button class="btn btn-failure">Acknowledged</button>
+    Status: <span class="pending">Acknowledged</span>
     @endif
     @endif
     </div>
