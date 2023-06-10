@@ -259,10 +259,13 @@ class OrderController extends Controller
         //dd($request->invoice_data);
         if ($validator->passes()) {
             $total = 0;
+            $total_price=0;
             // echo '<pre>';print_r($request['products']);exit;
            // return response()->json(['status' => 200, 'Success' => 'Success']);
            foreach($request['products'] as $key =>$val){
             if($val['quantity']!='') {
+                $product = Product::find($val['product_id']);
+                $total_price+=$product['price']*$val['quantity'];
                 $total+=$val['quantity'];
             }
         }
@@ -274,6 +277,7 @@ class OrderController extends Controller
                             'requester_id'=>$data['user']['info']->id,
                             // 'approved_by'=>$request->approved_by,
                             'total_qty'=>$total,
+                            'total_price'=>$total_price,
                             'order_category'=>$request->category,
                             'invoice_status'=>0
                              ];
@@ -283,7 +287,8 @@ class OrderController extends Controller
             $total = 0;
             foreach($request['products'] as $key =>$val){
                 if($val['quantity']!='') {
-                    $invoice_pr_data = ['invoice_id'=>$invoice_id,'product_id'=>$val['product_id'],'quantity'=>$val['quantity']];
+                    $product = Product::find($val['product_id']);
+                    $invoice_pr_data = ['invoice_id'=>$invoice_id,'product_id'=>$val['product_id'],'quantity'=>$val['quantity'],'price'=>$product['price']*$val['quantity']];
                     $invoice_products = InvoiceProducts::create($invoice_pr_data);
                 }
 

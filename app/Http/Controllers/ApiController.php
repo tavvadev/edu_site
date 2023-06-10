@@ -97,9 +97,14 @@ class ApiController extends Controller
       //dd($request->invoice_data);
       if ($validator->passes()) {
         $total = 0;
-          foreach($request['products'] as $key =>$val){
-            $total+=$val['quantity'];
-          }
+        $total_price = 0;
+        foreach($request['products'] as $key =>$val){
+            if($val['quantity']!='') {
+                $product = Product::find($val['product_id']);
+                $total_price+=$product['price']*$val['quantity'];
+                $total+=$val['quantity'];
+            }
+        }
          // return response()->json(['status' => 200, 'Success' => 'Success']);
             $invoice_data = [ 
               'invoice_data'=>$request->invoice_data,
@@ -108,17 +113,21 @@ class ApiController extends Controller
               'requester_id'=>$request->requester_id,
               // 'approved_by'=>$request->approved_by,
               'total_qty'=>$total,
+              'total_price'=>$total_price,
               'order_category' => $request->category,
               'invoice_status'=>0
               ];
           $invoice_data = Invoices::create($invoice_data);
           $invoice_id =  $invoice_data->id;
-          
+
           foreach($request['products'] as $key =>$val){
-              // echo $val;
-              $invoice_pr_data = ['invoice_id'=>$invoice_id,'product_id'=>$val['product_id'],'quantity'=>$val['quantity']];
-              $invoice_products = InvoiceProducts::create($invoice_pr_data);  
-          }
+            if($val['quantity']!='') {
+                $product = Product::find($val['product_id']);
+                $invoice_pr_data = ['invoice_id'=>$invoice_id,'product_id'=>$val['product_id'],'quantity'=>$val['quantity'],'price'=>$product['price']*$val['quantity']];
+                $invoice_products = InvoiceProducts::create($invoice_pr_data);
+            }
+
+        }
             $school_details = Schools::where('id',$request->school_id)->first();
            
             $supplier_details = DistrictSuppliers::where('dist_id', $school_details['district_id'])->first();
