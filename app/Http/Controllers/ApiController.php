@@ -10,6 +10,7 @@ use App\Models\Schoolusers;
 use App\Models\Schools;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\DistrictSuppliers;
 use Illuminate\Support\Str;
 
 
@@ -108,7 +109,7 @@ class ApiController extends Controller
               // 'approved_by'=>$request->approved_by,
               'total_qty'=>$total,
               'order_category' => $request->category,
-              'invoice_status'=>$request->invoice_status
+              'invoice_status'=>0
               ];
           $invoice_data = Invoices::create($invoice_data);
           $invoice_id =  $invoice_data->id;
@@ -118,6 +119,12 @@ class ApiController extends Controller
               $invoice_pr_data = ['invoice_id'=>$invoice_id,'product_id'=>$val['product_id'],'quantity'=>$val['quantity']];
               $invoice_products = InvoiceProducts::create($invoice_pr_data);  
           }
+            $school_details = Schools::where('id',$request->school_id)->first();
+            $supplier_details = DistrictSuppliers::where('dist_id', $school_details->dist_id)->first();
+            $order = Invoices::find($invoice_id);
+            $order->supplier_id = $supplier_details->supplier_id;
+            $order->invoice_num = $request->login_id.$invoice_id;
+            $order->save();
           return response()->json([
             'message' => 'Order created successfully.',
             'order_id' => $invoice_id
@@ -155,7 +162,8 @@ class ApiController extends Controller
         $orders = Invoices::leftjoin('schools as s',"orders.school_id","=",'s.id')
         ->leftjoin('districts as d',"s.district_id","=",'d.id')
         ->leftjoin('villages as v',"s.village_id","=",'v.id')
-        ->whereIn('s.id', $schools)->select("d.dist_name","v.village_name","s.*","orders.id as orderId")
+        ->leftjoin('categories as c',"c.id","=",'orders.order_category')
+        ->whereIn('s.id', $schools)->select("d.dist_name","v.village_name","s.school_name","s.hm_name","s.hm_contact_num","s.UDISE_code","s.code","orders.id as orderId",'c.cat_name','orders.id as oid','orders.invoice_num as order_num','orders.total_qty','orders.invoice_status','s.school_name','s.UDISE_code','s.hm_name',"s.hm_contact_num","orders.apc_approved_status","orders.invoice_status")
         ->get();
         $allOrders = [];
         foreach($orders as $order) {
