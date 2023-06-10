@@ -58,9 +58,16 @@
                         <li class="nav-item">
                           <a class="nav-link" href="{{ route('orders.index') }}">Orders</a>
                         </li>
+                        <?php
+                        if(session('user.info.role_id')==2){
+                        ?>
                         <li class="nav-item">
                           <a class="nav-link" href="{{ route('users.updateschool') }}">School Location</a>
                         </li>
+                      <?php
+                      }
+                      ?>
+
                         <!-- <li class="nav-item">
                           <a class="nav-link" href="javascript:void(0)">MIS Report</a>
                         </li>
