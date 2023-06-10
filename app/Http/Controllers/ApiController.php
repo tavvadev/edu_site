@@ -190,7 +190,7 @@ class ApiController extends Controller
     }
     public function updateorder(Request $request){
         $data = $request->all();
-        // echo '<pre>';print_r( $data );exit;
+        echo '<pre>';print_r( $data );exit;
             foreach($request->ack_qty as $product_id=>$del_qty) {
                 DB::table('order_products')
                 ->where('invoice_id', $request->order_id)
