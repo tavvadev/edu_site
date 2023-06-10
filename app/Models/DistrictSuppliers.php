@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class DistrictSuppliers extends Model
 {
     use HasFactory;
-    public $table = 'orders';
+    public $table = 'district_suppliers';
     protected $fillable =  ['id','dist_id','supplier_id'];
     public $timestamps = false;
 }
