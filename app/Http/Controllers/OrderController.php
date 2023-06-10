@@ -81,7 +81,9 @@ class OrderController extends Controller
 
         $query = Orders::leftjoin('schools as s',"orders.school_id","=",'s.id')
         ->leftjoin('categories as c',"c.id","=",'orders.order_category')
-        ->select('c.cat_name','orders.id as oid','orders.invoice_num as order_num','orders.total_qty','orders.invoice_status','s.school_name','s.UDISE_code','s.hm_name',"s.hm_contact_num","orders.apc_approved_status","orders.invoice_status");
+        ->leftjoin('villages as vi',"vi.id","=",'s.village_id')
+        ->leftjoin('mandals as m',"m.id","=",'vi.mandal_id')
+        ->select('c.cat_name','orders.id as oid','orders.invoice_num as order_num','orders.total_qty','orders.invoice_status','orders.school_id','m.mandal_name' ,'s.school_name','s.UDISE_code','s.hm_name',"s.hm_contact_num","orders.apc_approved_status","orders.invoice_status");
         $i =0;
         if($role->roleName == 'Supplier') {
             $query->where('apc_approved_status', 1);
