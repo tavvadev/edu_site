@@ -64,6 +64,21 @@
             } else if(session('user.info.role_id')==6){
             ?>
 
+            <th>S.No</th>
+            <th>District</th>
+            <th>Mandal</th>
+            <th>Village</th>
+            <th>School ID</th>
+            <th>School Name</th>
+            <th>PIN Code</th>
+            <th>Address</th>
+            <th>Latitude</th>
+            <th>Longitude</th>
+            <th>HM Name</th>
+            <th>HM Contact Number</th>
+            <th>Order Id</th>           
+            <th>Status</th>
+
             <?php
             } 
             ?>
@@ -108,6 +123,21 @@
              <?php
             } else if(session('user.info.role_id')==6){
             ?>
+             <td>{{ $i }}</td>
+            <td>{{ $order->dist_name }}</td>
+            <td>{{ $order->mandal_name }}</td>
+            <td>{{ $order->village_name }}</td>
+            <td>{{ $order->school_id }}</td>
+            <td>{{ $order->school_name }}</td>
+            <td>{{ $order->UDISE_code }}</td>
+            <td>{{ $order->school_name }}</td>
+            <td>{{ $order->latitude }}</td>
+            <td>{{ $order->longitude }}</td>
+            <td>{{ $order->hm_name }}</td>
+            <td>{{ $order->hm_contact_num }}</td>
+            <td ><a class=" btn btn-link" role="button" href="/order/view/{{ $order->oid }}">{{ $order->order_num }}</a></td>
+            <td><span class="pending ">{{ $order->invoice_status==0?"Pending":($order->invoice_status==1?"Completed":"Acknoledged") }}</span> @if($order->invoice_status==0) / <span class="pending ">{{ $order->apc_approved_status==0?"Yet to Approve":"Approved by APC" }}</span>@endif</td>
+             
 
             <?php
             } 
