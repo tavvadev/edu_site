@@ -98,7 +98,7 @@ class OrderController extends Controller
             $orders[$i]['products'] = $results;
             $i++;
         }
-         echo '<pre>';print_r($orders);exit;
+         //echo '<pre>';print_r($orders);exit;
 
         return view('orders.index',compact('orders','user'))
                 ->with('i', (request()->input('page', 1) - 1) * 5);
