@@ -172,8 +172,9 @@ class ApiController extends Controller
         $orders = Invoices::leftjoin('schools as s',"orders.school_id","=",'s.id')
         ->leftjoin('districts as d',"s.district_id","=",'d.id')
         ->leftjoin('villages as v',"s.village_id","=",'v.id')
+        ->leftjoin('users as u',"orders.supplier_id","=",'u.id')
         ->leftjoin('categories as c',"c.id","=",'orders.order_category')
-        ->whereIn('s.id', $schools)->select("d.dist_name","v.village_name","s.school_name","s.hm_name","s.hm_contact_num","s.UDISE_code","s.code","orders.id as orderId",'c.cat_name','orders.id as oid','orders.invoice_num as order_num','orders.total_qty','orders.invoice_status','s.school_name','s.UDISE_code','s.hm_name',"s.hm_contact_num","orders.apc_approved_status","orders.invoice_status")
+        ->whereIn('s.id', $schools)->select("d.dist_name","v.village_name","s.school_name","s.hm_name","s.hm_contact_num","s.UDISE_code","s.code","orders.id as orderId",'c.cat_name','orders.id as oid','orders.invoice_num as order_num','orders.total_qty','orders.invoice_status','s.school_name','s.UDISE_code','s.hm_name',"s.hm_contact_num","orders.apc_approved_status","orders.invoice_status","u.name as supplierName","u.contact_number as supplierNumber")
         ->get();
         $allOrders = [];
         foreach($orders as $order) {
