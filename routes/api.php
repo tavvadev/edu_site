@@ -19,6 +19,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 Route::any('/createOrder', [ApiController::class, 'createOrder']);
+Route::any('/updateorder', [ApiController::class, 'updateorder']);
 Route::any('/login', [ApiController::class, 'login']);
 Route::any('/orders', [ApiController::class, 'orders']);
 Route::any('/categories', [ApiController::class, 'categories']);
