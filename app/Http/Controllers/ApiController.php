@@ -12,7 +12,7 @@ use App\Models\Category;
 use App\Models\Product;
 use App\Models\DistrictSuppliers;
 use Illuminate\Support\Str;
-
+use Illuminate\Support\Facades\DB;
 
 use Auth;
 
@@ -187,5 +187,28 @@ class ApiController extends Controller
         ->where('category_id', '=', $request->id)
         ->get();
         return response()->json($products);
+    }
+    public function updateorder(Request $request){
+        $data = $request->all();
+        // echo '<pre>';print_r( $data );exit;
+            foreach($request->ack_qty as $product_id=>$del_qty) {
+                DB::table('order_products')
+                ->where('invoice_id', $request->order_id)
+                ->where('product_id', $product_id)
+                ->update([
+                'ack_qty' => $del_qty
+                ]);
+                }
+    
+                // echo '<pre>';print_r($request->all());exit;
+                $order = Invoices::find($request->order_id);
+                $order->invoice_status = $request->order_status?$request->order_status:2;
+                $order->reason = $request->reason?$request->reason:"";
+                $order->ack_date = date('Y-m-d H:i:s');
+                $order->save();
+                return response()->json([
+                    'message' => 'Order updated successfully.',
+                    'order_id' => $request->order_id
+                ]);
     }
 }
