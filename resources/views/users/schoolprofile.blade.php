@@ -5,15 +5,6 @@
 <div class="main-bg">
 <div class="container pt-5 pb-4">
 
-<div class="row justify-content-start">
-    <div class="col-md-2">
-<a class="btn d-flex align-items-center fw-bold text-uppercase"
-href="{{ route('orders.index') }}">
-<img src="/../assets/images/backarrow.svg"
-class="px-1" width="48" height="48" alt="backarrow"/> Back
-</a>
-</div>
-</div>
 <p class="fw-normal fs-5 text-capitalize pb-0 mb-0 text-muted text-center">
         <small>My School Profile</small></p>
 
