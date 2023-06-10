@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Models\Schools;
 use Spatie\Permission\Models\Role;
 use DB;
 use Hash;
@@ -135,12 +136,20 @@ class UserController extends Controller
         return redirect()->route('users.index')
                         ->with('success','User deleted successfully');
     }
-    public function updateschool(): View
+    public function schoolprofile(): View
     {
         $data = request()->session()->all();
         // echo '<pre>';print_r($data['user']);
         $user = $data['user'];
-        // print_r($data['user']['schools']);exit;
-        return view('users.updateschool',compact('user'));
+        // echo $user['schools'][0];exit;
+        $schoolDetails = Schools::leftjoin('school_users_relations as su','su.school_id','schools.id')
+        ->where('schools.id',$user['schools'][0])
+        ->leftjoin('users as u','su.user_id','u.id')
+        ->leftjoin('villages as v','v.id','schools.village_id')
+        ->leftjoin('districts as d','d.id','schools.district_id')
+        ->leftjoin('mandals as m','m.id','v.mandal_id')
+        ->select("schools.*","su.*","u.login_id","u.name as username","u.id as userId","v.village_name","m.mandal_name","d.dist_name")->first();
+        // echo '<pre>'; print_r($schoolDetails);exit;
+        return view('users.schoolprofile',compact('schoolDetails'));
     }
 }
