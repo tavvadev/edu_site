@@ -169,7 +169,7 @@
 </div>
     </div>
 
-   <!--  {!! $orders->links() !!} -->
+   {!! $orders->links('vendor.pagination.table') !!}
     </div>
 </div>
 @endsection
