@@ -120,9 +120,10 @@ class ApiController extends Controller
               $invoice_products = InvoiceProducts::create($invoice_pr_data);  
           }
             $school_details = Schools::where('id',$request->school_id)->first();
-            $supplier_details = DistrictSuppliers::where('dist_id', $school_details->dist_id)->first();
+           
+            $supplier_details = DistrictSuppliers::where('dist_id', $school_details['district_id'])->first();
             $order = Invoices::find($invoice_id);
-            $order->supplier_id = $supplier_details->supplier_id;
+            $order->supplier_id = $supplier_details['supplier_id'];
             $order->invoice_num = $request->login_id.$invoice_id;
             $order->save();
           return response()->json([

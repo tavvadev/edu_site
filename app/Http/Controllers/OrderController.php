@@ -286,7 +286,10 @@ class OrderController extends Controller
                 }
 
             }
+            $school_details = Schools::where('id',$data['user']['schools'][0])->first();
+            $supplier_details = DistrictSuppliers::where('dist_id', $school_details['district_id'])->first();
             $order = Invoices::find($invoice_id);
+            $order->supplier_id = $supplier_details['supplier_id'];
             $order->invoice_num = $data['user']['info']->login_id.$invoice_id;
             $order->save();
 
