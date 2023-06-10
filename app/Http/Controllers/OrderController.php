@@ -85,7 +85,8 @@ class OrderController extends Controller
         ->leftjoin('villages as vi',"vi.id","=",'s.village_id')
         ->leftjoin('mandals as m',"m.id","=",'vi.mandal_id')
         ->leftjoin('districts as d',"d.id","=",'s.district_id')
-        ->select('c.cat_name','orders.id as oid','orders.invoice_num as order_num','orders.total_qty','orders.invoice_status','orders.school_id','vi.village_name','d.dist_name','m.mandal_name','s.latitude','s.longitude','s.code','s.school_name' ,'s.school_name','s.UDISE_code','s.hm_name',"s.hm_contact_num","orders.apc_approved_status","orders.invoice_status");
+        ->leftjoin('users as u',"orders.supplier_id","=",'u.id')
+        ->select('c.cat_name','orders.id as oid','orders.invoice_num as order_num','orders.total_qty','orders.invoice_status','orders.school_id','vi.village_name','d.dist_name','m.mandal_name','s.latitude','s.longitude','s.code','s.school_name' ,'s.school_name','s.UDISE_code','s.hm_name',"s.hm_contact_num","orders.apc_approved_status","orders.invoice_status","u.name as supplierName","u.contact_number as supplierNumber");
         $i =0;
         if($role->roleName == 'Supplier') {
             $query->where('apc_approved_status', 1);
