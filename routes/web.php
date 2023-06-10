@@ -41,7 +41,7 @@ Route::get('orders/category', [OrderController::class, 'category']);
 Route::any('order/create', [OrderController::class, 'createOrder']);
 Route::post('order/updateorder', [OrderController::class, 'updateorder']);
 Route::any('order/view/{id}', [OrderController::class, 'view'])->name('orders.view');
-Route::any('updateschool', [UserController::class, 'updateschool'])->name('users.updateschool');
+Route::any('schoolprofile', [UserController::class, 'schoolprofile'])->name('users.schoolprofile');
 
 
 

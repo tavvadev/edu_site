@@ -62,7 +62,7 @@
                         if(session('user.info.role_id')==2){
                         ?>
                         <li class="nav-item">
-                          <a class="nav-link" href="{{ route('users.updateschool') }}">School Profile</a>
+                          <a class="nav-link" href="{{ route('users.schoolprofile') }}">School Profile</a>
                         </li>
                       <?php
                       }

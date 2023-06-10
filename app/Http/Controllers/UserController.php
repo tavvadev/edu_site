@@ -135,12 +135,12 @@ class UserController extends Controller
         return redirect()->route('users.index')
                         ->with('success','User deleted successfully');
     }
-    public function updateschool(): View
+    public function schoolprofile(): View
     {
         $data = request()->session()->all();
         // echo '<pre>';print_r($data['user']);
         $user = $data['user'];
         // print_r($data['user']['schools']);exit;
-        return view('users.updateschool',compact('user'));
+        return view('users.schoolprofile',compact('user'));
     }
 }
