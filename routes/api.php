@@ -24,4 +24,5 @@ Route::any('/login', [ApiController::class, 'login']);
 Route::any('/orders', [ApiController::class, 'orders']);
 Route::any('/categories', [ApiController::class, 'categories']);
 Route::any('/getproducts/{id}', [ApiController::class, 'getproducts']);
+Route::any('/vieworder/{id}', [ApiController::class, 'viewOrder']);
 
