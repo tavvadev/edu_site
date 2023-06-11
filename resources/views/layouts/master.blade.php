@@ -53,16 +53,16 @@
                     <div class="offcanvas-body justify-content-between w-100">
                       <ul class="navbar-nav ">
                         <li class="nav-item">
-                          <a class="nav-link active" href="/">Home</a>
+                          <a class="{{ request()->is('/') ? 'nav-link active' : '' }}" href="/">Home</a>
                         </li>
                         <li class="nav-item">
-                          <a class="nav-link" href="{{ route('orders.index') }}">Orders</a>
+                          <a  class="{{ request()->is('orders') ? 'nav-link active' : 'nav-link' }}" href="{{ route('orders.index') }}">Orders</a>
                         </li>
                         <?php
                         if(session('user.info.role_id')==2){
                         ?>
                         <li class="nav-item">
-                          <a class="nav-link" href="{{ route('users.schoolprofile') }}">School Profile</a>
+                          <a class="{{ request()->is('schoolprofile') ? 'nav-link active' : 'nav-link' }}" href="{{ route('users.schoolprofile') }}">School Profile</a>
                         </li>
                       <?php
                       }
