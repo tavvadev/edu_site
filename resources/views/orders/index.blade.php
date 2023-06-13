@@ -41,10 +41,9 @@
           <?php
             if(session('user.info.role_id')==2){
           ?>
-            <th>Order Id</th>
+            <th>S.No</th>
             <th>Indent</th>
-            <th>School</th>
-            <th>HM</th>
+            <th>Supplier Name</th>
             <th>Contact Number</th>
             <th>Status</th>
             <th>Order Id</th>
@@ -100,9 +99,8 @@
           ?>
             <td>{{ $order->oid }}</td>
             <td>{{ $order->cat_name }}</td>
-            <td>{{ $order->school_name }}</td>
-            <td>{{ $order->hm_name }}</td>
-            <td>{{ $order->hm_contact_num }}</td>
+            <td>{{ $order->supplierName }}</td>
+            <td>{{ $order->supplierNumber }}</td>
 
             <td><span class="pending ">{{ $order->invoice_status==0?"Pending":($order->invoice_status==1?"Completed":"Acknoledged") }}</span> @if($order->invoice_status==0) / <span class="pending ">{{ $order->apc_approved_status==0?"Yet to Approve":"Approved by APC" }}</span>@endif</td>
             <td ><a class=" btn btn-link" role="button" href="/order/view/{{ $order->oid }}">{{ $order->order_num }}</a></td>
@@ -156,20 +154,12 @@
 
 
 
-    <nav aria-label="Page navigation example">
-  <ul class="pagination">
-    <li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
-    <li class="page-item"><a class="page-link" href="#">1</a></li>
-    <li class="page-item active" aria-current="page"><a class="page-link" href="#">2</a></li>
-    <li class="page-item"><a class="page-link" href="#">3</a></li>
-    <li class="page-item"><a class="page-link" href="#">Next</a></li>
-  </ul>
-</nav>
+{!! $orders->links('vendor.pagination.table') !!}
 </div>
 </div>
     </div>
 
-   {!! $orders->links('vendor.pagination.table') !!}
+  
     </div>
 </div>
 @endsection

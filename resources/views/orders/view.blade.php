@@ -7,16 +7,18 @@
     <div class="top-banner">
 
 <div class="container">
-<nav aria-label="breadcrumb">
+<!--<nav aria-label="breadcrumb">
   <ol class="breadcrumb">
     <li class="breadcrumb-item"><a href="#">Home</a></li>
     <li class="breadcrumb-item"><a href="#">Library</a></li>
     <li class="breadcrumb-item active" aria-current="page">Data</li>
   </ol>
-</nav>
+</nav>-->
               <!--   <h2 class="fw-bold text-white fs-4 ">Orders</h2> -->
 
-
+              <?php
+                if(session('user.info.role_id')==2){
+              ?>
               <div class="row justify-content-end pt-3 pb-2">
                 <div class="col-md-3 text-end">
 
@@ -24,16 +26,20 @@
               <a class="btn btn-warning text-white py-3 px-4" href="/orders/category"> Create your New Order</a>
               </div>
               </div>
+              <?php
+                }
+                ?>
 
                </div>
+                @if ($message = Session::get('success'))
+                <div class="alert alert-success">
+                {{ $message }}
+                </div>
+    @endif
 
     </div>
 
-    @if ($message = Session::get('success'))
-        <div class="alert alert-success">
-            {{ $message }}
-        </div>
-    @endif
+   
     <form action="/order/updateorder" class="card cat-crd pt-4 px-4 pb-3 p-md-5 pb-md-4" method="POST" enctype="multipart/form-data">
         @csrf
         <input type="hidden" name="order_id" value="{{$orderDetails->orderId}}" />
@@ -63,7 +69,7 @@
             @foreach ($orderDetails->products as $product)
 	    <tr>
             <td>{{$product->product_name}}</td>
-            <td>{{$product->quantity}}</td>
+            <td>{{$product->quantity}} {{$product->units}}</td>
             <td>{{$product->productPrice * $product->quantity}}</td>
             @if($user['role'] == 'Supplier' && $orderDetails->invoice_status==0)
             <td><input type="number" name="delivered_qty[{{$product->pid}}]" max="{{$product->quantity}}" min="0" /></td>
@@ -114,6 +120,7 @@
     <div>
     @if($user['role'] == 'APC' && $orderDetails->invoice_status==0)
     <button type="submit" class="btn btn-primary mt-3 px-4 py-3">Approve</button>
+    <button type="button" class="btn btn-primary mt-3 px-4 py-3">Reject</button>
     @endif
     </div>
     </div>

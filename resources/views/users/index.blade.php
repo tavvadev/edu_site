@@ -53,7 +53,8 @@
 </table>
 
 
-{!! $data->render() !!}
+{!! $data->links('vendor.pagination.table') !!}
+
 
 
 @endsection
