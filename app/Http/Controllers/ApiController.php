@@ -229,7 +229,8 @@ class ApiController extends Controller
         ->leftjoin('districts as d',"s.district_id","=",'d.id')
         ->leftjoin('villages as v',"s.village_id","=",'v.id')
         ->leftjoin('categories as c',"c.id","=",'orders.order_category')
-        ->where('orders.id', $orderId)->select("d.dist_name","c.cat_name","v.village_name","orders.*","orders.id as orderId","s.school_name","s.hm_name","s.hm_contact_num")
+        ->leftjoin('users as u',"orders.supplier_id","=",'u.id')
+        ->where('orders.id', $orderId)->select("d.dist_name","c.cat_name","v.village_name","orders.*","orders.id as orderId","s.school_name","s.hm_name","s.hm_contact_num","u.name as supplierName","u.contact_number as supplierNumber")
         ->first();
             $results = InvoiceProducts::leftjoin('products as p',"order_products.invoice_id","=",'p.id')->where('invoice_id', $orderId)
             ->select("p.name as product_name","p.units","order_products.product_id as pid","p.price as productPrice","order_products.*")->get();
