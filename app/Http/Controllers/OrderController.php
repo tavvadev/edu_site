@@ -210,6 +210,7 @@ class OrderController extends Controller
             
         } else if($data['user']['role'] == 'HM') {
             $totalnetpayable_price = 0;
+            // echo '<pre>';print_r($request->ack_qty);exit;
             foreach($request->ack_qty as $product_id=>$del_qty) {
                 $product = Product::find($product_id);
                 $totalnetpayable_price+= $product['price']*$del_qty * 0.78;
