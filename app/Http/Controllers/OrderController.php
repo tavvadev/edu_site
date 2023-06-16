@@ -212,14 +212,14 @@ class OrderController extends Controller
             $totalnetpayable_price = 0;
             foreach($request->ack_qty as $product_id=>$del_qty) {
                 $product = Product::find($product_id);
-                $totalnetpayable_price+= $product['price']*$del_qty * 0.8;
+                $totalnetpayable_price+= $product['price']*$del_qty * 0.78;
                 DB::table('order_products')
                 ->where('invoice_id', $request->order_id)
                 ->where('product_id', $product_id)
                 ->update([
                 'ack_qty' => $del_qty,
                 'price' => $product['price']*$del_qty,
-                'netpayable_price' => $product['price']*$del_qty * 0.8
+                'netpayable_price' => $product['price']*$del_qty * 0.78
                 ]);
                 }
     
