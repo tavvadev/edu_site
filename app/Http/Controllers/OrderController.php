@@ -207,19 +207,26 @@ class OrderController extends Controller
             $order->invoice_file_path = $path;
             $order->invoice_status = 1;
             $order->save();
+            
         } else if($data['user']['role'] == 'HM') {
+            $totalnetpayable_price = 0;
             foreach($request->ack_qty as $product_id=>$del_qty) {
+                $product = Product::find($product_id);
+                $totalnetpayable_price+= $product['price']*$del_qty * 0.8;
                 DB::table('order_products')
                 ->where('invoice_id', $request->order_id)
                 ->where('product_id', $product_id)
                 ->update([
-                'ack_qty' => $del_qty
+                'ack_qty' => $del_qty,
+                'price' => $product['price']*$del_qty,
+                'netpayable_price' => $product['price']*$del_qty * 0.8
                 ]);
                 }
     
                 // echo '<pre>';print_r($request->all());exit;
                 $order = Invoices::find($request->order_id);
                 $order->invoice_status = 2;
+                $order->total_price = $totalnetpayable_price;
                 $order->ack_date = date('Y-m-d H:i:s');
                 $order->save();
         } else if($data['user']['role'] == 'APC') {
