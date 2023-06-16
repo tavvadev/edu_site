@@ -42,7 +42,7 @@
             if(session('user.info.role_id')==2){
           ?>
             <th>S.No</th>
-            <th>Indent</th>
+            <th>Component</th>
             <th>Supplier Name</th>
             <th>Contact Number</th>
             <th>Status</th>

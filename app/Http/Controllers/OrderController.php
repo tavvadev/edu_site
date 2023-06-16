@@ -48,8 +48,8 @@ class OrderController extends Controller
     {
         $data = request()->session()->all();
         // echo $data['user'];exit;
-        // echo '<pre>';print_r($data['user']);exit;
-        // print_r($data['user']['role']);
+        // echo '<pre>';print_r($data['user']);
+        // print_r($data['user']['role']);exit;
         $user_id = $data['user']['info']->id;
         //echo '<pre>';print_r($data['user']['info']->id);exit;
         $user = $data['user']['info'];
@@ -79,30 +79,40 @@ class OrderController extends Controller
                     $schools[] = $res->school_id;
                 }
             }
-
-        $query = Orders::leftjoin('schools as s',"orders.school_id","=",'s.id')
-        ->leftjoin('categories as c',"c.id","=",'orders.order_category')
-        ->leftjoin('villages as vi',"vi.id","=",'s.village_id')
-        ->leftjoin('mandals as m',"m.id","=",'vi.mandal_id')
-        ->leftjoin('districts as d',"d.id","=",'s.district_id')
-        ->leftjoin('users as u',"orders.supplier_id","=",'u.id')
-        ->select('c.cat_name','orders.id as oid','orders.invoice_num as order_num','orders.total_qty','orders.invoice_status','orders.school_id','vi.village_name','d.dist_name','m.mandal_name','s.latitude','s.longitude','s.code','s.school_name' ,'s.school_name','s.UDISE_code','s.hm_name',"s.hm_contact_num","orders.apc_approved_status","orders.invoice_status","u.name as supplierName","u.contact_number as supplierNumber");
-        $i =0;
-        if($role->roleName == 'Supplier') {
-            $query->where('apc_approved_status', 1);
-        }
-        $orders = $query->paginate(10);
-        foreach($orders as $order) {
-            $orders[$i] = $order;
-            $results = InvoiceProducts::leftjoin('products as p',"order_products.invoice_id","=",'p.id')->where('invoice_id', $order->oid)
-            ->select("p.name as product_name","p.units","order_products.*")->get();
-            $orders[$i]['products'] = $results;
-            $i++;
-        }
-         //echo '<pre>';print_r($orders);exit;
-
-        return view('orders.index',compact('orders','user'))
+        
+            $query = Orders::leftjoin('schools as s',"orders.school_id","=",'s.id')
+            ->leftjoin('categories as c',"c.id","=",'orders.order_category')
+            ->leftjoin('villages as vi',"vi.id","=",'s.village_id')
+            ->leftjoin('mandals as m',"m.id","=",'vi.mandal_id')
+            ->leftjoin('districts as d',"d.id","=",'s.district_id')
+            ->leftjoin('users as u',"orders.supplier_id","=",'u.id')
+            ->select('c.cat_name','orders.id as oid','orders.invoice_num as order_num','orders.total_qty','orders.invoice_status','orders.school_id','vi.village_name','d.dist_name','m.mandal_name','s.latitude','s.longitude','s.code','s.school_name' ,'s.school_name','s.UDISE_code','s.hm_name',"s.hm_contact_num","orders.apc_approved_status","orders.invoice_status","u.name as supplierName","u.contact_number as supplierNumber");
+            $i =0;
+            if($role->roleName == 'Supplier') {
+                $query->where('apc_approved_status', 1);
+            }
+            if($role->roleName == 'FAO') {
+                $query->where('invoice_status', 2);
+                $query->whereIn('school_id', $schools);
+            }
+            $orders = $query->paginate(10);
+            foreach($orders as $order) {
+                $orders[$i] = $order;
+                $results = InvoiceProducts::leftjoin('products as p',"order_products.invoice_id","=",'p.id')->where('invoice_id', $order->oid)
+                ->select("p.name as product_name","p.units","order_products.*")->get();
+                $orders[$i]['products'] = $results;
+                $i++;
+            }     
+        // echo count($orders);
+        //  echo '<pre>';print_r($orders);exit;
+        if($role->roleName == 'FAO') {
+            return view('orders.faoindex',compact('orders','user'))
                 ->with('i', (request()->input('page', 1) - 1) * 5);
+        } else {
+            return view('orders.index',compact('orders','user'))
+                ->with('i', (request()->input('page', 1) - 1) * 5);
+        }
+        
     }
 
     public function category(Request $request): View
@@ -197,19 +207,26 @@ class OrderController extends Controller
             $order->invoice_file_path = $path;
             $order->invoice_status = 1;
             $order->save();
+            
         } else if($data['user']['role'] == 'HM') {
+            $totalnetpayable_price = 0;
             foreach($request->ack_qty as $product_id=>$del_qty) {
+                $product = Product::find($product_id);
+                $totalnetpayable_price+= $product['price']*$del_qty * 0.78;
                 DB::table('order_products')
                 ->where('invoice_id', $request->order_id)
                 ->where('product_id', $product_id)
                 ->update([
-                'ack_qty' => $del_qty
+                'ack_qty' => $del_qty,
+                'price' => $product['price']*$del_qty,
+                'netpayable_price' => $product['price']*$del_qty * 0.78
                 ]);
                 }
     
                 // echo '<pre>';print_r($request->all());exit;
                 $order = Invoices::find($request->order_id);
                 $order->invoice_status = 2;
+                $order->total_price = $totalnetpayable_price;
                 $order->ack_date = date('Y-m-d H:i:s');
                 $order->save();
         } else if($data['user']['role'] == 'APC') {
@@ -330,7 +347,12 @@ class OrderController extends Controller
                 $orderDetails['products'] = $results;
 
             // echo '<pre>';print_r($orderDetails);exit;
-            return view('orders.view',compact('orderDetails','user'));
+            if($data['user']['role'] == 'FAO') {
+                return view('orders.faoview',compact('orderDetails','user'));
+            } else {
+                return view('orders.view',compact('orderDetails','user'));
+            }
+            
 
         }
 
