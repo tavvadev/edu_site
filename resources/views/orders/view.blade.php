@@ -97,7 +97,7 @@
         <button type="submit" class="btn btn-primary mt-3 px-4 py-3">Update</button>
 </div>
     @elseif(($user['role'] == 'Supplier' || $user['role'] == 'HM' || $user['role'] == 'APC') && $orderDetails->invoice_status>0)
-    <p>Invoice No: {{$orderDetails->invoice_no}}</p>
+    <p>Invoice No: {{$orderDetails->invoice_no}} {{storage_path('app/uploads/F0LyR5VxbukL6maP4YFxNjNLmbxjxKNt8NrWoF6T.pdf')}}    </p>
     <p>Invoice File: <a href="{{asset('storage/'.$orderDetails->invoice_file_path)}}" target="_blank">{{$orderDetails->invoice_no}}</a></p>
     <p>Invoice Date: {{$orderDetails->invoice_date}}</p>
     @endif
