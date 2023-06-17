@@ -68,7 +68,7 @@ class OrderController extends Controller
                     $schools[] = $school->id;
                 }
             } else if($role->roleName == 'Supplier') {
-                $schoolResults = Schools::get();
+                $schoolResults = Schools::where('district_id', $user->district_id)->get();
                 foreach($schoolResults as $school) {
                     $schools[] = $school->id;
                 }
@@ -79,7 +79,7 @@ class OrderController extends Controller
                     $schools[] = $res->school_id;
                 }
             }
-        
+            // echo '<pre>';print_r($schools);exit;
             $query = Orders::leftjoin('schools as s',"orders.school_id","=",'s.id')
             ->leftjoin('categories as c',"c.id","=",'orders.order_category')
             ->leftjoin('villages as vi',"vi.id","=",'s.village_id')
@@ -90,11 +90,20 @@ class OrderController extends Controller
             $i =0;
             if($role->roleName == 'Supplier') {
                 $query->where('apc_approved_status', 1);
+                $query->whereIn('school_id', $schools);
             }
             if($role->roleName == 'FAO') {
                 $query->where('invoice_status', 2);
                 $query->whereIn('school_id', $schools);
             }
+            if($role->roleName == 'HM') {
+                $query->whereIn('school_id', $schools);
+            }
+            if($role->roleName == 'APC') {
+                $query->whereIn('school_id', $schools);
+            }
+            // echo '<pre>';print_r($schools);
+            //  echo $query->toSql();exit;
             $orders = $query->paginate(10);
             foreach($orders as $order) {
                 $orders[$i] = $order;
