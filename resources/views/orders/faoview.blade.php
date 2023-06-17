@@ -20,6 +20,7 @@
     <p><b>Bill No: </b>{{$orderDetails->invoice_num}}</p>
     <p><b>Bill Date: </b>{{$orderDetails->ack_date}}</p>
     <p><b>Inovice Number: </b>{{$orderDetails->invoice_no}}</p>
+    <p>Download: <a href="{{asset($orderDetails->invoice_file_path)}}" target="_blank">Inovice</a></p>
     <p><b>Total Amount:</b>  {{$orderDetails->total_price}}</p>
     <table class="table table-bordered ">
         <thead class="table-dark">
