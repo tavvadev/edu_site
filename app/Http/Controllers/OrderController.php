@@ -195,7 +195,7 @@ class OrderController extends Controller
 
             if ($request->hasFile('invoice')) {
             $file = $request->file('invoice');
-            // echo "<pre>";print_r($request->file());
+            echo "<pre>";print_r($request->file());
             $path = $file->store('uploads', 'public');
 
             echo '<pre>';print_r($file);
