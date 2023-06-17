@@ -195,7 +195,10 @@ class OrderController extends Controller
 
             if ($request->hasFile('invoice')) {
             $file = $request->file('invoice');
-            $path = $file->store('uploads');
+            // echo "<pre>";print_r($request->file());
+            $path = $file->store('uploads', 'public');
+
+            // echo '<pre>';print_r($file);
             }
             // echo '<pre>';print_r($request->all());exit;
             foreach($request->delivered_qty as $product_id=>$del_qty) {

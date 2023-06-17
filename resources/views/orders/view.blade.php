@@ -97,12 +97,9 @@
         <button type="submit" class="btn btn-primary mt-3 px-4 py-3">Update</button>
 </div>
     @elseif(($user['role'] == 'Supplier' || $user['role'] == 'HM' || $user['role'] == 'APC') && $orderDetails->invoice_status>0)
-    <p>Invoice No: {{$orderDetails->invoice_no}} {{storage_path('app/uploads/F0LyR5VxbukL6maP4YFxNjNLmbxjxKNt8NrWoF6T.pdf')}}    </p>
-    <p>Invoice File: <a href="{{asset('storage/'.$orderDetails->invoice_file_path)}}" target="_blank">{{$orderDetails->invoice_no}}</a></p>
+    <p>Invoice No: {{$orderDetails->invoice_no}}</p>
+    <p>Invoice File: <a href="{{asset($orderDetails->invoice_file_path)}}" target="_blank">Download Inovice</a></p>
     <p>Invoice Date: {{$orderDetails->invoice_date}}</p>
-    <p><a href="{{ url('storage/app/uploads/pet.txt') }}" target="_blank">{{ "FILE" }}</a></p>
-    <a href="{{ $orderDetails->invoice_file_path }}">Download File</a>
-
     @endif
     @if($user['role'] == 'HM' && $orderDetails->invoice_status==1)
     <div class="col-xs-12 col-sm-12 col-md-12 text-center">
