@@ -42,8 +42,8 @@ Route::any('order/create', [OrderController::class, 'createOrder']);
 Route::post('order/updateorder', [OrderController::class, 'updateorder']);
 Route::any('order/view/{id}', [OrderController::class, 'view'])->name('orders.view');
 Route::any('schoolprofile', [UserController::class, 'schoolprofile'])->name('users.schoolprofile');
-
-
+Route::get('/change-password', [UserController::class, 'changepassword'])->name('users.changepassword');
+Route::post('/updateChangePassword', [UserController::class, 'updateChangePassword'])->name('users.updateChangePassword');
 
 
 Route::group(['middleware' => ['auth']], function() {
@@ -51,6 +51,7 @@ Route::group(['middleware' => ['auth']], function() {
     Route::resource('users', UserController::class);
     Route::resource('products', ProductController::class);
     Route::resource('orders', OrderController::class);
+
 });
 
 // Auth::routes();
