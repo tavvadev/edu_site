@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\Schools;
+use App\Models\Supplier;
 use Spatie\Permission\Models\Role;
 use DB;
 use Hash;
@@ -188,6 +189,16 @@ class UserController extends Controller
        
         return redirect()->back()->with("success","Password changed successfully !");
     
+    }
+
+    public function suppilerprofile(): View
+    {
+        
+
+        echo "<pre>";print_r(session('user.info.id'));exit;
+
+       
+        return view('users.supplierprofile');
     }
 
     

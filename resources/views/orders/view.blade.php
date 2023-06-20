@@ -63,21 +63,31 @@
             @if($user['role'] == 'HM' && ($orderDetails->invoice_status==1 || $orderDetails->invoice_status==2))
             <th>Ack Qty</th>
             @endif
+            <th>Deilvered Qty Price</th>
         </tr>
         </thead>
         <tbody>
             @foreach ($orderDetails->products as $product)
+            <?php
+           // echo "<pre>";print_r($product);exit;
+            ?>
+
 	    <tr>
             <td>{{$product->product_name}}</td>
             <td>{{$product->quantity}} {{$product->units}}</td>
-            <td>{{$product->productPrice * $product->quantity}}</td>
+            <td>{{$product->productPrice}}</td>
             @if($user['role'] == 'Supplier' && $orderDetails->invoice_status==0)
-            <td><input type="number" name="delivered_qty[{{$product->pid}}]" max="{{$product->quantity}}" min="0" /></td>
+            <td><input type="number" onChange="ProductPriceChange({{$product->pid}}, {{$product->productPrice}});" id="delivered_qty_{{$product->pid}}"  name="delivered_qty[{{$product->pid}}]" max="{{$product->quantity}}" min="0" /></td>
             @else
             <td>{{$product->bill_qty}}</td>
             @endif
             @if($user['role'] == 'HM' && $orderDetails->invoice_status==1)
             <td><input type="number" value="{{$product->bill_qty}}" name="ack_qty[{{$product->pid}}]" max="{{$product->quantity}}" min="0" /></td>
+            @endif
+            @if($user['role'] == 'Supplier' && $orderDetails->invoice_status==0)
+            <td><input type="number" value="" id="ack_qty_price_{{$product->pid}}"  min="0" readonly /></td>
+            @else
+            <td>{{$product->price}}</td>
             @endif
             @if($user['role'] == 'HM' && $orderDetails->invoice_status==2)
             <td>{{$product->ack_qty}}</td>
@@ -126,7 +136,16 @@
     </div>
     </div>
 </form>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 
-    
+
+
+
 </div>
+<script >
+  function ProductPriceChange(id, price){
+    var qty = $("#delivered_qty_"+id).val();
+    $("#ack_qty_price_"+id).val(qty * price);
+  }
+  </script>
 @endsection

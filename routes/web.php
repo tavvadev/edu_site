@@ -44,6 +44,7 @@ Route::any('order/view/{id}', [OrderController::class, 'view'])->name('orders.vi
 Route::any('schoolprofile', [UserController::class, 'schoolprofile'])->name('users.schoolprofile');
 Route::get('/change-password', [UserController::class, 'changepassword'])->name('users.changepassword');
 Route::post('/updateChangePassword', [UserController::class, 'updateChangePassword'])->name('users.updateChangePassword');
+Route::get('suppilerprofile', [UserController::class, 'suppilerprofile'])->name('users.suppilerprofile');
 
 
 Route::group(['middleware' => ['auth']], function() {
