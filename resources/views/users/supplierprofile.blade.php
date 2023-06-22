@@ -5,8 +5,14 @@
 <div class="main-bg">
 <div class="container pt-5 pb-4">
 
+@if ($message = Session::get('success'))
+<div class="alert alert-success">
+  {{ $message }}
+</div>
+@endif
+
 <p class="fw-normal fs-5 text-capitalize pb-0 mb-0 text-muted text-center">
-        <small>My School Profile</small></p>
+        <small>Supplier Profile</small></p>
 
     @if ($errors->any())
         <div class="alert alert-danger">
@@ -18,90 +24,60 @@
             </ul>
         </div>
     @endif
+
+   
     <div class="row justify-content-center">
    <div class="col-md-6">
-    <form action="/order/create" class="card cat-crd pt-4 px-4 pb-3 p-md-5 pb-md-4" method="POST">
+    <form action="/updatesuppilerprofile" class="card cat-crd pt-4 px-4 pb-3 p-md-5 pb-md-4" method="POST">
     @csrf
          <div class="row">
             <?php $i=0; ?>
-            <input type="hidden" name="school_id" value="{{$schoolDetails['id']}}" />
+            <input type="hidden" name="supplier_details_id" value="<?php if(isset($supplier_details->supplier_details_id) && $supplier_details->supplier_details_id!=""){ echo $supplier_details->supplier_details_id;} ?>" />
             <div class="col-md-12">
             <div class="form-group border-bottom pb-3 pt-3 d-flex align-items-center justify-content-between mb-2">
-                    <label class="fw-bold col-md-6">School ID </label>
+                    <label class="fw-bold col-md-6">Firm Name </label>
                     <div class="col-md-6 d-flex align-items-center">
-                        {{$schoolDetails['school_name']}}
+                       <input type="text" id="firm_name" name="firm_name" value="<?php if(isset($supplier_details->firm_name) && $supplier_details->firm_name!=""){ echo $supplier_details->firm_name;} ?>" >
                     </div>
                 </div>
                 <div class="form-group border-bottom pb-3 pt-3 d-flex align-items-center justify-content-between mb-2">
-                    <label class="fw-bold col-md-6">School Name </label>
+                    <label class="fw-bold col-md-6">Bank Account Number</label>
                     <div class="col-md-6 d-flex align-items-center">
-                        {{$schoolDetails['school_name']}}
+                        <input type="number" id="bank_account_number" name="bank_account_number" value="<?php if(isset($supplier_details->bank_account_number) && $supplier_details->bank_account_number!=""){ echo $supplier_details->bank_account_number;} ?>" >
                     </div>
                 </div>
                 <div class="form-group border-bottom pb-3 pt-3 d-flex align-items-center justify-content-between mb-2">
-                    <label class="fw-bold col-md-6">No Of Teachers </label>
+                    <label class="fw-bold col-md-6">Bank Account Name</label>
                     <div class="col-md-6 d-flex align-items-center">
-                        {{$schoolDetails['school_name']}}
+                        <input type="text" id="bank_account_name" name="bank_account_name" value="<?php if(isset($supplier_details->bank_account_name) && $supplier_details->bank_account_name!=""){ echo $supplier_details->bank_account_name;} ?>" >
+                    </div>
+                </div>
+               
+                <div class="form-group border-bottom pb-3 pt-3 d-flex align-items-center justify-content-between mb-2">
+                    <label class="fw-bold col-md-6">Bank IFSC </label>
+                    <div class="col-md-6 d-flex align-items-center">
+                        <input type="text" id="bank_ifsc" name="bank_ifsc" value="<?php if(isset($supplier_details->bank_ifsc) && $supplier_details->bank_ifsc!=""){ echo $supplier_details->bank_ifsc;} ?>" >
                     </div>
                 </div>
                 <div class="form-group border-bottom pb-3 pt-3 d-flex align-items-center justify-content-between mb-2">
-                    <label class="fw-bold col-md-6">No Of Students </label>
+                    <label class="fw-bold col-md-6">Firm Pan Number</label>
                     <div class="col-md-6 d-flex align-items-center">
-                        {{$schoolDetails['school_name']}}
+                    <input type="text" id="firm_pan_number" name="firm_pan_number" value="<?php if(isset($supplier_details->firm_pan_number) && $supplier_details->firm_pan_number!=""){ echo $supplier_details->firm_pan_number;} ?>" >
                     </div>
                 </div>
                 <div class="form-group border-bottom pb-3 pt-3 d-flex align-items-center justify-content-between mb-2">
-                    <label class="fw-bold col-md-6">No Of  Class rooms </label>
+                    <label class="fw-bold col-md-6">GST Number </label>
                     <div class="col-md-6 d-flex align-items-center">
-                        {{$schoolDetails['school_name']}}
+                        <input type="text" id="gst_number" name="gst_number" value="<?php if(isset($supplier_details->gst_number) && $supplier_details->gst_number!=""){ echo $supplier_details->gst_number;} ?>" >
                     </div>
                 </div>
                 <div class="form-group border-bottom pb-3 pt-3 d-flex align-items-center justify-content-between mb-2">
-                    <label class="fw-bold col-md-6">School Address </label>
+                    <label class="fw-bold col-md-6">AADHAAR Number</label>
                     <div class="col-md-6 d-flex align-items-center">
-                        {{$schoolDetails['school_name']}}
+                        <input type="text" id="aadhaar_number" name="aadhaar_number" value="<?php if(isset($supplier_details->aadhaar_number) && $supplier_details->aadhaar_number!=""){ echo $supplier_details->aadhaar_number;} ?>" >
                     </div>
                 </div>
-                <div class="form-group border-bottom pb-3 pt-3 d-flex align-items-center justify-content-between mb-2">
-                    <label class="fw-bold col-md-6">PIN Code </label>
-                    <div class="col-md-6 d-flex align-items-center">
-                        {{$schoolDetails['school_name']}}
-                    </div>
-                </div>
-                <div class="form-group border-bottom pb-3 pt-3 d-flex align-items-center justify-content-between mb-2">
-                    <label class="fw-bold col-md-6">School Location </label>
-                    <div class="col-md-6 d-flex align-items-center">
-                        {{$schoolDetails['school_name']}}
-                    </div>
-                </div>
-                <div class="form-group border-bottom pb-3 pt-3 d-flex align-items-center justify-content-between mb-2">
-                    <label class="fw-bold col-md-6">Head Master Name </label>
-                    <div class="col-md-6 d-flex align-items-center">
-                        {{$schoolDetails['school_name']}}
-                    </div>
-                </div>
-                <div class="form-group border-bottom pb-3 pt-3 d-flex align-items-center justify-content-between mb-2">
-                    <label class="fw-bold col-md-6">Head Master Contact Number</label>
-                    <div class="col-md-6 d-flex align-items-center">
-                        {{$schoolDetails['login_id']}}
-                    </div>
-                </div>
-                <div class="form-group border-bottom pb-3 pt-3 d-flex align-items-center justify-content-between mb-2">
-                    <label class="fw-bold col-md-6">Alternate Person Name </label>
-                    <div class="col-md-6 d-flex align-items-center">
-                        <input type="text" value="{{$schoolDetails['eng_name']}}" id="contact_nuber" name="contact_nuber" class="form-control" placeholder="Eng Name">
-                    </div>
-                </div>
-            <div class="col-md-12">
-                <div class="form-group border-bottom pb-3 pt-3 d-flex align-items-center justify-content-between mb-2">
-                    <label class="fw-bold col-md-6">Alternative Person Contact Number </label>
-                    <div class="col-md-6 d-flex align-items-center">
-                        <input type="text" value="{{$schoolDetails['eng_contact']}}" id="contact_nuber" name="contact_nuber" class="form-control" placeholder="Eng contact number">
-                    </div>
-
-                </div>
-            </div>
-           
+                    
 		    <div class="col-xs-12 col-sm-12 col-md-12 text-center">
 		            <button type="submit" class="btn btn-primary mt-3 px-4 py-3">Submit</button>
 		    </div>
@@ -109,7 +85,6 @@
     </form>
     </div>
     </div>
-<!-- <p class="text-center text-primary"><small>Tutorial by edutechsolutions</small></p> -->
 </div>
 </div>
 @endsection

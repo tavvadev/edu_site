@@ -192,14 +192,69 @@ class UserController extends Controller
     }
 
     public function suppilerprofile(): View
-    {
-        
-
-        echo "<pre>";print_r(session('user.info.id'));exit;
-
-       
-        return view('users.supplierprofile');
+    {  
+        $supplier_details = DB::table('supplier_details')->where('supplier_id', session('user.info.id'))->first();
+        return view('users.supplierprofile',compact('supplier_details'));
     }
+
+    public function updatesuppilerprofile(Request $request)
+    {  
+        
+        $validatedData = $request->validate([
+            'firm_name' => 'required',
+            'bank_account_number' => 'required',
+            'bank_account_name' => 'required',
+            'bank_ifsc' => 'required',
+            'firm_pan_number' => 'required',
+            'gst_number' => 'required',
+            'aadhaar_number' => 'required',
+        ]);
+
+        $loginUserId = session('user.info.id');
+        
+        $Supplier_details_data = Supplier::where('supplier_id',$loginUserId)->first();
+
+        if($Supplier_details_data!=""){
+
+        $Supplier_details = array(
+            'supplier_id' => $loginUserId,
+            'firm_name' => $request->firm_name,
+            'bank_account_number' => "$request->bank_account_number",
+            'bank_account_name' => "$request->bank_account_name",
+            'bank_ifsc' => "$request->bank_ifsc",
+            'firm_pan_number' => "$request->firm_pan_number",
+            'gst_number' => "$request->gst_number",
+            'aadhaar_number' => "$request->aadhaar_number",
+        );
+
+        DB::table('supplier_details')
+        ->where('supplier_id', $loginUserId)
+        ->update($Supplier_details);
+        return redirect()->back()->with("success","Supplier details updated successfully !");
+
+
+    }else{
+
+        $Supplier_details = array(
+            'supplier_id' => $loginUserId,
+            'firm_name' => $request->firm_name,
+            'bank_account_number' => "$request->bank_account_number",
+            'bank_account_name' => "$request->bank_account_name",
+            'bank_ifsc' => "$request->bank_ifsc",
+            'firm_pan_number' => "$request->firm_pan_number",
+            'gst_number' => "$request->gst_number",
+            'aadhaar_number' => "$request->aadhaar_number",
+        );
+        Supplier::create($Supplier_details);
+        return redirect()->back()->with("success","Supplier details created successfully !");
+
+    }
+            
+       
+    
+    }
+
+
 
     
 }

@@ -45,6 +45,8 @@ Route::any('schoolprofile', [UserController::class, 'schoolprofile'])->name('use
 Route::get('/change-password', [UserController::class, 'changepassword'])->name('users.changepassword');
 Route::post('/updateChangePassword', [UserController::class, 'updateChangePassword'])->name('users.updateChangePassword');
 Route::get('suppilerprofile', [UserController::class, 'suppilerprofile'])->name('users.suppilerprofile');
+Route::post('updatesuppilerprofile', [UserController::class, 'updatesuppilerprofile'])->name('users.updatesuppilerprofile');
+
 
 
 Route::group(['middleware' => ['auth']], function() {
