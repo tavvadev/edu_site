@@ -11,6 +11,7 @@
 </div>
 @endif
 
+
 <p class="fw-normal fs-5 text-capitalize pb-0 mb-0 text-muted text-center">
         <small>Supplier Profile</small></p>
 

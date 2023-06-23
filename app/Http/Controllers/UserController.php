@@ -158,6 +158,8 @@ class UserController extends Controller
 
     public function changepassword(Request $request)
     {
+        echo "<pre>";print_r('changes');exit;
+
         return view('users.change-password');
     }
 
