@@ -59,7 +59,15 @@
                           <a  class="{{ request()->is('orders') ? 'nav-link active' : 'nav-link' }}" href="{{ route('orders.index') }}">Orders</a>
                         </li>
 
-                       
+                        <?php
+                        if(session('user.info.role_id')==6){
+                        ?>
+                        <li class="nav-item">
+                          <a class="{{ request()->is('suppilerprofile') ? 'nav-link active' : 'nav-link' }}" href="{{ route('suppilerprofile') }}">Supplier Profile</a>
+                        </li>
+                      <?php
+                      }
+                      ?>
 
                         <?php
                         if(session('user.info.role_id')==2){
