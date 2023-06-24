@@ -55,7 +55,7 @@
                     </div>
                 </div>
 
-                <div class="form-group border-bottom pb-3 pt-3 d-flex align-items-center justify-content-between mb-2">
+                <div class="form-group  pb-3 pt-3 d-flex align-items-center justify-content-between mb-2">
                     <label class="fw-bold col-md-12">Secret Questions</label>
                 </div>
 
@@ -64,7 +64,7 @@
                        // echo "<pre>";print_r($question->name);exit;
                 ?>
 
-                <div class="form-group border-bottom pb-3 pt-3 d-flex align-items-center justify-content-between mb-2">
+                <div class="form-group  pb-3 pt-3 d-flex align-items-center justify-content-between mb-2">
                     <label class="fw-bold col-md-6">Question </label>
                     <div class="col-md-6 d-flex align-items-center">
                         {{$question->name}}?
@@ -74,12 +74,14 @@
 
                     <label class="fw-bold col-md-2">Answer </label>
                     <div class="col-md-4 d-flex align-items-center">
-                    <input type="text" class="form-control" id="answer_{{$question->id}}" name="answer[]" value="<?php if(isset($user->answer) && $user->answer!=""){ echo $user->answer;} ?>" >
-                    </div>
+                    <input type="text" class="form-control" id="answer_{{$question->id}}" name="answer[]" value="<?php if(isset($question->answer) && $question->answer!=""){ echo $question->answer;} ?>" >
+                    <input type="hidden" class="form-control" id="question{{$question->id}}" name="question[]" value="{{$question->id}}" >
+   
+                </div>
 
                     <label class="fw-bold col-md-2">Confirm Answer </label>
                     <div class="col-md-4 d-flex align-items-center">
-                    <input type="text" class="form-control" id="confirm_ans_{{$question->id}}" name="confirm_ans[]" value="<?php if(isset($user->answer) && $user->answer!=""){ echo $user->answer;} ?>" >
+                    <input type="text" class="form-control" id="confirm_ans_{{$question->id}}" name="confirm_ans[]" value="<?php if(isset($question->answer) && $question->answer!=""){ echo $question->answer;} ?>" >
                     </div>
                 </div>
 

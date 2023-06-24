@@ -318,7 +318,11 @@ class UserController extends Controller
     {  
         $userId = session('user.info.id');
         $user = User::find($userId);
-        $questions = DB::select('SELECT * FROM questions');
+        $questions = DB::select('SELECT * FROM questions q LEFT JOIN `user_answers` a ON  q.id =a.question_id WHERE a.user_id = '.$user['id']);
+        if(count($questions) == 0){
+            $questions = DB::select('SELECT * FROM questions');
+        }
+        
 
         return view('users.profile',compact('user', 'questions'));
     }
@@ -347,22 +351,33 @@ class UserController extends Controller
             DB::table('users')
             ->where('id', $user['id'])
             ->update($profile_data);
+
+            $user_answers = DB::select('SELECT * FROM user_answers where user_id = '.$user['id']);
+
+            if(count($user_answers) !=0){
+                foreach($request->answer as $key =>$val){
+                    $answers_data = array(
+                        'answer' => $request->answer[$key],
+                    );
+                    DB::table('user_answers')
+                    ->where('user_id', $user['id'])
+                    ->where('question_id', $request->question[$key])
+                    ->update($answers_data);
+                }
+            }else{
+                foreach($request->answer as $key =>$val){
+                    $answers_data = array(
+                        'question_id' => $request->question[$key],
+                        'answer' => $request->answer[$key],
+                        'user_id' => $user['id'],
+                    );
+                    DB::table('user_answers')->insert($answers_data);
+                }
+            }
+
+
             return redirect()->back()->with("success","Profile updated successfully");
-
-
-        }else{
-            /*
-            $profile_data = array(
-                'name' => $request->name,
-                'email' => "$request->email",
-                'contact_number' => "$request->contact_number",
-            );
-            User::create($profile_data);
-            return redirect()->back()->with("success","Profile created successfully !");
-            */
-
         }
-
     }
 
 
