@@ -87,7 +87,7 @@
                     
                 </div>
 
-                <div class="form-group border-bottom pb-3 pt-3 d-flex align-items-center justify-content-between mb-2">
+                <div class="form-group  pb-3 pt-3 d-flex align-items-center justify-content-between mb-2">
                     <label class="fw-bold col-md-6">latitude *</label>
                     <div class="col-md-6 d-flex align-items-center">
                     <input type="text" id="latitude" name="latitude" class="form-control" value="<?php if(isset($schoolDetails['latitude']) && $schoolDetails['latitude']!=""){ echo $schoolDetails['latitude'];} ?>" >
