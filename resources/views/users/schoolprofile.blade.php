@@ -124,7 +124,7 @@
                 <div class="form-group border-bottom pb-3 pt-3 d-flex align-items-center justify-content-between mb-2">
                     <label class="fw-bold col-md-6">Alternative Person Contact Number </label>
                     <div class="col-md-6 d-flex align-items-center">
-                        <input type="text" id="contact_nuber" name="contact_nuber" class="form-control" placeholder="Eng contact number" value="<?php if(isset($schoolDetails['eng_contact']) && $schoolDetails['eng_contact']!=""){ echo $schoolDetails['eng_contact'];} ?>" >
+                        <input type="text" id="eng_contact" name="eng_contact" class="form-control" placeholder="Eng contact number" value="<?php if(isset($schoolDetails['eng_contact']) && $schoolDetails['eng_contact']!=""){ echo $schoolDetails['eng_contact'];} ?>" >
                     </div>
 
                 </div>

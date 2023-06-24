@@ -160,56 +160,59 @@ class UserController extends Controller
     {  
         
         $validatedData = $request->validate([
-            'firm_name' => 'required',
-            'bank_account_number' => 'required',
-            'bank_account_name' => 'required',
-            'bank_ifsc' => 'required',
-            'firm_pan_number' => 'required',
-            'gst_number' => 'required',
-            'aadhaar_number' => 'required',
+            'school_category' => 'required',
+            'latitude' => 'required',
+            'longitude' => 'required',
+            'hm_name' => 'required',
+            'hm_contact_num' => 'required',
         ]);
 
         $loginUserId = session('user.info.id');
         
-        $Supplier_details_data = Supplier::where('supplier_id',$loginUserId)->first();
+        $data = request()->session()->all();
+        // echo '<pre>';print_r($data['user']);
+        $user = $data['user'];
+        // echo $user['schools'][0];exit;
+        $schoolDetails = Schools::leftjoin('school_users_relations as su','su.school_id','schools.id')
+        ->where('schools.id',$user['schools'][0])
+        ->leftjoin('users as u','su.user_id','u.id')
+        ->leftjoin('villages as v','v.id','schools.village_id')
+        ->leftjoin('districts as d','d.id','schools.district_id')
+        ->leftjoin('mandals as m','m.id','v.mandal_id')
+        ->select("schools.*","su.*","u.login_id","u.name as username","u.id as userId","v.village_name","m.mandal_name","d.dist_name")->first();
+        // echo '<pre>'; print_r($schoolDetails);exit;
 
-        if($Supplier_details_data!=""){
+        if($schoolDetails!=""){
 
-        $Supplier_details = array(
-            'supplier_id' => $loginUserId,
-            'firm_name' => $request->firm_name,
-            'bank_account_number' => "$request->bank_account_number",
-            'bank_account_name' => "$request->bank_account_name",
-            'bank_ifsc' => "$request->bank_ifsc",
-            'firm_pan_number' => "$request->firm_pan_number",
-            'gst_number' => "$request->gst_number",
-            'aadhaar_number' => "$request->aadhaar_number",
-        );
+            $schoolDetails_data = array(
+                'school_category' => $request->school_category,
+                'latitude' => "$request->latitude",
+                'longitude' => "$request->longitude",
+                'hm_name' => "$request->hm_name",
+                'hm_contact_num' => "$request->hm_contact_num",
+                'eng_name' => "$request->eng_name",
+                'eng_contact' => "$request->eng_contact",
+            );
 
-        DB::table('supplier_details')
-        ->where('supplier_id', $loginUserId)
-        ->update($Supplier_details);
-        return redirect()->back()->with("success","Supplier details updated successfully !");
+            DB::table('schools')
+            ->where('id', $user['schools'][0])
+            ->update($schoolDetails_data);
+            return redirect()->back()->with("success","School details updated successfully !");
 
 
-    }else{
-
-        $Supplier_details = array(
-            'supplier_id' => $loginUserId,
-            'firm_name' => $request->firm_name,
-            'bank_account_number' => "$request->bank_account_number",
-            'bank_account_name' => "$request->bank_account_name",
-            'bank_ifsc' => "$request->bank_ifsc",
-            'firm_pan_number' => "$request->firm_pan_number",
-            'gst_number' => "$request->gst_number",
-            'aadhaar_number' => "$request->aadhaar_number",
-        );
-        Supplier::create($Supplier_details);
-        return redirect()->back()->with("success","Supplier details created successfully !");
-
-    }
-            
-       
+        }else{
+            $schoolDetails_data = array(
+                'school_category' => $request->school_category,
+                'latitude' => "$request->latitude",
+                'longitude' => "$request->longitude",
+                'hm_name' => "$request->hm_name",
+                'hm_contact_num' => "$request->hm_contact_num",
+                'eng_name' => "$request->eng_name",
+                'eng_contact' => "$request->eng_contact",
+            );
+            Schools::create($schoolDetails_data);
+            return redirect()->back()->with("success","Schools details created successfully !");
+        }
     
     }
 
