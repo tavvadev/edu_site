@@ -247,7 +247,7 @@ class UserController extends Controller
 
             
        
-        return redirect()->back()->with("success","Password changed successfully !");
+        return redirect()->back()->with("success","Password changed successfully");
     
     }
 
@@ -290,7 +290,7 @@ class UserController extends Controller
         DB::table('supplier_details')
         ->where('supplier_id', $loginUserId)
         ->update($Supplier_details);
-        return redirect()->back()->with("success","Supplier details updated successfully !");
+        return redirect()->back()->with("success","Supplier details updated successfully");
 
 
     }else{
@@ -306,13 +306,67 @@ class UserController extends Controller
             'aadhaar_number' => "$request->aadhaar_number",
         );
         Supplier::create($Supplier_details);
-        return redirect()->back()->with("success","Supplier details created successfully !");
+        return redirect()->back()->with("success","Supplier details created successfully");
 
     }
             
        
     
     }
+
+    public function profile(): View
+    {  
+        $userId = session('user.info.id');
+        $user = User::find($userId);
+        $questions = DB::select('SELECT * FROM questions');
+
+        return view('users.profile',compact('user', 'questions'));
+    }
+
+    public function updateprofile(Request $request)
+    {  
+        
+        $validatedData = $request->validate([
+            'name' => 'required',
+            'email' => 'required',
+            'contact_number' => 'required',
+        ]);
+
+        $userId = session('user.info.id');
+        $user = User::find($userId);
+
+       
+        if($user['id']!=""){
+
+            $profile_data = array(
+                'name' => $request->name,
+                'email' => "$request->email",
+                'contact_number' => "$request->contact_number",
+            );
+
+            DB::table('users')
+            ->where('id', $user['id'])
+            ->update($profile_data);
+            return redirect()->back()->with("success","Profile updated successfully");
+
+
+        }else{
+            /*
+            $profile_data = array(
+                'name' => $request->name,
+                'email' => "$request->email",
+                'contact_number' => "$request->contact_number",
+            );
+            User::create($profile_data);
+            return redirect()->back()->with("success","Profile created successfully !");
+            */
+
+        }
+
+    }
+
+
+
 
 
 

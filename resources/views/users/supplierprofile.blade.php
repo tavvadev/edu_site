@@ -38,44 +38,44 @@
             <div class="form-group border-bottom pb-3 pt-3 d-flex align-items-center justify-content-between mb-2">
                     <label class="fw-bold col-md-6">Firm Name </label>
                     <div class="col-md-6 d-flex align-items-center">
-                       <input type="text" id="firm_name" name="firm_name" value="<?php if(isset($supplier_details->firm_name) && $supplier_details->firm_name!=""){ echo $supplier_details->firm_name;} ?>" >
+                       <input type="text" class="form-control" id="firm_name" name="firm_name" value="<?php if(isset($supplier_details->firm_name) && $supplier_details->firm_name!=""){ echo $supplier_details->firm_name;} ?>" >
                     </div>
                 </div>
                 <div class="form-group border-bottom pb-3 pt-3 d-flex align-items-center justify-content-between mb-2">
                     <label class="fw-bold col-md-6">Bank Account Number</label>
                     <div class="col-md-6 d-flex align-items-center">
-                        <input type="number" id="bank_account_number" name="bank_account_number" value="<?php if(isset($supplier_details->bank_account_number) && $supplier_details->bank_account_number!=""){ echo $supplier_details->bank_account_number;} ?>" >
+                        <input type="number" class="form-control" id="bank_account_number" name="bank_account_number" value="<?php if(isset($supplier_details->bank_account_number) && $supplier_details->bank_account_number!=""){ echo $supplier_details->bank_account_number;} ?>" >
                     </div>
                 </div>
                 <div class="form-group border-bottom pb-3 pt-3 d-flex align-items-center justify-content-between mb-2">
                     <label class="fw-bold col-md-6">Bank Account Name</label>
                     <div class="col-md-6 d-flex align-items-center">
-                        <input type="text" id="bank_account_name" name="bank_account_name" value="<?php if(isset($supplier_details->bank_account_name) && $supplier_details->bank_account_name!=""){ echo $supplier_details->bank_account_name;} ?>" >
+                        <input type="text" class="form-control" id="bank_account_name" name="bank_account_name" value="<?php if(isset($supplier_details->bank_account_name) && $supplier_details->bank_account_name!=""){ echo $supplier_details->bank_account_name;} ?>" >
                     </div>
                 </div>
                
                 <div class="form-group border-bottom pb-3 pt-3 d-flex align-items-center justify-content-between mb-2">
                     <label class="fw-bold col-md-6">Bank IFSC </label>
                     <div class="col-md-6 d-flex align-items-center">
-                        <input type="text" id="bank_ifsc" name="bank_ifsc" value="<?php if(isset($supplier_details->bank_ifsc) && $supplier_details->bank_ifsc!=""){ echo $supplier_details->bank_ifsc;} ?>" >
+                        <input type="text" class="form-control" id="bank_ifsc" name="bank_ifsc" value="<?php if(isset($supplier_details->bank_ifsc) && $supplier_details->bank_ifsc!=""){ echo $supplier_details->bank_ifsc;} ?>" >
                     </div>
                 </div>
                 <div class="form-group border-bottom pb-3 pt-3 d-flex align-items-center justify-content-between mb-2">
                     <label class="fw-bold col-md-6">Firm Pan Number</label>
                     <div class="col-md-6 d-flex align-items-center">
-                    <input type="text" id="firm_pan_number" name="firm_pan_number" value="<?php if(isset($supplier_details->firm_pan_number) && $supplier_details->firm_pan_number!=""){ echo $supplier_details->firm_pan_number;} ?>" >
+                    <input type="text" class="form-control" id="firm_pan_number" name="firm_pan_number" value="<?php if(isset($supplier_details->firm_pan_number) && $supplier_details->firm_pan_number!=""){ echo $supplier_details->firm_pan_number;} ?>" >
                     </div>
                 </div>
                 <div class="form-group border-bottom pb-3 pt-3 d-flex align-items-center justify-content-between mb-2">
                     <label class="fw-bold col-md-6">GST Number </label>
                     <div class="col-md-6 d-flex align-items-center">
-                        <input type="text" id="gst_number" name="gst_number" value="<?php if(isset($supplier_details->gst_number) && $supplier_details->gst_number!=""){ echo $supplier_details->gst_number;} ?>" >
+                        <input type="text" class="form-control" id="gst_number" name="gst_number" value="<?php if(isset($supplier_details->gst_number) && $supplier_details->gst_number!=""){ echo $supplier_details->gst_number;} ?>" >
                     </div>
                 </div>
                 <div class="form-group border-bottom pb-3 pt-3 d-flex align-items-center justify-content-between mb-2">
                     <label class="fw-bold col-md-6">AADHAAR Number</label>
                     <div class="col-md-6 d-flex align-items-center">
-                        <input type="text" id="aadhaar_number" name="aadhaar_number" value="<?php if(isset($supplier_details->aadhaar_number) && $supplier_details->aadhaar_number!=""){ echo $supplier_details->aadhaar_number;} ?>" >
+                        <input type="text" class="form-control" id="aadhaar_number" name="aadhaar_number" value="<?php if(isset($supplier_details->aadhaar_number) && $supplier_details->aadhaar_number!=""){ echo $supplier_details->aadhaar_number;} ?>" >
                     </div>
                 </div>
                     

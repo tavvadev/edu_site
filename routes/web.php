@@ -43,8 +43,11 @@ Route::post('order/updateorder', [OrderController::class, 'updateorder']);
 Route::any('order/view/{id}', [OrderController::class, 'view'])->name('orders.view');
 Route::any('schoolprofile', [UserController::class, 'schoolprofile'])->name('users.schoolprofile');
 
-Route::post('updateSchoolprofile', [UserController::class, 'updateSchoolprofile'])->name('users.updateSchoolprofile');
+Route::get('profile', [UserController::class, 'profile'])->name('users.profile');
+Route::post('updateprofile', [UserController::class, 'updateprofile'])->name('users.updateprofile');
 
+
+Route::post('updateSchoolprofile', [UserController::class, 'updateSchoolprofile'])->name('users.updateSchoolprofile');
 Route::get('change-password', [UserController::class, 'changepassword'])->name('users.changepassword');
 Route::post('updateChangePassword', [UserController::class, 'updateChangePassword'])->name('users.updateChangePassword');
 
