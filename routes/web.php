@@ -43,6 +43,8 @@ Route::post('order/updateorder', [OrderController::class, 'updateorder']);
 Route::any('order/view/{id}', [OrderController::class, 'view'])->name('orders.view');
 Route::any('schoolprofile', [UserController::class, 'schoolprofile'])->name('users.schoolprofile');
 
+Route::post('/generatebill', [OrderController::class, 'generatebill'])->name('orders.generatebill');
+
 Route::get('profile', [UserController::class, 'profile'])->name('users.profile');
 Route::post('updateprofile', [UserController::class, 'updateprofile'])->name('users.updateprofile');
 

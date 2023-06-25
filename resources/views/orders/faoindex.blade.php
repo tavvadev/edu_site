@@ -44,7 +44,9 @@
             <th>School Name</th>
             <th>HM Name</th>
             <th>Contact Number</th>
+            <th>Bill Status</th>
             <th>Order Name</th>
+            
         </tr>
         </thead>
         <tbody>
@@ -63,6 +65,7 @@
             <td>{{ $order->school_name }}</td>
             <td>{{ $order->hm_name }}</td>
             <td>{{ $order->hm_contact_num }}</td>
+            <td>{{ $order->bill_generated==1?"Generated":"Not Yet Generated" }}</td>
             <td ><a class=" btn btn-link" role="button" href="/order/view/{{ $order->oid }}">{{ $order->order_num }}</a></td>
 	    </tr>
       @php
