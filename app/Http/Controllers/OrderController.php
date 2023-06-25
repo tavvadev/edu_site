@@ -417,23 +417,19 @@ class OrderController extends Controller
                     $schools[] = $res->school_id;
                 }
             }
-            $query = Payments::leftjoin('orders as o',"o.school_id","=",'payments.order_id')
-            ->leftjoin('schools as s',"orders.school_id","=",'s.id')
-            ->select('payments.*','orders.id as oid','orders.bill_generated','orders.bill_generated_date','orders.invoice_num as order_num','orders.total_qty','orders.invoice_status','orders.school_id',"orders.apc_approved_status","orders.invoice_status");
+            $query = Payments::leftjoin('orders as o',"o.id","=",'payments.order_id')
+            ->leftjoin('schools as s',"o.school_id","=",'s.id')
+            ->leftjoin('users as u',"u.id","=",'payments.supplier_id')
+            ->select('u.name as supplierName','u.contact_number as supplierNumber','s.school_name','payments.*','o.id as oid','o.bill_generated','o.bill_generated_date','o.invoice_num as order_num','o.total_qty','o.invoice_status','o.school_id',"o.apc_approved_status","o.invoice_status");
             $i =0;
             if($role->roleName == 'APC') {
-                $query->whereIn('s.school_id', $schools);
+                $query->whereIn('s.id', $schools);
                 $query->where('o.bill_generated',1);
             }
 
             $paymentsList = $query->paginate(10);
-            foreach($paymentsList as $order) {
-                $paymentsList[$i] = $order;
-                $results = InvoiceProducts::leftjoin('products as p',"order_products.invoice_id","=",'p.id')->where('invoice_id', $order->oid)
-                ->select("p.name as product_name","p.units","order_products.*")->get();
-                $paymentsList[$i]['products'] = $results;
-                $i++;
-            }     
+            // echo '<pre>';print_r($paymentsList);exit;
+                
             return view('orders.payments',compact('paymentsList'))
             ->with('i', (request()->input('page', 1) - 1) * 5);
         }
