@@ -78,6 +78,15 @@
                       <?php
                       }
                       ?>
+                      <?php
+                      if(session('user.info.role_id')==5){
+                      ?>
+                      <li class="nav-item">
+                        <a class="{{ request()->is('payments') ? 'nav-link active' : 'nav-link' }}" href="{{ route('orders.payments') }}">Payments</a>
+                      </li>
+                    <?php
+                    }
+                    ?>
 
                         <!-- <li class="nav-item">
                           <a class="nav-link" href="javascript:void(0)">MIS Report</a>

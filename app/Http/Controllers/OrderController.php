@@ -48,8 +48,6 @@ class OrderController extends Controller
     public function index(): View
     {
         $data = request()->session()->all();
-        // echo $data['user'];exit;
-        // echo '<pre>';print_r($data['user']);
         // print_r($data['user']['role']);exit;
         $user_id = $data['user']['info']->id;
         //echo '<pre>';print_r($data['user']['info']->id);exit;
@@ -395,6 +393,49 @@ class OrderController extends Controller
             $order->bill_generated_date = Date('Y-m-d H:i:s');
             $order->save();
             return redirect()->back()->with("success","Bill generated successfully");
+        }
+        public function payments(Request $request): View {
+            
+        $data = request()->session()->all();
+        $user_id = $data['user']['info']->id;
+        $user = $data['user']['info'];
+        $schools =[];
+        // Get the schools using the user id.....
+        $role = User::leftJoin('roles','roles.id','=','users.role_id')->where('users.id', $user_id)->first('roles.name as roleName');
+            if($role->roleName == 'APC') {
+                // Find the district of this logged in User/Role if they are distrcit level officer.
+                $district_details = User::leftJoin('districts','districts.id','=','users.district_id')->where('users.id', $user_id)->first('districts.*');
+                $district_details = User::leftJoin('districts','districts.id','=','users.district_id')->where('users.id', $user_id)->first('districts.*');
+                // get all the schools and villages in this district
+                $schoolResults = Schools::where('district_id', $user->district_id)->get();
+                foreach($schoolResults as $school) {
+                    $schools[] = $school->id;
+                }
+            } else {
+                $results = Schoolusers::where('user_id', $user_id)->get();
+                foreach ($results as $res) {
+                    $schools[] = $res->school_id;
+                }
+            }
+            $query = Payments::leftjoin('orders as o',"o.school_id","=",'payments.order_id')
+            ->leftjoin('schools as s',"orders.school_id","=",'s.id')
+            ->select('payments.*','orders.id as oid','orders.bill_generated','orders.bill_generated_date','orders.invoice_num as order_num','orders.total_qty','orders.invoice_status','orders.school_id',"orders.apc_approved_status","orders.invoice_status");
+            $i =0;
+            if($role->roleName == 'APC') {
+                $query->whereIn('s.school_id', $schools);
+                $query->where('o.bill_generated',1);
+            }
+
+            $paymentsList = $query->paginate(10);
+            foreach($paymentsList as $order) {
+                $paymentsList[$i] = $order;
+                $results = InvoiceProducts::leftjoin('products as p',"order_products.invoice_id","=",'p.id')->where('invoice_id', $order->oid)
+                ->select("p.name as product_name","p.units","order_products.*")->get();
+                $paymentsList[$i]['products'] = $results;
+                $i++;
+            }     
+            return view('orders.payments',compact('paymentsList'))
+            ->with('i', (request()->input('page', 1) - 1) * 5);
         }
 
 }
