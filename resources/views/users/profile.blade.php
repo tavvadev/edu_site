@@ -5,11 +5,6 @@
 <div class="main-bg">
 <div class="container pt-5 pb-4">
 
-@if ($message = Session::get('success'))
-<div class="alert alert-success">
-  {{ $message }}
-</div>
-@endif
 
 
 <p class="fw-normal fs-5 text-capitalize pb-0 mb-0 text-muted text-center">
@@ -25,6 +20,17 @@
             </ul>
         </div>
     @endif
+
+    @if (session('error'))
+                            <div class="alert alert-danger">
+                                {{ session('error') }}
+                            </div>
+                        @endif
+                        @if (session('success'))
+                            <div class="alert alert-success">
+                                {{ session('success') }}
+                            </div>
+                        @endif
 
    
     <div class="row justify-content-center">
@@ -55,42 +61,44 @@
                     </div>
                 </div>
 
-                <div class="form-group  pb-3 pt-3 d-flex align-items-center justify-content-between mb-2">
-                    <label class="fw-bold col-md-12">Secret Questions</label>
-                </div>
-
-                <?php
-                    foreach($questions as $question){
-                       // echo "<pre>";print_r($question->name);exit;
-                ?>
+               
 
                 <div class="form-group  pb-3 pt-3 d-flex align-items-center justify-content-between mb-2">
-                    <label class="fw-bold col-md-6">Question </label>
+                    <label class="fw-bold col-md-6">Secret Question </label>
                     <div class="col-md-6 d-flex align-items-center">
-                        {{$question->name}}?
+
+                    <select id="question"  name="question" class="form-control">
+                        <?php
+                        foreach($questions as $question){
+                            if($question->id == $user->question_id){
+                        ?>
+                            <option value="{{$question->id}}" selected >{{$question->name}}?</option>
+                            <?php
+                            }else{
+                            ?>
+                            <option value="{{$question->id}}" >{{$question->name}}?</option>
+                        <?php
+                             }
+                        }
+                        ?>
+                    </select>
+                        
                     </div>
                 </div>
                 <div class="form-group border-bottom pb-3 pt-3 d-flex align-items-center justify-content-between mb-2">
 
                     <label class="fw-bold col-md-2">Answer </label>
                     <div class="col-md-4 d-flex align-items-center">
-                    <input type="text" class="form-control" id="answer_{{$question->id}}" name="answer[]" value="<?php if(isset($question->answer) && $question->answer!=""){ echo $question->answer;} ?>" >
-                    <input type="hidden" class="form-control" id="question{{$question->id}}" name="question[]" value="{{$question->id}}" >
+                    <input type="text" class="form-control" id="answer" name="answer" value="<?php if(isset($user->answer) && $user->answer!=""){ echo $user->answer;} ?>" >
    
                 </div>
 
                     <label class="fw-bold col-md-2">Confirm Answer </label>
                     <div class="col-md-4 d-flex align-items-center">
-                    <input type="text" class="form-control" id="confirm_ans_{{$question->id}}" name="confirm_ans[]" value="<?php if(isset($question->answer) && $question->answer!=""){ echo $question->answer;} ?>" >
+                    <input type="text" class="form-control" id="confirm_ans" name="confirm_ans" value="<?php if(isset($user->answer) && $user->answer!=""){ echo $user->answer;} ?>" >
                     </div>
                 </div>
-
-
-                <?php
-                    }
-                ?>
-                
-                    
+ 
 		    <div class="col-xs-12 col-sm-12 col-md-12 text-center">
 		            <button type="submit" class="btn btn-primary mt-3 px-4 py-3">Submit</button>
 		    </div>

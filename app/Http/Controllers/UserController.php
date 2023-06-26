@@ -342,13 +342,13 @@ class UserController extends Controller
     public function profile(): View
     {  
         $userId = session('user.info.id');
-        $user = User::find($userId);
-        $questions = DB::select('SELECT * FROM questions q LEFT JOIN `user_answers` a ON  q.id =a.question_id WHERE a.user_id = '.$user['id']);
-        if(count($questions) == 0){
-            $questions = DB::select('SELECT * FROM questions');
-        }
-        
 
+        $user = User::leftjoin('user_answers as ans','ans.user_id','users.id')
+        ->where('users.id',$userId)
+        ->select("users.*","ans.*")->first();       
+
+        $questions = DB::select('SELECT * FROM questions');
+    
         return view('users.profile',compact('user', 'questions'));
     }
 
@@ -360,6 +360,10 @@ class UserController extends Controller
             'email' => 'required',
             'contact_number' => 'required',
         ]);
+
+        if($request->get('answer') != $request->get('confirm_ans')){
+            return redirect()->back()->with("error","Answer and Confirm Answer are same.");
+        }
 
         $userId = session('user.info.id');
         $user = User::find($userId);
@@ -380,24 +384,24 @@ class UserController extends Controller
             $user_answers = DB::select('SELECT * FROM user_answers where user_id = '.$user['id']);
 
             if(count($user_answers) !=0){
-                foreach($request->answer as $key =>$val){
+                if($request->get('answer') != ""){
                     $answers_data = array(
-                        'answer' => $request->answer[$key],
+                        'answer' => $request->get('answer'),
+                        'question_id' => $request->get('question'),
                     );
                     DB::table('user_answers')
                     ->where('user_id', $user['id'])
-                    ->where('question_id', $request->question[$key])
                     ->update($answers_data);
                 }
             }else{
-                foreach($request->answer as $key =>$val){
+                if($request->get('answer') != ""){
                     $answers_data = array(
-                        'question_id' => $request->question[$key],
-                        'answer' => $request->answer[$key],
+                        'answer' => $request->get('answer'),
+                        'question_id' => $request->get('question'),
                         'user_id' => $user['id'],
                     );
                     DB::table('user_answers')->insert($answers_data);
-                }
+                }    
             }
 
 
