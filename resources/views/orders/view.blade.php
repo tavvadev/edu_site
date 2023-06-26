@@ -108,7 +108,7 @@
 </div>
     @elseif(($user['role'] == 'Supplier' || $user['role'] == 'HM' || $user['role'] == 'APC') && $orderDetails->invoice_status>0)
     <p>Invoice No: {{$orderDetails->invoice_no}}</p>
-    <p>Invoice File: <a href="{{asset($orderDetails->invoice_file_path)}}" target="_blank">Download Inovice</a></p>
+    <p>Invoice File: <a style="color: blue;text-decoration:underline;" href="{{asset($orderDetails->invoice_file_path)}}" target="_blank">Download Inovice</a></p>
     <p>Invoice Date: {{$orderDetails->invoice_date}}</p>
     @endif
     @if($user['role'] == 'HM' && $orderDetails->invoice_status==1)
@@ -128,7 +128,7 @@
     @endif
     @endif
     <div>
-    @if($user['role'] == 'APC' && $orderDetails->invoice_status==0)
+    @if($user['role'] == 'APC' && ($orderDetails->apc_approved_status==0))
     <button type="submit" class="btn btn-primary mt-3 px-4 py-3">Approve</button>
     <button type="button" class="btn btn-primary mt-3 px-4 py-3">Reject</button>
     @endif

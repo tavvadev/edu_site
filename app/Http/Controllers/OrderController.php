@@ -318,7 +318,7 @@ class OrderController extends Controller
             foreach($request['products'] as $key =>$val){
                 if($val['quantity']!='') {
                     $product = Product::find($val['product_id']);
-                    $invoice_pr_data = ['invoice_id'=>$invoice_id,'product_id'=>$val['product_id'],'quantity'=>$val['quantity'],'price'=>$product['price']*$val['quantity']];
+                    $invoice_pr_data = ['invoice_id'=>$invoice_id,'product_id'=>$val['product_id'],'quantity'=>$val['quantity']];
                     $invoice_products = InvoiceProducts::create($invoice_pr_data);
                 }
 
