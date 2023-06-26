@@ -12,6 +12,7 @@ use App\Models\Invoices;
 use App\Models\InvoiceProducts;
 use App\Models\Orderproducts;
 use App\Models\DistrictSuppliers;
+use App\Models\Payments;
 use Illuminate\Support\Facades\DB;
 
 
@@ -47,8 +48,6 @@ class OrderController extends Controller
     public function index(): View
     {
         $data = request()->session()->all();
-        // echo $data['user'];exit;
-        // echo '<pre>';print_r($data['user']);
         // print_r($data['user']['role']);exit;
         $user_id = $data['user']['info']->id;
         //echo '<pre>';print_r($data['user']['info']->id);exit;
@@ -86,7 +85,7 @@ class OrderController extends Controller
             ->leftjoin('mandals as m',"m.id","=",'vi.mandal_id')
             ->leftjoin('districts as d',"d.id","=",'s.district_id')
             ->leftjoin('users as u',"orders.supplier_id","=",'u.id')
-            ->select('c.cat_name','orders.id as oid','orders.invoice_num as order_num','orders.total_qty','orders.invoice_status','orders.school_id','vi.village_name','d.dist_name','m.mandal_name','s.latitude','s.longitude','s.code','s.school_name' ,'s.school_name','s.UDISE_code','s.hm_name',"s.hm_contact_num","orders.apc_approved_status","orders.invoice_status","u.name as supplierName","u.contact_number as supplierNumber");
+            ->select('c.cat_name','orders.id as oid','orders.bill_generated','orders.bill_generated_date','orders.invoice_num as order_num','orders.total_qty','orders.invoice_status','orders.school_id','vi.village_name','d.dist_name','m.mandal_name','s.latitude','s.longitude','s.code','s.school_name' ,'s.school_name','s.UDISE_code','s.hm_name',"s.hm_contact_num","orders.apc_approved_status","orders.invoice_status","u.name as supplierName","u.contact_number as supplierNumber");
             $i =0;
             if($role->roleName == 'Supplier') {
                 $query->where('apc_approved_status', 1);
@@ -344,7 +343,7 @@ class OrderController extends Controller
                 $orderId = $request->id;
             }
             $data = request()->session()->all();
-            //echo '<pre>';print_r($data['user']['role']);exit;
+            // echo '<pre>';print_r($data['user']);exit;
             $user = $data['user'];
             $user_id = $data['user']['info']->id;
             $orderDetails = Invoices::leftjoin('schools as s',"orders.school_id","=",'s.id')
@@ -367,6 +366,72 @@ class OrderController extends Controller
             }
             
 
+        }
+        public function generatebill(Request $request): RedirectResponse {
+            if($request->order_id!=''){
+                $orderId = $request->order_id;
+            }
+            $orderDetails = Invoices::leftjoin('schools as s',"orders.school_id","=",'s.id')
+            ->leftjoin('users as u',"orders.supplier_id","=",'u.id')
+            ->where('orders.id', $orderId)->select("orders.*","orders.id as orderId","u.name as supplierName","u.contact_number as supplierNumber")
+            ->first();
+            $results = InvoiceProducts::leftjoin('products as p',"order_products.product_id","=",'p.id')->where('invoice_id', $orderDetails->orderId)
+                ->select("p.name as product_name","p.units","order_products.product_id as pid","p.price as productPrice","order_products.*")->get();
+                $orderDetails['products'] = $results;
+
+            $payments = new Payments();
+            $payments->order_id = $orderDetails->orderId;
+            $payments->supplier_id = $orderDetails->supplier_id;
+            $payments->bill_amount = $orderDetails->total_price*0.8;
+            $payments->tds_amount = ($orderDetails->total_price*0.8)*0.02;
+            $payments->total_amount = $orderDetails->total_price;
+            $payments->remaining_balance = $orderDetails->total_price*0.2;
+            $payments->save();
+
+            $order = Invoices::find($request->order_id);
+            $order->bill_generated = 1;
+            $order->bill_generated_date = Date('Y-m-d H:i:s');
+            $order->save();
+            return redirect()->back()->with("success","Bill generated successfully");
+        }
+        public function payments(Request $request): View {
+            
+        $data = request()->session()->all();
+        $user_id = $data['user']['info']->id;
+        $user = $data['user']['info'];
+        $schools =[];
+        // Get the schools using the user id.....
+        $role = User::leftJoin('roles','roles.id','=','users.role_id')->where('users.id', $user_id)->first('roles.name as roleName');
+            if($role->roleName == 'APC') {
+                // Find the district of this logged in User/Role if they are distrcit level officer.
+                $district_details = User::leftJoin('districts','districts.id','=','users.district_id')->where('users.id', $user_id)->first('districts.*');
+                $district_details = User::leftJoin('districts','districts.id','=','users.district_id')->where('users.id', $user_id)->first('districts.*');
+                // get all the schools and villages in this district
+                $schoolResults = Schools::where('district_id', $user->district_id)->get();
+                foreach($schoolResults as $school) {
+                    $schools[] = $school->id;
+                }
+            } else {
+                $results = Schoolusers::where('user_id', $user_id)->get();
+                foreach ($results as $res) {
+                    $schools[] = $res->school_id;
+                }
+            }
+            $query = Payments::leftjoin('orders as o',"o.id","=",'payments.order_id')
+            ->leftjoin('schools as s',"o.school_id","=",'s.id')
+            ->leftjoin('users as u',"u.id","=",'payments.supplier_id')
+            ->select('u.name as supplierName','u.contact_number as supplierNumber','s.school_name','payments.*','o.id as oid','o.bill_generated','o.bill_generated_date','o.invoice_num as order_num','o.total_qty','o.invoice_status','o.school_id',"o.apc_approved_status","o.invoice_status");
+            $i =0;
+            if($role->roleName == 'APC') {
+                $query->whereIn('s.id', $schools);
+                $query->where('o.bill_generated',1);
+            }
+
+            $paymentsList = $query->paginate(10);
+            // echo '<pre>';print_r($paymentsList);exit;
+                
+            return view('orders.payments',compact('paymentsList'))
+            ->with('i', (request()->input('page', 1) - 1) * 5);
         }
 
 }

@@ -38,15 +38,21 @@
     <table class="table table-bordered ">
         <thead class="table-dark">
         <tr>
-            <th>Component</th>
-            <th>Supplier Name</th>
-            <th>Contact Number</th>
-            <th>School Name</th>
-            <th>HM Name</th>
-            <th>Contact Number</th>
-            <th>Bill Status</th>
-            <th>Order Name</th>
+          <?php
+            if(session('user.info.role_id')==5){
+            ?>
+            <th>School</th>
+            <th>Supplier</th>
+            <th>Bill Amount</th>
+            <th>TDS amount</th>
             
+            <th>Bill Date</th>
+            <th>Status</th>
+            <th>Order No</th>
+            <th>Action</th>
+            <?php
+            } 
+            ?>
         </tr>
         </thead>
         <tbody>
@@ -54,19 +60,33 @@
         $i=1;
       @endphp
 
-	    @foreach ($orders as $order)
+	    @foreach ($paymentsList as $payment)
         <?php
        //echo "<pre>";print_r($order);exit;
         ?>
 	    <tr>
-            <td>{{ $order->cat_name }}</td>
-            <td>{{ $order->supplierName }}</td>
-            <td>{{ $order->supplierNumber }}</td>
-            <td>{{ $order->school_name }}</td>
-            <td>{{ $order->hm_name }}</td>
-            <td>{{ $order->hm_contact_num }}</td>
-            <td>{{ $order->bill_generated==1?"Generated":"Not Yet Generated" }}</td>
-            <td ><a class=" btn btn-link" role="button" href="/order/view/{{ $order->oid }}">{{ $order->order_num }}</a></td>
+          <?php
+            if(session('user.info.role_id')==5){
+          ?>
+            <td>{{ $payment->school_name }}</td>
+            <td>{{ $payment->supplierName }}</td>
+            <td>{{ $payment->bill_amount }}</td>
+            <td>{{ $payment->tds_amount }}</td>
+            
+            <td>{{ Date('Y-m-d',strtotime($payment->bill_generated_date)) }}</td>
+            <td>{{ $payment->paid_status==0?'Not Paid':"Paid" }}</td>
+            <td >{{ $payment->order_num }}</td>
+            <td>@if($payment->paid_status == 0)
+              <a class=" btn btn-link" role="button" href="javascript:alert('payment in progress')">Pay</a>
+              @else
+              <a class=" btn btn-link" role="button" href="javascript:alert('payment in progress')">>Paid</a>
+              @endif
+            </td>
+            <?php
+            } 
+            ?>
+
+
 	    </tr>
       @php
       $i++;
@@ -79,7 +99,7 @@
 
 
 
-{!! $orders->links('vendor.pagination.table') !!}
+{!! $paymentsList->links('vendor.pagination.table') !!}
 </div>
 </div>
     </div>

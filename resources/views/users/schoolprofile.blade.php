@@ -32,7 +32,7 @@
             <div class="form-group border-bottom pb-3 pt-3 d-flex align-items-center justify-content-between mb-2">
                     <label class="fw-bold col-md-6">School ID </label>
                     <div class="col-md-6 d-flex align-items-center">
-                        {{$schoolDetails['school_id']}}
+                        {{$schoolDetails['UDISE_code']}}
                     </div>
                 </div>
                 <div class="form-group border-bottom pb-3 pt-3 d-flex align-items-center justify-content-between mb-2">
@@ -43,28 +43,79 @@
                 </div>
 
                 <div class="form-group border-bottom pb-3 pt-3 d-flex align-items-center justify-content-between mb-2">
-                    <label class="fw-bold col-md-6">School Category</label>
+                    <label class="fw-bold col-md-6">School Category *</label>
                     <div class="col-md-6 d-flex align-items-center">
-                        <input type="text" id="school_category" name="school_category" class="form-control" placeholder="School Category" value="<?php if(isset($schoolDetails['school_category']) && $schoolDetails['school_category']!=""){ echo $schoolDetails['school_category'];} ?>" >
+                        <select id="school_category"  name="school_category" class="form-control">
+                           <?php
+                            if(isset($schoolDetails['school_category']) && $schoolDetails['school_category']==1){
+                           ?>
+                            <option value="1" selected>Primary</option>
+                            <?php
+                            }else{
+                            ?>
+                             <option value="1" >Primary</option>
+                            <?php
+                            }
+                            ?>
+
+                            <?php
+                            if(isset($schoolDetails['school_category']) && $schoolDetails['school_category']==2){
+                           ?>
+                            <option value="2" selected>Upper Primary</option>
+                            <?php
+                            }else{
+                            ?>
+                             <option value="2" >Upper Primary</option>
+                            <?php
+                            }
+                            ?>
+
+                           <?php
+                            if(isset($schoolDetails['school_category']) && $schoolDetails['school_category']==3){
+                           ?>
+                            <option value="3" selected>Secondary</option>
+                            <?php
+                            }else{
+                            ?>
+                             <option value="3" >Secondary</option>
+                            <?php
+                            }
+                            ?>
+                        </select>
                     </div>
                 </div>
 
                 <div class="form-group border-bottom pb-3 pt-3 d-flex align-items-center justify-content-between mb-2">
-                    <label class="fw-bold col-md-6">No of Teachers</label>
+                    <label class="fw-bold col-md-6">No of Teachers *</label>
                     <div class="col-md-6 d-flex align-items-center">
                         <input type="text" id="no_of_teachers" name="no_of_teachers" class="form-control" value="<?php if(isset($schoolDetails['no_of_teachers']) && $schoolDetails['no_of_teachers']!=""){ echo $schoolDetails['no_of_teachers'];} ?>" >
                     </div>
                 </div>
 
-
-                <div class="form-group border-bottom pb-3 pt-3 d-flex align-items-center justify-content-between mb-2">
-                    <label class="fw-bold col-md-6">No Of Students </label>
+                <div class="form-group pb-3 pt-3 d-flex align-items-center justify-content-between mb-2">
+                    <label class="fw-bold col-md-6">No Of Students *</label>
                     <div class="col-md-6 d-flex align-items-center">
                         <input type="text" id="total_strength" name="total_strength" class="form-control"  value="<?php if(isset($schoolDetails['total_strength']) && $schoolDetails['total_strength']!=""){ echo $schoolDetails['total_strength'];} ?>" >
                     </div>
                 </div>
+
+                <div class="form-group  pb-3 pt-3 d-flex align-items-center justify-content-between mb-2">
+                    <label class="fw-bold col-md-6">Girls *</label>
+                    <div class="col-md-6 d-flex align-items-center">
+                    <input type="text" id="no_of_girls" name="no_of_girls" class="form-control" value="<?php if(isset($schoolDetails['no_of_girls']) && $schoolDetails['no_of_girls']!=""){ echo $schoolDetails['no_of_girls'];} ?>" >
+                    </div>
+                </div>
+
                 <div class="form-group border-bottom pb-3 pt-3 d-flex align-items-center justify-content-between mb-2">
-                    <label class="fw-bold col-md-6">No Of  Class rooms </label>
+                    <label class="fw-bold col-md-6">Boys *</label>
+                    <div class="col-md-6 d-flex align-items-center">
+                    <input type="text" id="no_of_boys" name="no_of_boys" class="form-control"  value="<?php if(isset($schoolDetails['no_of_boys']) && $schoolDetails['no_of_boys']!=""){ echo $schoolDetails['no_of_boys'];} ?>" >
+                    </div>
+                </div>
+
+
+                <div class="form-group border-bottom pb-3 pt-3 d-flex align-items-center justify-content-between mb-2">
+                    <label class="fw-bold col-md-6">No Of  Class rooms *</label>
                     <div class="col-md-6 d-flex align-items-center">
                         <input type="text" id="no_of_class_rooms" name="no_of_class_rooms" class="form-control" placeholder="No Of  Class rooms" value="<?php if(isset($schoolDetails['no_of_class_rooms']) && $schoolDetails['no_of_class_rooms']!=""){ echo $schoolDetails['no_of_class_rooms'];} ?>" >
                     </div>

@@ -165,6 +165,12 @@ class UserController extends Controller
             'longitude' => 'required',
             'hm_name' => 'required',
             'hm_contact_num' => 'required',
+            'total_strength' => 'required',
+            'no_of_teachers' => 'required',
+            'no_of_class_rooms' => 'required',
+            'school_address' => 'required',
+            'no_of_girls' => 'required',
+            'no_of_boys' => 'required',
         ]);
 
         $loginUserId = session('user.info.id');
@@ -188,10 +194,17 @@ class UserController extends Controller
                 'school_category' => $request->school_category,
                 'latitude' => "$request->latitude",
                 'longitude' => "$request->longitude",
-                'hm_name' => "$request->hm_name",
-                'hm_contact_num' => "$request->hm_contact_num",
-                'eng_name' => "$request->eng_name",
-                'eng_contact' => "$request->eng_contact",
+                'hm_name' => $request->hm_name,
+                'hm_contact_num' => $request->hm_contact_num,
+                'eng_name' => $request->eng_name,
+                'eng_contact' => $request->eng_contact,
+                'no_of_teachers' => $request->no_of_teachers,
+                'no_of_class_rooms' => $request->no_of_class_rooms,
+                'school_address' => $request->school_address,
+                'pin_code' => $request->pin_code,
+                'total_strength' => $request->total_strength,
+                'no_of_girls' => $request->no_of_girls,
+                'no_of_boys' => $request->no_of_boys,
             );
 
             DB::table('schools')
@@ -209,6 +222,12 @@ class UserController extends Controller
                 'hm_contact_num' => "$request->hm_contact_num",
                 'eng_name' => "$request->eng_name",
                 'eng_contact' => "$request->eng_contact",
+                'no_of_teachers' => $request->no_of_teachers,
+                'no_of_class_rooms' => $request->no_of_class_rooms,
+                'school_address' => $request->school_address,
+                'pin_code' => $request->pin_code,
+                'no_of_girls' => $request->no_of_girls,
+                'no_of_boys' => $request->no_of_boys,
             );
             Schools::create($schoolDetails_data);
             return redirect()->back()->with("success","Schools details created successfully !");

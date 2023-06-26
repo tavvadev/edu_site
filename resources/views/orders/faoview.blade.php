@@ -9,9 +9,11 @@
     @endif
     </div>
    
-    <form action="/order/updateorder" class="card cat-crd pt-4 px-4 pb-3 p-md-5 pb-md-4" method="POST" enctype="multipart/form-data">
+    <form action="/generatebill" class="card cat-crd pt-4 px-4 pb-3 p-md-5 pb-md-4" method="POST" enctype="multipart/form-data">
         @csrf
         <input type="hidden" name="order_id" value="{{$orderDetails->orderId}}" />
+        <input type="hidden" name="total_price" value="{{$orderDetails->total_price}}" />
+        <input type="hidden" name="tds_price" value="{{$orderDetails->total_price}}" />
     <div class="tb-sec">
     
     
@@ -21,7 +23,8 @@
     <p><b>Bill Date: </b>{{$orderDetails->ack_date}}</p>
     <p><b>Inovice Number: </b>{{$orderDetails->invoice_no}}</p>
     <p>Download: <a href="{{asset($orderDetails->invoice_file_path)}}" target="_blank">Inovice</a></p>
-    <p><b>Total Amount:</b>  {{$orderDetails->total_price}}</p>
+    <p><b>NET Amount:</b>  {{$orderDetails->total_price}}</p>
+    {{-- <p><b>TDS Amount:</b>  {{$orderDetails->total_price}}</p> --}}
     <table class="table table-bordered ">
         <thead class="table-dark">
         <tr>
@@ -45,7 +48,11 @@
         </tbody>
     </table>
     <div>
-    <button type="submit" class="btn btn-primary mt-3 px-4 py-3">Pay</button>
+    @if($orderDetails->bill_generated == 0)
+      <button type="submit" class="btn btn-primary mt-3 px-4 py-3">Generate Bill</button>
+    @else
+      <button type="button" class="btn btn-primary mt-3 px-4 py-3">Bill generated</button>
+    @endif
     </div>
     </div>
     </div>
