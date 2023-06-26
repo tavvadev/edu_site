@@ -171,7 +171,13 @@ class UserController extends Controller
             'school_address' => 'required',
             'no_of_girls' => 'required',
             'no_of_boys' => 'required',
+            'pin_code' => 'required|digits:6'
         ]);
+
+        if($request->hm_contact_num == $request->eng_contact){
+            //Current password and new password are same
+            return redirect()->back()->with("error","HM Contact Number cannot be same as Alternative Person Contact Number");
+        }
 
         $loginUserId = session('user.info.id');
         
