@@ -29,6 +29,19 @@ class="px-1" width="48" height="48" alt="backarrow"/> Back
         </div>
     @endif
 
+    @if ($message = Session::get('success'))
+        <div class="alert alert-success">
+        {{ $message }}
+        </div>
+    @endif
+
+
+    @if (session('error'))
+        <div class="alert alert-danger">
+            {{ session('error') }}
+        </div>
+    @endif
+
     <div class="row justify-content-center">
    <div class="col-md-6">
     <form action="/order/create" class="card cat-crd pt-4 px-4 pb-3 p-md-5 pb-md-4" method="POST">

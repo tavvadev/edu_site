@@ -256,8 +256,14 @@ class OrderController extends Controller
         
     }
     public function createOrder(Request $request){
+
         $data = request()->session()->all();
 
+        $orders = DB::select('SELECT * FROM orders where requester_id = "'.$data['user']['info']->id.'" and order_category = "'.$request->category.'" and school_id ="'.$data['user']['schools'][0].'"');
+
+        if(count($orders) !=0){
+            return redirect()->back()->with("error","Already this order category placed.");
+        }else{
         // echo $data['user'];exit;
         // echo $request->school_id;
         // echo '<pre>';print_r($data['user']['schools'][0]);
@@ -299,43 +305,47 @@ class OrderController extends Controller
                 $total+=$val['quantity'];
             }
         }
-        // echo $request->category;exit;
-            $invoice_data = [
-                            'invoice_data'=>$request->invoice_data,
-                            'supplier_id'=>$request->supplier_id,
-                            'school_id'=>$data['user']['schools'][0],
-                            'requester_id'=>$data['user']['info']->id,
-                            // 'approved_by'=>$request->approved_by,
-                            'total_qty'=>$total,
-                            'total_price'=>$total_price,
-                            'order_category'=>$request->category,
-                            'invoice_status'=>0
-                             ];
-          //   echo '<pre>';print_r($request['products']); exit;
-            $invoice_data = Invoices::create($invoice_data);
-            $invoice_id =  $invoice_data->id;
-            $total = 0;
-            foreach($request['products'] as $key =>$val){
-                if($val['quantity']!='') {
-                    $product = Product::find($val['product_id']);
-                    $invoice_pr_data = ['invoice_id'=>$invoice_id,'product_id'=>$val['product_id'],'quantity'=>$val['quantity']];
-                    $invoice_products = InvoiceProducts::create($invoice_pr_data);
+
+                // echo $request->category;exit;
+                    $invoice_data = [
+                                    'invoice_data'=>$request->invoice_data,
+                                    'supplier_id'=>$request->supplier_id,
+                                    'school_id'=>$data['user']['schools'][0],
+                                    'requester_id'=>$data['user']['info']->id,
+                                    // 'approved_by'=>$request->approved_by,
+                                    'total_qty'=>$total,
+                                    'total_price'=>$total_price,
+                                    'order_category'=>$request->category,
+                                    'invoice_status'=>0
+                                    ];
+                //   echo '<pre>';print_r($request['products']); exit;
+                    $invoice_data = Invoices::create($invoice_data);
+                    $invoice_id =  $invoice_data->id;
+                    $total = 0;
+                    foreach($request['products'] as $key =>$val){
+                        if($val['quantity']!='') {
+                            $product = Product::find($val['product_id']);
+                            $invoice_pr_data = ['invoice_id'=>$invoice_id,'product_id'=>$val['product_id'],'quantity'=>$val['quantity']];
+                            $invoice_products = InvoiceProducts::create($invoice_pr_data);
+                        }
+
+                    }
+                    $school_details = Schools::where('id',$data['user']['schools'][0])->first();
+                    $supplier_details = DistrictSuppliers::where('dist_id', $school_details['district_id'])->first();
+                    $order = Invoices::find($invoice_id);
+                    $order->supplier_id = $supplier_details['supplier_id'];
+                    $order->invoice_num = $data['user']['info']->login_id.$invoice_id;
+                    $order->save();
+
+                    return redirect()->route('orders.index')
+                    ->with('success','Order created successfully.Order ID:'.$invoice_id);
+                }else{
+                    return response()->json(['status' => 401, 'error' => $validator->errors()]);
+
                 }
 
-            }
-            $school_details = Schools::where('id',$data['user']['schools'][0])->first();
-            $supplier_details = DistrictSuppliers::where('dist_id', $school_details['district_id'])->first();
-            $order = Invoices::find($invoice_id);
-            $order->supplier_id = $supplier_details['supplier_id'];
-            $order->invoice_num = $data['user']['info']->login_id.$invoice_id;
-            $order->save();
-
-            return redirect()->route('orders.index')
-            ->with('success','Order created successfully.Order ID:'.$invoice_id);
-        }else{
-            return response()->json(['status' => 401, 'error' => $validator->errors()]);
-
-            }
+            }    
+            
         }
         public function view(Request $request): View
         {
