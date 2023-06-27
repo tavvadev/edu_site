@@ -63,7 +63,7 @@
             @if($user['role'] == 'HM' && ($orderDetails->invoice_status==1 || $orderDetails->invoice_status==2))
             <th>Ack Qty</th>
             @endif
-            <th>Deilvered Qty Price</th>
+            <th>Price</th>
         </tr>
         </thead>
         <tbody>
