@@ -259,7 +259,7 @@ class OrderController extends Controller
 
         $data = request()->session()->all();
 
-        $orders = DB::select('SELECT * FROM orders where requester_id = "'.$data['user']['info']->id.'" and order_category = "'.$request->category.'" and school_id ="'.$data['user']['schools'][0].'"');
+        $orders = DB::select('SELECT * FROM orders where order_category = "'.$request->category.'" and school_id ="'.$data['user']['schools'][0].'"');
 
         if(count($orders) !=0){
             return redirect()->back()->with("error","Already this order category placed.");
