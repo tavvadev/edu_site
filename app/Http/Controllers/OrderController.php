@@ -444,4 +444,42 @@ class OrderController extends Controller
             ->with('i', (request()->input('page', 1) - 1) * 5);
         }
 
+
+        public function trackorder(Request $request): View
+        {
+            $data = request()->session()->all();
+            $user = $data['user'];
+            $user_id = $data['user']['info']->id;
+            $searchOrderId = "";
+
+            if(isset($request->order_id) && $request->order_id!=""){
+          
+                if($request->order_id!=''){
+                    $orderId = $request->order_id;
+                }
+                
+                $orderDetails = Invoices::leftjoin('schools as s',"orders.school_id","=",'s.id')
+                ->leftjoin('districts as d',"s.district_id","=",'d.id')
+                ->leftjoin('villages as v',"s.village_id","=",'v.id')
+                ->leftjoin('mandals as m',"v.mandal_id","=",'m.id')
+                ->leftjoin('categories as c',"c.id","=",'orders.order_category')
+                ->leftjoin('users as u',"orders.supplier_id","=",'u.id')
+                ->where('orders.invoice_num', $orderId)->select("d.dist_name","c.cat_name","v.village_name","m.mandal_name","orders.*","orders.id as orderId","s.*","u.name as supplierName","u.contact_number as supplierNumber")
+                ->first();
+                 //echo '<pre>';print_r($orderDetails);exit;
+                 if(isset($orderDetails)  && $orderDetails ==""){
+                    $orderDetails = '';
+                 }
+                 $searchOrderId = $request->order_id;
+
+            }else{
+                $orderDetails = '';
+                $searchOrderId = $request->order_id;
+            }
+          
+            return view('orders.trackorder',compact('orderDetails','user', 'searchOrderId'));
+            
+
+        }
+
 }

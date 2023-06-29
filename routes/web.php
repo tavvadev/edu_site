@@ -44,6 +44,8 @@ Route::any('order/view/{id}', [OrderController::class, 'view'])->name('orders.vi
 Route::any('schoolprofile', [UserController::class, 'schoolprofile'])->name('users.schoolprofile');
 Route::get('/payments', [OrderController::class, 'payments'])->name('orders.payments');
 
+Route::any('trackorder', [OrderController::class, 'trackorder'])->name('orders.trackorder');
+
 
 Route::post('/generatebill', [OrderController::class, 'generatebill'])->name('orders.generatebill');
 

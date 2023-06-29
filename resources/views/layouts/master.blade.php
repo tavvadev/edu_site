@@ -59,6 +59,10 @@
                           <a  class="{{ request()->is('orders') ? 'nav-link active' : 'nav-link' }}" href="{{ route('orders.index') }}">Orders</a>
                         </li>
 
+                        <li class="nav-item">
+                          <a  class="{{ request()->is('trackorder') ? 'nav-link active' : 'nav-link' }}" href="{{ route('orders.trackorder') }}">Track Order</a>
+                        </li>
+
                         <?php
                         if(session('user.info.role_id')==6){
                         ?>
