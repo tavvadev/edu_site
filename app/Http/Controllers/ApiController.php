@@ -321,8 +321,14 @@ class ApiController extends Controller
     public function districtlevelreport() {
         $params = (array) json_decode(file_get_contents('php://input'), TRUE);
 
-        $districts = DB::table('districts')->get();
+        if(isset($params['district_id']) && $params['district_id']!=""){
+            $districts = DB::table('districts')
+            ->where('id', $params['district_id'])->get();
+        }else{
+            $districts = DB::table('districts')->get();
+        }
 
+        
         $districtReport = array();
         $reports = array();
         foreach($districts as $district){
@@ -331,13 +337,33 @@ class ApiController extends Controller
             $reports['dist_name'] = $district_name;
             $reports['dist_id'] = $district_id;
 
-            $mandals = DB::select('SELECT count(*) as mandalcount FROM mandals where dist_id = '.$district_id);
+            if(isset($params['mandal_id']) && $params['mandal_id']!=""){
+                $mandals = DB::select('SELECT count(*) as mandalcount FROM mandals where id="'.$params['mandal_id'].'" AND dist_id = '.$district_id);
+            }else{
+                $mandals = DB::select('SELECT count(*) as mandalcount FROM mandals where dist_id = '.$district_id);
+            }
             $reports['mandals_count'] = $mandals[0]->mandalcount;
 
-            $villages = DB::select('SELECT count(*) as villagescount FROM villages where district_id = '.$district_id);
+            if(isset($params['mandal_id']) && $params['mandal_id']!="" && isset($params['village_id']) && $params['village_id']!=""){
+                $villages = DB::select('SELECT count(*) as villagescount FROM villages where id="'.$params['village_id'].'" AND mandal_id="'.$params['mandal_id'].'" AND district_id = '.$district_id);
+            }else if(isset($params['mandal_id']) && $params['mandal_id']=="" && isset($params['village_id']) && $params['village_id']!=""){
+                $villages = DB::select('SELECT count(*) as villagescount FROM villages where id="'.$params['village_id'].'" AND district_id = '.$district_id);
+            }else{
+                 $villages = DB::select('SELECT count(*) as villagescount FROM villages where district_id = '.$district_id);
+            }
+
             $reports['villages_count'] = $villages[0]->villagescount;
 
-            $schools = DB::select('SELECT COUNT(*) AS schoolscount, SUM(no_of_teachers) AS teachers, SUM(no_of_boys) AS boys, SUM(no_of_girls) AS girls, SUM(total_strength) AS total_students, SUM(no_of_class_rooms) AS total_classrooms FROM schools WHERE district_id="'.$district_id.'"  GROUP BY district_id');
+            if(isset($params['mandal_id']) && $params['mandal_id']!="" && isset($params['village_id']) && $params['village_id']!="" && isset($params['school_id']) && $params['school_id']!="" ){
+                $schools = DB::select('SELECT COUNT(*) AS schoolscount, SUM(no_of_teachers) AS teachers, SUM(no_of_boys) AS boys, SUM(no_of_girls) AS girls, SUM(total_strength) AS total_students, SUM(no_of_class_rooms) AS total_classrooms FROM schools WHERE village_id="'.$params['village_id'].'" AND district_id="'.$district_id.'"  GROUP BY district_id');
+            }else if(isset($params['mandal_id']) && $params['mandal_id']!="" && isset($params['village_id']) && $params['village_id']!=""){
+                $schools = DB::select('SELECT COUNT(*) AS schoolscount, SUM(no_of_teachers) AS teachers, SUM(no_of_boys) AS boys, SUM(no_of_girls) AS girls, SUM(total_strength) AS total_students, SUM(no_of_class_rooms) AS total_classrooms FROM schools WHERE village_id="'.$params['village_id'].'" AND district_id="'.$district_id.'"  GROUP BY district_id');
+            }else if(isset($params['mandal_id']) && $params['mandal_id']!="" ){
+                $schools = DB::select('SELECT COUNT(*) AS schoolscount, SUM(no_of_teachers) AS teachers, SUM(no_of_boys) AS boys, SUM(no_of_girls) AS girls, SUM(total_strength) AS total_students, SUM(no_of_class_rooms) AS total_classrooms FROM schools LEFT JOIN `villages` ON schools.village_id=villages.id WHERE villages.mandal_id="'.$params['mandal_id'].'" AND schools.district_id="'.$district_id.'"  GROUP BY schools.district_id');
+            }else{
+                $schools = DB::select('SELECT COUNT(*) AS schoolscount, SUM(no_of_teachers) AS teachers, SUM(no_of_boys) AS boys, SUM(no_of_girls) AS girls, SUM(total_strength) AS total_students, SUM(no_of_class_rooms) AS total_classrooms FROM schools WHERE district_id="'.$district_id.'"  GROUP BY district_id');
+            }
+
             if(isset($schools[0]->schoolscount) && $schools[0]->schoolscount !=""){
                 $reports['schools_count'] = $schools[0]->schoolscount;
                 $reports['teachers'] = $schools[0]->teachers;
@@ -360,28 +386,6 @@ class ApiController extends Controller
         
         echo "<pre>";print_r($districtReport);exit;
 
-
-        if(isset($params['district_id']) && $params['district_id']==""){
-            return response()->json(['status' => '200', 'message' => 'Please select district', 'schools' => []]);
-        } 
-        
-        if(isset($params['village_id']) && $params['village_id']==""){
-            return response()->json(['status' => '200', 'message' => 'Please select village', 'schools' => []]);
-        }
-
-        if(isset($params['district_id']) && $params['district_id']!="" && isset($params['village_id']) && $params['village_id']!=""){
-            $schools = DB::table('schools')
-            ->where('district_id', $params['district_id'])
-            ->where('village_id', $params['village_id'])
-            ->orderBy('school_name', 'ASC')->get();
-            if(count($schools) ==0){
-                return response()->json(['status' => '404', 'message' => 'Invalid district id',  'schools' => []]);
-            }else{
-                return response()->json(['status' => '200', 'message' => 'success',  'schools' => $schools]);
-            }
-         }else{
-                return response()->json(['status' => '404', 'message' => 'Please select district', 'schools' => []]);
-         }
     }
 
 
