@@ -30,6 +30,8 @@ Route::post('/mandals', [ApiController::class, 'mandals']);
 Route::post('/villages', [ApiController::class, 'villages']);
 Route::post('/schools', [ApiController::class, 'schools']);
 Route::post('/districtlevelreport', [ApiController::class, 'districtlevelreport']);
+Route::post('/mandallevelreport', [ApiController::class, 'mandallevelreport']);
+
 
 
 
