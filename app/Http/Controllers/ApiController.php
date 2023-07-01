@@ -318,6 +318,73 @@ class ApiController extends Controller
          }
     }
 
+    public function districtlevelreport() {
+        $params = (array) json_decode(file_get_contents('php://input'), TRUE);
+
+        $districts = DB::table('districts')->get();
+
+        $districtReport = array();
+        $reports = array();
+        foreach($districts as $district){
+            $district_name = $district->dist_name;
+            $district_id = $district->id;
+            $reports['dist_name'] = $district_name;
+            $reports['dist_id'] = $district_id;
+
+            $mandals = DB::select('SELECT count(*) as mandalcount FROM mandals where dist_id = '.$district_id);
+            $reports['mandals_count'] = $mandals[0]->mandalcount;
+
+            $villages = DB::select('SELECT count(*) as villagescount FROM villages where district_id = '.$district_id);
+            $reports['villages_count'] = $villages[0]->villagescount;
+
+            $schools = DB::select('SELECT COUNT(*) AS schoolscount, SUM(no_of_teachers) AS teachers, SUM(no_of_boys) AS boys, SUM(no_of_girls) AS girls, SUM(total_strength) AS total_students, SUM(no_of_class_rooms) AS total_classrooms FROM schools WHERE district_id="'.$district_id.'"  GROUP BY district_id');
+            if(isset($schools[0]->schoolscount) && $schools[0]->schoolscount !=""){
+                $reports['schools_count'] = $schools[0]->schoolscount;
+                $reports['teachers'] = $schools[0]->teachers;
+                $reports['boys'] = $schools[0]->boys;
+                $reports['girls'] = $schools[0]->girls;
+                $reports['total_students'] = $schools[0]->total_students;
+                $reports['total_classrooms'] = $schools[0]->total_classrooms;
+            }else{
+                $reports['schools_count'] = 0;
+                $reports['teachers'] = 0;
+                $reports['boys'] = 0;
+                $reports['girls'] = 0;
+                $reports['total_students'] = 0;
+                $reports['total_classrooms'] = 0;
+            }    
+
+            array_push($districtReport, $reports);
+
+        }
+        
+        echo "<pre>";print_r($districtReport);exit;
+
+
+        if(isset($params['district_id']) && $params['district_id']==""){
+            return response()->json(['status' => '200', 'message' => 'Please select district', 'schools' => []]);
+        } 
+        
+        if(isset($params['village_id']) && $params['village_id']==""){
+            return response()->json(['status' => '200', 'message' => 'Please select village', 'schools' => []]);
+        }
+
+        if(isset($params['district_id']) && $params['district_id']!="" && isset($params['village_id']) && $params['village_id']!=""){
+            $schools = DB::table('schools')
+            ->where('district_id', $params['district_id'])
+            ->where('village_id', $params['village_id'])
+            ->orderBy('school_name', 'ASC')->get();
+            if(count($schools) ==0){
+                return response()->json(['status' => '404', 'message' => 'Invalid district id',  'schools' => []]);
+            }else{
+                return response()->json(['status' => '200', 'message' => 'success',  'schools' => $schools]);
+            }
+         }else{
+                return response()->json(['status' => '404', 'message' => 'Please select district', 'schools' => []]);
+         }
+    }
+
+
 
 
 }
