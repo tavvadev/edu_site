@@ -25,4 +25,12 @@ Route::any('/orders', [ApiController::class, 'orders']);
 Route::any('/categories', [ApiController::class, 'categories']);
 Route::any('/getproducts/{id}', [ApiController::class, 'getproducts']);
 Route::any('/vieworder/{id}', [ApiController::class, 'viewOrder']);
+Route::any('/district', [ApiController::class, 'district']);
+Route::post('/mandals', [ApiController::class, 'mandals']);
+Route::post('/villages', [ApiController::class, 'villages']);
+Route::post('/schools', [ApiController::class, 'schools']);
+
+
+
+
 

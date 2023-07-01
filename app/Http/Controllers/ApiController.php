@@ -240,4 +240,84 @@ class ApiController extends Controller
             'orderDetails' => $orderDetails
         ]);
     }
+
+    public function district() {
+        $districts = DB::table('districts')->orderBy('dist_name', 'ASC')->get();
+        return response()->json([
+            'status' => '200',
+            'districts' => $districts
+        ]);
+    }
+
+    public function mandals() {
+        $params = (array) json_decode(file_get_contents('php://input'), TRUE);
+        if(isset($params['district']) && $params['district']!=""){
+            $mandals = DB::table('mandals')
+            ->where('dist_id', $params['district'])
+            ->orderBy('mandal_name', 'ASC')->get();
+            if(count($mandals) ==0){
+                return response()->json(['status' => '404', 'message' => 'Invalid district id',  'mandals' => []]);
+            }else{
+                return response()->json(['status' => '200', 'message' => 'success',  'mandals' => $mandals]);
+            }
+         }else{
+                return response()->json(['status' => '404', 'message' => 'Please select district', 'mandals' => []]);
+         }
+    }
+
+    public function villages() {
+        $params = (array) json_decode(file_get_contents('php://input'), TRUE);
+
+        if(isset($params['district_id']) && $params['district_id']==""){
+            return response()->json(['status' => '200', 'message' => 'Please select district', 'villages' => []]);
+        } 
+        
+        if(isset($params['mandal_id']) && $params['mandal_id']==""){
+            return response()->json(['status' => '200', 'message' => 'Please select mandal', 'villages' => []]);
+        }
+
+        if(isset($params['district_id']) && $params['district_id']!="" && isset($params['mandal_id']) && $params['mandal_id']!=""){
+            $villages = DB::table('villages')
+            ->where('district_id', $params['district_id'])
+            ->where('mandal_id', $params['mandal_id'])
+            ->orderBy('village_name', 'ASC')->get();
+            if(count($villages) ==0){
+                return response()->json(['status' => '404', 'message' => 'Invalid district id',  'villages' => []]);
+            }else{
+                return response()->json(['status' => '200', 'message' => 'success',  'villages' => $villages]);
+            }
+         }else{
+                return response()->json(['status' => '404', 'message' => 'Please select district', 'villages' => []]);
+         }
+    }
+
+
+    public function schools() {
+        $params = (array) json_decode(file_get_contents('php://input'), TRUE);
+
+        if(isset($params['district_id']) && $params['district_id']==""){
+            return response()->json(['status' => '200', 'message' => 'Please select district', 'schools' => []]);
+        } 
+        
+        if(isset($params['village_id']) && $params['village_id']==""){
+            return response()->json(['status' => '200', 'message' => 'Please select village', 'schools' => []]);
+        }
+
+        if(isset($params['district_id']) && $params['district_id']!="" && isset($params['village_id']) && $params['village_id']!=""){
+            $schools = DB::table('schools')
+            ->where('district_id', $params['district_id'])
+            ->where('village_id', $params['village_id'])
+            ->orderBy('school_name', 'ASC')->get();
+            if(count($schools) ==0){
+                return response()->json(['status' => '404', 'message' => 'Invalid district id',  'schools' => []]);
+            }else{
+                return response()->json(['status' => '200', 'message' => 'success',  'schools' => $schools]);
+            }
+         }else{
+                return response()->json(['status' => '404', 'message' => 'Please select district', 'schools' => []]);
+         }
+    }
+
+
+
 }
