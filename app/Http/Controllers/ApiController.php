@@ -410,6 +410,8 @@ class ApiController extends Controller
                 $schools = DB::select('SELECT * FROM schools LEFT JOIN `villages` ON schools.village_id=villages.id WHERE schools.id="'.$params['school_id'].'" AND schools.village_id="'.$params['village_id'].'" AND villages.mandal_id="'.$mandal_id.'" AND schools.district_id="'.$mandal->district_id.'" ');
             }else if(isset($params['village_id']) && $params['village_id']!=""){
                 $schools = DB::select('SELECT * FROM schools LEFT JOIN `villages` ON schools.village_id=villages.id WHERE schools.village_id="'.$params['village_id'].'" AND villages.mandal_id="'.$mandal_id.'" AND schools.district_id="'.$mandal->district_id.'" ');
+            }else if(isset($params['village_id']) && $params['village_id']!=""){
+                $schools = DB::select('SELECT * FROM schools LEFT JOIN `villages` ON schools.village_id=villages.id WHERE schools.village_id="'.$params['village_id'].'" AND villages.mandal_id="'.$mandal_id.'" AND schools.district_id="'.$mandal->district_id.'" ');
             }else{
                 $schools = DB::select('SELECT * FROM schools LEFT JOIN `villages` ON schools.village_id=villages.id WHERE villages.mandal_id="'.$mandal_id.'" AND schools.district_id="'.$mandal->district_id.'" ');
             }
