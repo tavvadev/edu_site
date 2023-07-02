@@ -130,6 +130,9 @@
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                                     
                                 <a class="dropdown-item" href="/change-password">Change Password </a>
+                                <a class="dropdown-item" href="/districtlevelreports">District Level Report</a>
+                                <a class="dropdown-item" href="/mandallevelreports">Mandal Level Report</a>
+
                                 <a class="dropdown-item" href="/profile">Profile</a>
 
                                     <a class="dropdown-item" href="{{ route('logout') }}"
