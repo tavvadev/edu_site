@@ -6,7 +6,8 @@
 <?php
         
         ?>
-    <link href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css" rel="stylesheet"><form class="row gx-3 gy-2 align-items-center">
+    <form class="row gx-3 gy-2 align-items-center">
+
   <div class="col-sm-3">
   <div class="input-group">
     <div class="input-group-text">Districts</div>
@@ -77,14 +78,20 @@
       <tr>
         <th>S.No</th>
         <th>District</th>
-        <th>No Of Mandals</th>
-        <th>No Of Villages</th>
-        <th>No Of Schools</th>
+        <th>Mandal</th>
+        <th>Village</th>
+        <th>School ID</th>
+        <th>School Name</th>
+        <th>School Category</th>
         <th>No Of Teachers</th>
         <th>No Of Boys</th>
         <th>No Of Girls</th>
         <th>Total Students</th>
         <th>No Of ClassRooms</th>
+        <th>HR Name</th>
+        <th>HR Number</th>
+        <th>Alternate Teacher</th>
+        <th>Alternate Number</th>
       </tr>
     </thead>
     <tbody id="districtreporttable">
@@ -190,6 +197,7 @@ function Reports(){
   if(district_id==""){
     district_id = "";
   }
+  district_id = 10;
   var mandal_id = $("#mandalOptionsList").val();
   if(mandal_id=="" || village_id==null){
     mandal_id = "";
@@ -205,7 +213,7 @@ function Reports(){
 
   $.ajax({
       type: "POST",
-      url: 'http://127.0.0.1:8000/api/districtlevelreport',
+      url: 'http://127.0.0.1:8000/api/mandallevelreport',
       contentType: "application/json",
       dataType: "json",
       data: JSON.stringify({

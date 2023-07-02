@@ -6,7 +6,7 @@
 <?php
         
         ?>
-    <link href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css" rel="stylesheet"><form class="row gx-3 gy-2 align-items-center">
+<form class="row gx-3 gy-2 align-items-center">
   <div class="col-sm-3">
   <div class="input-group">
     <div class="input-group-text">Districts</div>
