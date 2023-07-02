@@ -72,19 +72,24 @@
 <br>
 <br>
 
-<table class="table table-bordered" id="districtreporttable">
-    <tr>
-      <th>S.No</th>
-      <th>District</th>
-      <th>No Of Mandals</th>
-      <th>No Of Villages</th>
-      <th>No Of Schools</th>
-      <th>No Of Teachers</th>
-      <th>No Of Boys</th>
-      <th>No Of Girls</th>
-      <th>Total Students</th>
-      <th>No Of ClassRooms</th>
-    </tr>
+<table class="table table-bordered" >
+    <thead>
+      <tr>
+        <th>S.No</th>
+        <th>District</th>
+        <th>No Of Mandals</th>
+        <th>No Of Villages</th>
+        <th>No Of Schools</th>
+        <th>No Of Teachers</th>
+        <th>No Of Boys</th>
+        <th>No Of Girls</th>
+        <th>Total Students</th>
+        <th>No Of ClassRooms</th>
+      </tr>
+    </thead>
+    <tbody id="districtreporttable">
+
+    </tbody> 
 
 </table>
 
@@ -179,7 +184,7 @@ function schoolsList(){
 
 
 function Reports(){
-  $("#districtreporttable").append('');
+  $("#districtreporttable").empty();
   var reportsHtml =""; 
   var district_id = $("#district_id").val();
   if(district_id==""){
@@ -211,11 +216,12 @@ function Reports(){
       }),
       success: function(response) {
           var p=0;
-          var ml=0;
+          var ml=1;
           $.each(response.reports, function(key, value) {
             //console.log("key : "+key+" ; value : "+value);
 
            reportsHtml+='<tr><td>'+ml+'</td><td>'+response.reports[p].dist_name+'</td><td>'+response.reports[p].mandals_count+'</td><td>'+response.reports[p].villages_count+'</td><td>'+response.reports[p].schools_count+'</td><td>'+response.reports[p].teachers+'</td><td>'+response.reports[p].boys+'</td><td>'+response.reports[p].girls+'</td><td>'+response.reports[p].total_students+'</td><td>'+response.reports[p].total_classrooms+'</td></tr>';
+           ml++;
            p++;
           });
           $("#districtreporttable").append(reportsHtml);
