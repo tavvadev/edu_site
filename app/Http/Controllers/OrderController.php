@@ -447,9 +447,7 @@ class OrderController extends Controller
 
         public function trackorder(Request $request): View
         {
-            $data = request()->session()->all();
-            $user = $data['user'];
-            $user_id = $data['user']['info']->id;
+          
             $searchOrderId = "";
 
             if(isset($request->order_id) && $request->order_id!=""){
@@ -477,7 +475,7 @@ class OrderController extends Controller
                 $searchOrderId = $request->order_id;
             }
           
-            return view('orders.trackorder',compact('orderDetails','user', 'searchOrderId'));
+            return view('orders.trackorder',compact('orderDetails', 'searchOrderId'));
             
 
         }

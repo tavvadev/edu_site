@@ -8,6 +8,8 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\ReportsController;
+
 
 
 
@@ -45,6 +47,8 @@ Route::any('schoolprofile', [UserController::class, 'schoolprofile'])->name('use
 Route::get('/payments', [OrderController::class, 'payments'])->name('orders.payments');
 
 Route::any('trackorder', [OrderController::class, 'trackorder'])->name('orders.trackorder');
+Route::get('districtlevelreports', [ReportsController::class, 'districtlevelreports'])->name('reports.districtlevelre');
+
 
 
 Route::post('/generatebill', [OrderController::class, 'generatebill'])->name('orders.generatebill');

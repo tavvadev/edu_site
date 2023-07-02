@@ -444,7 +444,7 @@ class ApiController extends Controller
                 $reports['hm_contact_num'] = "";
                 $reports['eng_name'] = "";
                 $reports['eng_contact'] = "";
-            }  
+            }
             array_push($mandalReport, $reports);          
         }
 
