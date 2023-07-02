@@ -227,9 +227,7 @@ function Reports(){
           $.each(response.reports, function(key, value) {
             //console.log("key : "+key+" ; value : "+value);
 
-           reportsHtml+='<tr>
-           <td>'+ml+'</td>
-           <td>'+response.reports[p].dist_name+'</td><td>'+response.reports[p].mandal_name+'</td><td>'+response.reports[p].village_name+'</td><td>'+response.reports[p].school_udise_code+'</td><td>'+response.reports[p].school_name+'</td><td>'+response.reports[p].school_category+'</td><td>'+response.reports[p].no_of_teachers+'</td><td>'+response.reports[p].no_of_boys+'</td><td>'+response.reports[p].no_of_girls+'</td><td>'+response.reports[p].total_strength+'</td><td>'+response.reports[p].no_of_class_rooms+'</td><td>'+response.reports[p].hm_name+'</td><td>'+response.reports[p].hm_contact_num+'</td><td>'+response.reports[p].eng_name+'</td><td>'+response.reports[p].eng_contact+'</td></tr>';
+           reportsHtml+='<tr><td>'+ml+'</td><td>'+response.reports[p].dist_name+'</td><td>'+response.reports[p].mandal_name+'</td><td>'+response.reports[p].village_name+'</td><td>'+response.reports[p].school_udise_code+'</td><td>'+response.reports[p].school_name+'</td><td>'+response.reports[p].school_category+'</td><td>'+response.reports[p].no_of_teachers+'</td><td>'+response.reports[p].no_of_boys+'</td><td>'+response.reports[p].no_of_girls+'</td><td>'+response.reports[p].total_strength+'</td><td>'+response.reports[p].no_of_class_rooms+'</td><td>'+response.reports[p].hm_name+'</td><td>'+response.reports[p].hm_contact_num+'</td><td>'+response.reports[p].eng_name+'</td><td>'+response.reports[p].eng_contact+'</td></tr>';
            ml++;
            p++;
           });
