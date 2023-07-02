@@ -47,7 +47,8 @@ Route::any('schoolprofile', [UserController::class, 'schoolprofile'])->name('use
 Route::get('/payments', [OrderController::class, 'payments'])->name('orders.payments');
 
 Route::any('trackorder', [OrderController::class, 'trackorder'])->name('orders.trackorder');
-Route::get('districtlevelreports', [ReportsController::class, 'districtlevelreports'])->name('reports.districtlevelre');
+Route::get('districtlevelreports', [ReportsController::class, 'districtlevelreports'])->name('reports.districtlevel');
+Route::get('mandallevelreports', [ReportsController::class, 'mandallevelreports'])->name('reports.mandallevel');
 
 
 

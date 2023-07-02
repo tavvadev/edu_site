@@ -23,4 +23,11 @@ class ReportsController extends Controller
         return view('reports.districtlevel',compact('districts'));
 
     }
+
+    public function mandallevelreports(Request $request): View
+    {
+        $districts = DB::table('districts')->orderBy('dist_name', 'ASC')->get();
+        return view('reports.mandallevel',compact('districts'));
+
+    }
 }
