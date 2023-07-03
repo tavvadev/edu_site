@@ -7,7 +7,7 @@
 <div class="main-bg">
 <div class="container pt-5 pb-4">
     <div class="row">
-                <h2 class="fw-bold fs-3 pb-3 title-clr ">Track Order</h2>
+    <h1 class="display-5 text-center fw-bold title-clr text-capitalize mb-5">Track Order</h1>
     </div>
     @if ($message = Session::get('success'))
         <div class="alert alert-success">
@@ -20,14 +20,18 @@
     ?>
 
     <div class="row"  >
-        <form class="row g-12" method="POST" action="/trackorder">
+        <form class="row justify-content-center" method="POST" action="/trackorder">
         @csrf
-            <div class="col-auto">
+        <div class="col-md-5 d-flex gap-1 align-items-center  ">
+
+
+            <div class="col-auto flex-grow-1 form-group">
             <label for="staticEmail2" class="visually-hidden">Track Order</label>
             <input type="text" class="form-control" id="order_id" name="order_id" placeholder="Enter Order ID" value="<?php if(isset($searchOrderId) && $searchOrderId!=""){ echo $searchOrderId;} ?>">
             </div>
             <div class="col-auto">
-            <button type="submit" class="btn btn-primary mb-3">Search</button>
+            <button type="submit" class="btn btn-primary w-100 my-3 px-4 " style="height:45px;">Search</button>
+            </div>
             </div>
         </form>
 
@@ -35,7 +39,7 @@
 
         if(isset($orderDetails) && $orderDetails !=""){
         ?>
-        
+
         <!--<h2>{{$orderDetails->invoice_num}} Order Details </h2>-->
         <br/>
         <br/>
@@ -57,9 +61,9 @@
             }
         }
         ?>
-    
+
     </div>
-    
+
 </div>
 </div>
 @endsection

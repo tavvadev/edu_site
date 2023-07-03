@@ -27,10 +27,7 @@
 
 <!-- header code starts here  -->
 <header class="edu-header">
-
 <div class="top-login-sec">
-
-
 </div>
 
         <div class="container container-xxl">
@@ -53,7 +50,7 @@
                     <div class="offcanvas-body justify-content-between w-100">
                       <ul class="navbar-nav ">
                         <li class="nav-item">
-                          <a class="{{ request()->is('/') ? 'nav-link active' : '' }}" href="/">Home</a>
+                          <a class="{{ request()->is('/') ? 'nav-link active' : 'nav-link' }}" href="/">Home</a>
                         </li>
                         <li class="nav-item">
                           <a  class="{{ request()->is('orders') ? 'nav-link active' : 'nav-link' }}" href="{{ route('orders.index') }}">Orders</a>
@@ -128,7 +125,7 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                    
+
                                 <a class="dropdown-item" href="/change-password">Change Password </a>
                                 <a class="dropdown-item" href="/districtlevelreports">District Level Report</a>
                                 <a class="dropdown-item" href="/mandallevelreports">Mandal Level Report</a>

@@ -5,12 +5,13 @@
 <div class="main-bg">
 <div class="container pt-5 pb-4">
 
-<p class="fw-normal fs-5 text-capitalize pb-0 mb-0 text-muted text-center">
-        <small>My School Profile</small></p>
+<h1 class="display-5 text-center fw-bold title-clr text-capitalize mb-5">
+        <small>My School Profile</small></h1>
 
     @if ($errors->any())
         <div class="alert alert-danger">
-            <strong>Whoops!</strong> There were some problems with your input.<br><br>
+            <h2 class="fw-normal py-4 text-center"><span class="fw-bold">Whoops!</span>
+             There were some problems with your input.</h2>
             <ul>
                 @foreach ($errors->all() as $error)
                     <li>{{ $error }}</li>
@@ -116,7 +117,7 @@
                     </div>
                 </div>
 
-                <div class="form-group border-bottom pb-3 pt-3 d-flex align-items-center justify-content-between mb-2">
+                <div class="form-group pb-3 pt-3 d-flex align-items-center justify-content-between mb-2">
                     <label class="fw-bold col-md-6">Boys *</label>
                     <div class="col-md-6 d-flex align-items-center">
                     <input type="text" id="no_of_boys" name="no_of_boys" class="form-control"  value="<?php if(isset($schoolDetails['no_of_boys']) && $schoolDetails['no_of_boys']!=""){ echo $schoolDetails['no_of_boys'];} ?>" >
@@ -124,7 +125,7 @@
                 </div>
 
 
-                <div class="form-group border-bottom pb-3 pt-3 d-flex align-items-center justify-content-between mb-2">
+                <div class="form-group pb-3 pt-3 d-flex align-items-center justify-content-between mb-2">
                     <label class="fw-bold col-md-6">No Of  Class rooms *</label>
                     <div class="col-md-6 d-flex align-items-center">
                         <input type="text" id="no_of_class_rooms" name="no_of_class_rooms" class="form-control" placeholder="No Of  Class rooms" value="<?php if(isset($schoolDetails['no_of_class_rooms']) && $schoolDetails['no_of_class_rooms']!=""){ echo $schoolDetails['no_of_class_rooms'];} ?>" >
@@ -143,10 +144,12 @@
                         <input type="text" id="pin_code" name="pin_code" class="form-control" placeholder="Pin Code" value="<?php if(isset($schoolDetails['pin_code']) && $schoolDetails['pin_code']!=""){ echo $schoolDetails['pin_code'];} ?>" >
                     </div>
                 </div>
-                <div class="form-group pb-3 pt-3 d-flex align-items-center justify-content-between mb-2">
-                    <label class="fw-bold col-md-6">School Location </label>
-                    
-                </div>
+
+
+                <p class="pb-0 pt-4 fs-5 text-body fw-bold">
+                  School Location </p>
+
+
 
                 <div class="form-group  pb-3 pt-3 d-flex align-items-center justify-content-between mb-2">
                     <label class="fw-bold col-md-6">latitude *</label>
@@ -190,7 +193,7 @@
 
                 </div>
             </div>
-           
+
 		    <div class="col-xs-12 col-sm-12 col-md-12 text-center">
 		            <button type="submit" class="btn btn-primary mt-3 px-4 py-3">Submit</button>
 		    </div>

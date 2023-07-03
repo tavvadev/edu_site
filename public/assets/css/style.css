@@ -1359,13 +1359,13 @@ margin:auto;
 
     }
     /* form for inner pages */
-.main-bg form .form-group label {
+ .form-group label {
     font-size: 14px;
     margin-bottom: 4px;
     font-weight: 600;
     color: var(--primary);
  }
- .main-bg form .form-group input[type="text"]{
+.form-group input[type="text"], select{
      border: none !important;
      height: 45px !important;
      background:rgb(215 214 214 / 26%) !important;
@@ -1376,6 +1376,4 @@ margin:auto;
  input[type="text"]::placeholder{
     color: rgba(0,0,0,0.3);
     font-weight: 400;
-
-
  }
