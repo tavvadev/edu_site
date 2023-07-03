@@ -60,10 +60,10 @@
             <th>Ordered Qty</th>
             <th>Price</th>
             <th>Deilvered Qty</th>
+            <th>Amount</th>
             @if($user['role'] == 'HM' && ($orderDetails->invoice_status==1 || $orderDetails->invoice_status==2))
             <th>Ack Qty</th>
             @endif
-            <th>Price</th>
         </tr>
         </thead>
         <tbody>
@@ -76,22 +76,39 @@
             <td>{{$product->product_name}}</td>
             <td>{{$product->quantity}} {{$product->units}}</td>
             <td>{{$product->productPrice}}</td>
-            @if($user['role'] == 'Supplier' && $orderDetails->invoice_status==0)
-            <td><input type="number" onChange="ProductPriceChange({{$product->pid}}, {{$product->productPrice}});" id="delivered_qty_{{$product->pid}}"  name="delivered_qty[{{$product->pid}}]" max="{{$product->quantity}}" min="0" /></td>
-            @else
-            <td>{{$product->bill_qty}}</td>
+            @if($user['role'] == 'HM' )
+                @if($user['role'] == 'HM' && $orderDetails->invoice_status==1)
+                <td><input type="number" value="{{$product->bill_qty}}" name="ack_qty[{{$product->pid}}]" max="{{$product->quantity}}" min="0" /></td>
+                @else
+                <td>{{$product->bill_qty}}</td>
+                @endif
+                <td>@php echo $product->bill_qty*$product->productPrice @endphp</td>
+                @if($user['role'] == 'HM' && $orderDetails->invoice_status==2)
+                <td>{{$product->ack_qty}}</td>
+                @endif
             @endif
-            @if($user['role'] == 'HM' && $orderDetails->invoice_status==1)
-            <td><input type="number" value="{{$product->bill_qty}}" name="ack_qty[{{$product->pid}}]" max="{{$product->quantity}}" min="0" /></td>
-            @endif
-            @if($user['role'] == 'Supplier' && $orderDetails->invoice_status==0)
-            <td><input type="number" value="" id="ack_qty_price_{{$product->pid}}"  min="0" readonly /></td>
-            @else
-            <td>{{$product->price}}</td>
-            @endif
-            @if($user['role'] == 'HM' && $orderDetails->invoice_status==2)
-            <td>{{$product->ack_qty}}</td>
-            @endif
+
+              @if($user['role'] == 'APC' )
+                <td>{{$product->bill_qty}}</td>
+                <td>@php echo $product->bill_qty*$product->productPrice @endphp</td>
+              @endif
+
+              @if($user['role'] == 'Supplier')
+
+                  @if($user['role'] == 'Supplier' && $orderDetails->invoice_status==0)
+                  <td><input type="number" onChange="ProductPriceChange({{$product->pid}}, {{$product->productPrice}});" id="delivered_qty_{{$product->pid}}"  name="delivered_qty[{{$product->pid}}]" max="{{$product->quantity}}" min="0" /></td>
+                  @else
+                  <td>{{$product->bill_qty}}</td>
+                  @endif
+
+                
+                  @if($user['role'] == 'Supplier' && $orderDetails->invoice_status==0)
+                  <td><input type="number" value="" id="ack_qty_price_{{$product->pid}}"  min="0" readonly /></td>
+                  @else
+                  <td>@php echo $product->bill_qty*$product->productPrice @endphp</td>
+                  @endif
+              @endif
+           
 	    </tr>
 	    @endforeach
         </tbody>

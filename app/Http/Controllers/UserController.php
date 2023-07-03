@@ -267,7 +267,7 @@ class UserController extends Controller
         //Change Password
         $user = User::find($userId);
         $user->password =  Hash::make($request->get('new-password'));
-       
+        $user->password_changed =  1;
         $user->save();
 
             

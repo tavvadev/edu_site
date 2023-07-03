@@ -68,9 +68,14 @@ class LoginController extends Controller
                 ]);
             }
             
+            if(isset($user->password_changed) && $user->password_changed==0){
+                 return redirect()->intended('change-password');
+              }else{
+                return redirect()->intended('/home');
+              }
 
 
-            return redirect()->intended('/home');
+            
         } else {
             // Authentication failed
             // Perform error handling or redirection
