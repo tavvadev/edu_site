@@ -185,12 +185,16 @@ class OrderController extends Controller
                         ->with('success','Order created successfully.');
     }
     public function updateorder(Request $request){
+
         $data = request()->session()->all();
+
         if($data['user']['role'] == 'Supplier') {
             // Validate the uploaded file
+/*
             $request->validate([
             'invoice' => 'mimes:pdf|max:2048', // Adjust the allowed file types and size as needed
             ]);
+            */
 
             if ($request->hasFile('invoice')) {
             $file = $request->file('invoice');
@@ -199,16 +203,19 @@ class OrderController extends Controller
 
             // echo '<pre>';print_r($file);
             }
-            // echo '<pre>';print_r($request->all());exit;
             foreach($request->delivered_qty as $product_id=>$del_qty) {
+                //echo '<pre>';print_r($_POST);exit;
+
             DB::table('order_products')
             ->where('invoice_id', $request->order_id)
             ->where('product_id', $product_id)
             ->update([
-            'bill_qty' => $del_qty,
-            'price' => DB::raw('price *'.$del_qty) 
+            'bill_qty' => $del_qty
+
             ]);
+
             }
+
 
             // echo '<pre>';print_r($request->all());exit;
             $order = Invoices::find($request->order_id);

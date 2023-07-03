@@ -35,7 +35,13 @@
                 <div class="alert alert-success">
                 {{ $message }}
                 </div>
-    @endif
+                @endif
+
+                @if (session('error'))
+                    <div class="alert alert-danger">
+                        {{ session('error') }}
+                    </div>
+                @endif
 
     </div>
 
@@ -103,7 +109,7 @@
 
                 
                   @if($user['role'] == 'Supplier' && $orderDetails->invoice_status==0)
-                  <td><input type="number" value="" id="ack_qty_price_{{$product->pid}}"  min="0" readonly /></td>
+                  <td><input type="number" value="" id="ack_qty_price_{{$product->pid}}" name="ack_qty_price_[{{$product->pid}}]"  min="0" readonly /></td>
                   @else
                   <td>@php echo $product->bill_qty*$product->productPrice @endphp</td>
                   @endif
