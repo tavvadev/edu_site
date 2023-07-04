@@ -5,6 +5,9 @@
 <?php
 
         ?>
+        <div class="main-bg">
+
+
 <div class="contianer-fluid ed-inner-pg">
 
 
@@ -121,6 +124,7 @@
 </div>
 </div>
 </div>
+
 <script>
 
 function mandalsList(){

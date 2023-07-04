@@ -324,6 +324,14 @@ background: var(--white);
   color: #292226 !important;
   font-size: 15px;
 }
+.edu-header .navbar .offcanvas .offcanvas-body .navbar-nav .nav-item .dropdown-menu {
+top: 4.4rem;
+padding: 0px;
+}
+.edu-header .navbar .offcanvas .offcanvas-body .navbar-nav .nav-item .dropdown-menu .dropdown-item {
+    padding: 1rem .4rem;
+margin: 0px;
+}
 
 /* form styles */
 .form-field {
@@ -1430,7 +1438,7 @@ margin:auto;
     font-weight: 600;
     color: var(--primary);
  }
-.form-group input[type="text"], select{
+.form-group input[type="text"], .form-group select, .form-group input[type="email"]{
      border: none !important;
      height: 45px !important;
      background:rgb(215 214 214 / 26%) !important;
