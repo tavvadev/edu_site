@@ -17,7 +17,7 @@
               <!--   <h2 class="fw-bold text-white fs-4 ">Orders</h2> -->
 
               <?php
-                if(session('user.info.role_id')==2){
+                if(session('user.info.role_id')==2 || session('user.info.role_id')==3){
               ?>
               <div class="row justify-content-end pt-3 pb-2">
                 <div class="col-md-3 text-end">
@@ -70,6 +70,9 @@
             @if($user['role'] == 'HM' && ($orderDetails->invoice_status==1 || $orderDetails->invoice_status==2))
             <th>Ack Qty</th>
             @endif
+            @if($user['role'] == 'EE' && ($orderDetails->invoice_status==1 || $orderDetails->invoice_status==2))
+            <th>Ack Qty</th>
+            @endif
         </tr>
         </thead>
         <tbody>
@@ -94,7 +97,19 @@
                 @endif
             @endif
 
-              @if($user['role'] == 'APC' )
+            @if($user['role'] == 'EE' )
+                @if($user['role'] == 'EE' && $orderDetails->invoice_status==1)
+                <td><input type="number" value="{{$product->bill_qty}}" name="ack_qty[{{$product->pid}}]" max="{{$product->quantity}}" min="0" /></td>
+                @else
+                <td>{{$product->bill_qty}}</td>
+                @endif
+                <td>@php echo $product->bill_qty*$product->productPrice @endphp</td>
+                @if($user['role'] == 'EE' && $orderDetails->invoice_status==2)
+                <td>{{$product->ack_qty}}</td>
+                @endif
+            @endif
+
+              @if($user['role'] == 'APC' || $user['role'] == 'FAO' )
                 <td>{{$product->bill_qty}}</td>
                 <td>@php echo $product->bill_qty*$product->productPrice @endphp</td>
               @endif
@@ -139,6 +154,13 @@
         <button type="submit" class="btn btn-primary mt-3 px-4 py-3">Acknowledge Order</button>
 </div>
 @endif
+
+@if( $user['role'] == 'EE' && $orderDetails->is_acknowledge_ee==1)
+    <div class="col-xs-12 col-sm-12 col-md-12 text-center">
+        <button type="submit" class="btn btn-primary mt-3 px-4 py-3">Acknowledge Order</button>
+</div>
+@endif
+
 
 
     @if($user['role'] != 'Supplier')

@@ -14,7 +14,7 @@
               <!--   <h2 class="fw-bold text-white fs-4 ">Orders</h2> -->
 
               <?php
-                if(session('user.info.role_id')==2){
+                if(session('user.info.role_id')==2 || session('user.info.role_id')==3){
               ?>
               <div class="row justify-content-end pt-4">
                   <div class="col-md-3 text-end">
@@ -45,7 +45,7 @@
         <thead class="table-dark">
         <tr>
           <?php
-            if(session('user.info.role_id')==2){
+            if(session('user.info.role_id')==2 || session('user.info.role_id')==3){
           ?>
             <th>S.No</th>
             <th>Component</th>
@@ -101,7 +101,7 @@
         ?>
 	    <tr>
           <?php
-            if(session('user.info.role_id')==2){
+            if(session('user.info.role_id')==2 || session('user.info.role_id')==3){
           ?>
             <td>{{ $order->oid }}</td>
             <td>{{ $order->cat_name }}</td>

@@ -59,8 +59,6 @@ class OrderController extends Controller
             if($role->roleName == 'FAO' || $role->roleName == 'APC') {
                 // Find the district of this logged in User/Role if they are distrcit level officer.
                 $district_details = User::leftJoin('districts','districts.id','=','users.district_id')->where('users.id', $user_id)->first('districts.*');
-
-                $district_details = User::leftJoin('districts','districts.id','=','users.district_id')->where('users.id', $user_id)->first('districts.*');
                 // get all the schools and villages in this district
                 $schoolResults = Schools::where('district_id', $user->district_id)->get();
                 foreach($schoolResults as $school) {
@@ -85,7 +83,7 @@ class OrderController extends Controller
             ->leftjoin('mandals as m',"m.id","=",'vi.mandal_id')
             ->leftjoin('districts as d',"d.id","=",'s.district_id')
             ->leftjoin('users as u',"orders.supplier_id","=",'u.id')
-            ->select('c.cat_name','orders.id as oid','orders.bill_generated','orders.bill_generated_date','orders.invoice_num as order_num','orders.total_qty','orders.invoice_status','orders.school_id','vi.village_name','d.dist_name','m.mandal_name','s.latitude','s.longitude','s.code','s.school_name' ,'s.school_name','s.UDISE_code','s.hm_name',"s.hm_contact_num","orders.apc_approved_status","orders.invoice_status","u.name as supplierName","u.contact_number as supplierNumber");
+            ->select('c.cat_name','orders.id as oid','orders.bill_generated','orders.bill_generated_date','orders.invoice_num as order_num','orders.total_qty','orders.invoice_status','orders.is_acknowledge_ee','orders.school_id','vi.village_name','d.dist_name','m.mandal_name','s.latitude','s.longitude','s.code','s.school_name' ,'s.school_name','s.UDISE_code','s.hm_name',"s.hm_contact_num","orders.apc_approved_status","orders.invoice_status","u.name as supplierName","u.contact_number as supplierNumber");
             $i =0;
             if($role->roleName == 'Supplier') {
                 $query->where('apc_approved_status', 1);
@@ -226,7 +224,7 @@ class OrderController extends Controller
             $order->invoice_status = 1;
             $order->save();
             
-        } else if($data['user']['role'] == 'HM') {
+        } else if($data['user']['role'] == 'HM' ||  $user['role'] == 'EE') {
             $totalnetpayable_price = 0;
             // echo '<pre>';print_r($request->ack_qty);exit;
             foreach($request->ack_qty as $product_id=>$del_qty) {
@@ -240,16 +238,22 @@ class OrderController extends Controller
                 'price' => $product['price']*$del_qty,
                 'netpayable_price' => $product['price']*$del_qty * 0.80
                 ]);
-                }
+            }
     
                 // echo '<pre>';print_r($request->all());exit;
-                $order = Invoices::find($request->order_id);
-                $order->invoice_status = 2;
-                $order->total_price = $totalnetpayable_price;
-                $order->ack_date = date('Y-m-d H:i:s');
-                $order->save();
+                if($data['user']['role'] == 'EE') {
+                    $order = Invoices::find($request->order_id);
+                    $order->total_price = $totalnetpayable_price;
+                    $order->ee_ack_date = date('Y-m-d H:i:s');
+                    $order->save();
+                }else{
+                    $order = Invoices::find($request->order_id);
+                    $order->invoice_status = 2;
+                    $order->total_price = $totalnetpayable_price;
+                    $order->ack_date = date('Y-m-d H:i:s');
+                    $order->save();
+                }
         } else if($data['user']['role'] == 'APC') {
-                // echo '<pre>';print_r($request->all());exit;
                 // echo '<pre>';print_r($request->all());exit;
                 $order = Invoices::find($request->order_id);
                 $order->apc_approved_status = 1;
@@ -272,12 +276,10 @@ class OrderController extends Controller
             return redirect()->back()->with("error","Already this order category placed.");
         }else{
         // echo $data['user'];exit;
-        // echo $request->school_id;
         // echo '<pre>';print_r($data['user']['schools'][0]);
         // // print_r($data['user']['role']);
         //  echo '<pre>';print_r($data['user']);
-        // echo '<pre>';
-        //  print_r($request->all());exit;
+   
             $validator = \Validator::make($request->all(),
             [
               //   'invoice_num'         =>     'required|min:1|regex:/^[a-zA-Z\s]*$/',
@@ -314,6 +316,12 @@ class OrderController extends Controller
         }
 
                 // echo $request->category;exit;
+                if($data['user']['role'] == 'EE') {
+                    $is_acknowledge_ee = 1;
+                }else{
+                    $is_acknowledge_ee = 0;
+                }
+
                     $invoice_data = [
                                     'invoice_data'=>$request->invoice_data,
                                     'supplier_id'=>$request->supplier_id,
@@ -323,6 +331,7 @@ class OrderController extends Controller
                                     'total_qty'=>$total,
                                     'total_price'=>$total_price,
                                     'order_category'=>$request->category,
+                                    'is_acknowledge_ee'=>$is_acknowledge_ee,
                                     'invoice_status'=>0
                                     ];
                 //   echo '<pre>';print_r($request['products']); exit;
