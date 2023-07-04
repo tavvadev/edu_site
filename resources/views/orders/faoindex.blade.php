@@ -12,7 +12,7 @@
   </ol>
 </nav>-->
               <!--   <h2 class="fw-bold text-white fs-4 ">Orders</h2> -->
-              
+
               <?php
                 if(session('user.info.role_id')==2){
               ?>
@@ -32,7 +32,7 @@
               </div>
               @endif
     </div>
-    
+
     <div class="tb-sec">
     <div class="table-responsive ">
     <table class="table table-bordered ">
@@ -46,7 +46,7 @@
             <th>Contact Number</th>
             <th>Bill Status</th>
             <th>Order Name</th>
-            
+
         </tr>
         </thead>
         <tbody>
@@ -84,7 +84,7 @@
 </div>
     </div>
 
-  
+
     </div>
 </div>
 @endsection

@@ -324,6 +324,14 @@ background: var(--white);
   color: #292226 !important;
   font-size: 15px;
 }
+.edu-header .navbar .offcanvas .offcanvas-body .navbar-nav .nav-item .dropdown-menu {
+top: 4.4rem;
+padding: 0px;
+}
+.edu-header .navbar .offcanvas .offcanvas-body .navbar-nav .nav-item .dropdown-menu .dropdown-item {
+    padding: 1rem .4rem;
+margin: 0px;
+}
 
 /* form styles */
 .form-field {
@@ -754,7 +762,8 @@ padding: 42px 64px;
     background: var(--primary) url(../images/campus.jpg) no-repeat;
     object-fit: cover;
     width: 100%;
-    height: 300px;
+    min-height: 220px;
+    height: auto;
 padding: 48px;
 background-blend-mode: luminosity;
 }
@@ -780,10 +789,10 @@ background-blend-mode: luminosity;
 }
 /* table styles */
 .tb-sec {
-    padding:48px;
+    padding:12px 48px 24px;
     width: 100%;
     height: auto;
-    margin-top: -140px;
+    margin-top: -80px;
 
 }
 .tb-sec .table-responsive{
@@ -791,8 +800,72 @@ background-blend-mode: luminosity;
     width: 100%;
     height: auto;
     background: var(--white);
-    border-radius: 16px;
+    border-radius: 16px !important;
 
+}
+.table-responsive {
+
+overflow-x: auto;
+background: var(--white);
+box-shadow: 0px 12px 24px -6px #ccc;
+border-radius: 16px !important;
+}
+.table-responsive table {
+    border-radius: 16px !important;
+
+overflow: hidden;
+}
+.table-responsive table thead {
+border-top-left-radius: 16px !important;
+border-top-right-radius: 16px !important;
+
+}
+.table-responsive table thead tr th, .table-responsive table tbody tr td  {
+font-size: 14px;
+padding:16px 12px;
+background: var(--primary);
+
+    }
+ .table-responsive table tbody tr td  {
+
+        background: var(--white);
+
+            }
+
+.form-crd-bg {
+    position: relative;
+    width: 100%;
+    height: auto;
+    overflow: hidden;
+    z-index: 0;
+    background: rgb(255,255,255);
+
+}
+.form-crd-bg::after {
+    position: absolute;
+    content: '';
+    top:-62px;
+    left:auto;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 32rem;
+    background:linear-gradient(119deg, rgba(254, 246, 225, 0.938) 87%, rgba(243,243,243,0.14898459383753504) 100%), url(../images/study.jpg) no-repeat;
+    background-position: right bottom;
+    background-size: contain;
+    background-blend-mode:multiply;
+    z-index: -1;
+    opacity: .25;
+}
+
+.form-crd-bg .form-group input[type], .form-crd-bg .form-group select {
+    height: 56px !important;
+    background: var(--white) !important;
+    border: 1px solid var(--teritary-clr) !important;
+}
+.form-crd-bg .btn-secondary {
+    height: 56px !important;
+    margin-top: 26px;
 }
 
 .tb-sec .table-responsive table > thead > tr > th, .tb-sec .table-responsive table > tbody > tr > td {
@@ -1231,7 +1304,7 @@ outline: none;
   .performance-sec .map img {height: 320px;width: 100%; margin:auto;}
   .performance-sec .table thead{background:var(--secondary);color: var(--teritary-clr);}
   .performance-sec .table > tbody > tr > td{font-size: 14px; font-weight: 600;}
-  footer{padding: 32px 48px;background: #0f1218;width: 100%; position: relative; float: left;}
+  footer{padding: 24px 48px;background: #0f1218;width: 100%; position: relative; float: left;}
 
   .analysis-container {
    padding: 48px;
@@ -1365,7 +1438,7 @@ margin:auto;
     font-weight: 600;
     color: var(--primary);
  }
-.form-group input[type="text"], select{
+.form-group input[type="text"], .form-group select, .form-group input[type="email"]{
      border: none !important;
      height: 45px !important;
      background:rgb(215 214 214 / 26%) !important;

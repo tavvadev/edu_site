@@ -3,7 +3,7 @@
 @section('content')
 <div class="contianer-fluid ed-inner-pg ">
     <div class="top-banner">
-<div class="container">
+
 <!--<nav aria-label="breadcrumb">
   <ol class="breadcrumb">
     <li class="breadcrumb-item"><a href="#">Home</a></li>
@@ -12,15 +12,15 @@
   </ol>
 </nav>-->
               <!--   <h2 class="fw-bold text-white fs-4 ">Orders</h2> -->
-              
+
               <?php
                 if(session('user.info.role_id')==2){
               ?>
-              <div class="row justify-content-end pt-3 pb-2">
+              <div class="row justify-content-end pt-4">
                   <div class="col-md-3 text-end">
                     <a class="btn btn-warning text-white py-3 px-4" href="/orders/category"> Create your New Order</a>
                   </div>
-              </div>
+
               <?php
                 }
                 ?>
@@ -38,7 +38,7 @@
                   </div>
               @endif
     </div>
-    
+
     <div class="tb-sec">
     <div class="table-responsive ">
     <table class="table table-bordered ">
@@ -81,11 +81,11 @@
             <th>Longitude</th>
             <th>HM Name</th>
             <th>HM Contact Number</th>
-            <th>Order Id</th>           
+            <th>Order Id</th>
             <th>Status</th>
 
             <?php
-            } 
+            }
             ?>
 
         </tr>
@@ -141,10 +141,10 @@
             <td>{{ $order->hm_contact_num }}</td>
             <td ><a class=" btn btn-link" role="button" href="/order/view/{{ $order->oid }}">{{ $order->order_num }}</a></td>
             <td><span class="pending ">{{ $order->invoice_status==0?"Pending":($order->invoice_status==1?"Completed":"Acknoledged") }}</span> @if($order->invoice_status==0) / <span class="pending ">{{ $order->apc_approved_status==0?"Yet to Approve":"Approved by APC" }}</span>@endif</td>
-             
+
 
             <?php
-            } 
+            }
             ?>
 
 
@@ -165,7 +165,7 @@
 </div>
     </div>
 
-  
+
     </div>
 </div>
 @endsection

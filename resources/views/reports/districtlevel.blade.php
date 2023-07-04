@@ -1,15 +1,33 @@
 @extends('layouts.master')
 
 @section('content')
-<br>
-<br>
+
 <?php
-        
+
         ?>
-<form class="row gx-3 gy-2 align-items-center">
-  <div class="col-sm-3">
-  <div class="input-group">
-    <div class="input-group-text">Districts</div>
+        <div class="main-bg">
+
+
+<div class="contianer-fluid ed-inner-pg">
+
+
+
+
+
+
+<div class="card form-crd-bg border-bottom rounded-0 p-5">
+
+<div class="container ">
+
+<div class="row justify-content-center">
+  <div class="col-md-8">
+
+
+<form class="row g-3 align-items-center ">
+
+  <div class="col-sm-6">
+  <div class="form-group">
+    <label >Districts</label>
       <select class="form-select" id="district_id" name="district_id" onchange="mandalsList();">
         <option value="">Choose...</option>
         <?php
@@ -17,32 +35,34 @@
         ?>
         <option value="{{$district->id}}">{{$district->dist_name}}</option>
         <?php } ?>
-        
+
       </select>
-    </div>
+
   </div>
-  <div class="col-sm-3">
-    <div class="input-group">
-      <div class="input-group-text">Mandals</div>
+  </div>
+  <div class="col-sm-6">
+  <div class="form-group">
+  <label >Mandals</label>
       <select class="form-select" id="mandalOptionsList" name="mandalOptionsList" onchange="villagesList();">
-     
+
     </select>
-    </div>
+
+  </div>
   </div>
 
-  
-  <div class="col-sm-3">
-    <div class="input-group">
-      <div class="input-group-text">Villages</div>
+
+  <div class="col-sm-6">
+  <div class="form-group">
+    <label >Villages</label>
       <select class="form-select" id="village_id" name="village_id" onchange="schoolsList();" >
-      
+
       </select>
     </div>
   </div>
 
-  <div class="col-sm-3">
-    <div class="input-group">
-      <div class="input-group-text">School Category</div>
+  <div class="col-sm-6">
+  <div class="form-group">
+    <label >School Category</label>
       <select class="form-select" id="school_category" name="school_category">
           <option selected>Choose...</option>
           <option value="PRIMARY">PRIMARY</option>
@@ -52,28 +72,35 @@
     </div>
   </div>
 
-  <div class="col-sm-3">
-    <div class="input-group">
-      <div class="input-group-text">Schools</div>
+  <div class="col-sm-6">
+  <div class="form-group">
+    <label >Schools</label>
       <select class="form-select" id="school_id" name="school_id" >
-      
-      </select>
-    </div>
-  </div>
 
-  
-  
-  
-  <div class="col-auto">
-    <button type="button" class="btn btn-primary" onClick="Reports();" >Submit</button>
+      </select>
+  </div>
+    </div>
+
+
+  <div class="col-sm-6">
+    <button type="button" class="btn w-100   p-2 btn-secondary" onClick="Reports();" >Submit</button>
   </div>
 </form>
+</div>
+</div>
+</div>
+</div>
 
-<br>
-<br>
 
+
+<div class="px-4 py-5 mt-5 ">
+
+
+
+
+<div class="table-responsive ">
 <table class="table table-bordered" >
-    <thead>
+    <thead class="table-dark">
       <tr>
         <th>S.No</th>
         <th>District</th>
@@ -89,16 +116,19 @@
     </thead>
     <tbody id="districtreporttable">
 
-    </tbody> 
+    </tbody>
 
 </table>
+</div>
 
+</div>
+</div>
+</div>
 
-<br>
 <script>
-  
-function mandalsList(){   
-  var mandalsoptions =""; 
+
+function mandalsList(){
+  var mandalsoptions ="";
 
   $.ajax({
       type: "POST",
@@ -121,10 +151,10 @@ function mandalsList(){
           console.log(response);
       }
   });
-} 
+}
 
-function villagesList(){   
-  var villageoptions =""; 
+function villagesList(){
+  var villageoptions ="";
 
   $.ajax({
       type: "POST",
@@ -148,13 +178,13 @@ function villagesList(){
           console.log(response);
       }
   });
-  
-  
+
+
 }
 
 
-function schoolsList(){   
-  var schoolsoptions =""; 
+function schoolsList(){
+  var schoolsoptions ="";
 
   $.ajax({
       type: "POST",
@@ -178,14 +208,14 @@ function schoolsList(){
           console.log(response);
       }
   });
-  
-  
+
+
 }
 
 
 function Reports(){
   $("#districtreporttable").empty();
-  var reportsHtml =""; 
+  var reportsHtml ="";
   var district_id = $("#district_id").val();
   if(district_id==""){
     district_id = "";
@@ -230,8 +260,8 @@ function Reports(){
           console.log(response);
       }
   });
-  
-  
+
+
 }
-</script>  
+</script>
 @endsection
