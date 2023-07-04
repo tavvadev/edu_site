@@ -6,7 +6,7 @@
 
     <div class="top-banner">
 
-<div class="container">
+
 <!--<nav aria-label="breadcrumb">
   <ol class="breadcrumb">
     <li class="breadcrumb-item"><a href="#">Home</a></li>
@@ -25,7 +25,7 @@
 
               <a class="btn btn-warning text-white py-3 px-4" href="/orders/category"> Create your New Order</a>
               </div>
-              </div>
+
               <?php
                 }
                 ?>
@@ -39,13 +39,13 @@
 
     </div>
 
-   
+
     <form action="/order/updateorder" class="card cat-crd pt-4 px-4 pb-3 p-md-5 pb-md-4" method="POST" enctype="multipart/form-data">
         @csrf
         <input type="hidden" name="order_id" value="{{$orderDetails->orderId}}" />
     <div class="tb-sec">
-    
-    
+
+
     <div class="table-responsive ">
         <h1>{{$orderDetails->cat_name}} Order Details </h1>
     <p><b>Order Id:</b> {{$orderDetails->invoice_num}}</p>
@@ -118,12 +118,12 @@
 @endif
 
 
-    @if($user['role'] != 'Supplier')    
-    @if($orderDetails->invoice_status == 0) 
+    @if($user['role'] != 'Supplier')
+    @if($orderDetails->invoice_status == 0)
     Status: <span class="pending">Pending</span>
-    @elseif($orderDetails->invoice_status == 1) 
+    @elseif($orderDetails->invoice_status == 1)
     Status: <span class="pending">Invoiced</span>
-    @elseif($orderDetails->invoice_status == 2) 
+    @elseif($orderDetails->invoice_status == 2)
     Status: <span class="pending">Acknowledged</span>
     @endif
     @endif
