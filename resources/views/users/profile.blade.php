@@ -42,10 +42,10 @@
             <input type="hidden" name="id" value="<?php if(isset($user->id) && $user->id!=""){ echo $user->id;} ?>" />
 
 
-            <div class="d-flex">
+            <div class="d-flex flex-wrap">
 
 
-            <div class="col-auto">
+            <div class="col-sm-12">
 
 
             <h2 class="fs-5 fw-bold text-body mb-1 mt-4 text-start w-100">Profile update Details </h2>
@@ -53,7 +53,7 @@
                 details
                  here</p>
                  </div>
-                 <div class="col-auto">
+                 <div class="col-sm-12">
 
                  </div>
                 </div>
