@@ -1,15 +1,16 @@
 @extends('layouts.master')
-
-
 @section('content')
+<div class="main-bg">
+<h1 class="display-5 pt-5 text-center fw-bold title-clr text-capitalize mb-2">
+        <small>Change password</small></h1>
 
-<div class="container">
-    <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-            <div class="panel panel-default">
-                <div class="panel-heading">Change password</div>
+<div class="container py-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8 ">
+            <div class="card p-4">
+                <div class="card-heading display-4 text fw-bold py-4"></div>
 
-                <div class="panel-body">
+                <div class="card-body">
                     @if (session('error'))
                         <div class="alert alert-danger">
                             {{ session('error') }}
@@ -71,5 +72,6 @@
             </div>
         </div>
     </div>
+</div>
 </div>
 @endsection
