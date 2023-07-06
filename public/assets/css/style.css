@@ -7,6 +7,8 @@
     --light-grey:#8D8D8D;
     --border-color:#ebebeb;
     --font: 1rem;
+    --success:#06be75;
+    --danger:#f95f5f;
     --teritary-clr:#ea9d0d;
 
   }
@@ -1203,7 +1205,7 @@ z-index: -1;
     font-size: 16px;
     color: var(--title-color);
   }
-  .explore-formsec form fieldset .input-field input[type="text"]::placeholder{
+ input[type]::placeholder{
     color: #bdbdbd;
     font-size: 14px;
     font-weight: 400;
@@ -1438,7 +1440,7 @@ margin:auto;
     font-weight: 600;
     color: var(--primary);
  }
-.form-group input[type="text"], .form-group select, .form-group input[type="email"]{
+.form-group input[type="text"], .form-group select, .form-group input[type="email"], input[type="password"]{
      border: none !important;
      height: 45px !important;
      background:rgb(215 214 214 / 26%) !important;
@@ -1446,7 +1448,21 @@ margin:auto;
      font-size: 16px;
      font-weight: 600;
  }
- input[type="text"]::placeholder{
-    color: rgba(0,0,0,0.3);
-    font-weight: 400;
+/*  .form-group input[type="text"]:focus, .form-group select:focus, .form-group input[type="email"]:focus, input[type="password"]:focus{
+    border: 1px solid var(--teritary-clr) !important;
+    box-shadow: none;
+ } */
+ .form-group input[type="text"]:required, .form-group select:required, .form-group input[type="email"]:required, input[type="password"]:required{
+    border: 1px solid var(--title-color) !important;
+    box-shadow: none;
+ }
+ .form-group input[type="text"]:focus, .form-group select:focus, .form-group input[type="email"]:focus, input[type="password"]:focus{
+    border: 1px solid var(--danger) !important;
+    box-shadow: none;
+    background: var(--white) !important;
+ }
+ .form-group input[type="text"]:valid, .form-group select:valid, .form-group input[type="email"]:valid, input[type="password"]:valid{
+    border: 1px solid var(--success) !important;
+    box-shadow: none;
+    background: var(--white) !important;
  }
