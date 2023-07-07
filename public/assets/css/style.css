@@ -332,17 +332,20 @@ background: var(--white);
     position: absolute;
     top:36px;
     width: max-content;
-    background:#f8a306;
+    background:var(--primary);
     left: 36px;
 padding: 0px;
 min-width:220px;
-    border: 1px solid var(--teritary-clr);
-    border-radius: 2px;
+    border: 0px solid var(--teritary-clr);
+    border-radius: 1px;
    /*  box-shadow: 0px 8px 16px -8px #ccc; */
     }
     .edu-header .navbar .offcanvas .offcanvas-body .navbar-nav .nav-item ul li {
         padding: 16px 24px ;
          }
+         .edu-header .navbar .offcanvas .offcanvas-body .navbar-nav .nav-item ul li a{
+            color: var(--white);
+             }
          .edu-header .navbar .offcanvas .offcanvas-body .navbar-nav .nav-item ul li:hover {
           background: #ffb121;
              }
