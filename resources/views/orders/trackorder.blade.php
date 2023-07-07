@@ -7,7 +7,7 @@
 <div class="main-bg">
 <div class="container pt-5 pb-4">
     <div class="row">
-    <h1 class="display-5 text-center fw-bold title-clr text-capitalize mb-5">Track Order</h1>
+    <h1 class="display-5 text-center fw-bold title-clr text-capitalize mb-5">Your Track Order</h1>
     </div>
     @if ($message = Session::get('success'))
         <div class="alert alert-success">
@@ -41,18 +41,22 @@
         ?>
 
         <!--<h2>{{$orderDetails->invoice_num}} Order Details </h2>-->
-        <br/>
-        <br/>
-        <p><b>Order Id:</b> {{$orderDetails->invoice_num}}</p>
-        <p><b>District:</b> {{$orderDetails->dist_name}}</p>
-        <p><b>Mandal:</b> {{$orderDetails->mandal_name}}</p>
-        <p><b>Village:</b> {{$orderDetails->village_name}}</p>
-        <p><b>School ID:</b> {{$orderDetails->UDISE_code}}</p>
-        <p><b>Order raise school Name:</b> {{$orderDetails->school_name}}</p>
-        <p><b>Order rises date:</b> {{$orderDetails->created_by}}</p>
-        <p><b>Order Component:</b> {{$orderDetails->cat_name}}</p>
-        <p><b>Order supply company Name:</b> {{$orderDetails->supplierName}}</p>
-        <p><b>Status of Order:</b> {{$orderDetails->invoice_status}}</p>
+
+        <div class="row justify-content-center">
+            <div class="col-md-5 pt-4">
+                <p class="card p-4 mb-2 d-flex flex-row justify-content-start"><span class="fw-normal col-md-6 text-muted">Order Id:</span> <span class="fw-bold col-md-6 px-4">{{$orderDetails->invoice_num}}</span></p>
+        <p class="card p-4 mb-2 d-flex flex-row justify-content-start"><span class="fw-normal col-md-6 text-muted">District:</span> <span class="fw-bold col-md-6 px-4">{{$orderDetails->dist_name}}</span></p>
+        <p class="card p-4 mb-2 d-flex flex-row justify-content-start"><span class="fw-normal col-md-6 text-muted">Mandal:</span> <span class="fw-bold col-md-6 px-4">{{$orderDetails->mandal_name}}</span></p>
+        <p class="card p-4 mb-2 d-flex flex-row justify-content-start"><span class="fw-normal col-md-6 text-muted">Village:</span> <span class="fw-bold col-md-6 px-4">{{$orderDetails->village_name}}</span></p>
+        <p class="card p-4 mb-2 d-flex flex-row justify-content-start"><span class="fw-normal col-md-6 text-muted">School ID:</span> <span class="fw-bold col-md-6 px-4">{{$orderDetails->UDISE_code}}</span></p>
+        <p class="card p-4 mb-2 d-flex flex-row justify-content-start"><span class="fw-normal col-md-6 text-muted">Order raise school Name:</span> <span class="fw-bold col-md-6 px-4">{{$orderDetails->school_name}}</span></p>
+        <p class="card p-4 mb-2 d-flex flex-row justify-content-start"><span class="fw-normal col-md-6 text-muted">Order rises date:</span> <span class="fw-bold col-md-6 px-4">{{$orderDetails->created_by}}</span></p>
+        <p class="card p-4 mb-2 d-flex flex-row justify-content-start"><span class="fw-normal col-md-6 text-muted">Order Component:</span> <span class="fw-bold col-md-6 px-4">{{$orderDetails->cat_name}}</span></p>
+        <p class="card p-4 mb-2 d-flex flex-row justify-content-start"><span class="fw-normal col-md-6 text-muted">Order supply company Name:</span><span class="fw-bold col-md-6 px-4">{{$orderDetails->supplierName}}</span></p>
+        <p class="card p-4 mb-2 d-flex flex-row justify-content-start"><span class="fw-normal col-md-6 text-muted">Status of Order:</span> <span class="fw-bold col-md-6 px-4">{{$orderDetails->invoice_status}}</span></p>
+            </div>
+        </div>
+
         <?php
         }else{
 
