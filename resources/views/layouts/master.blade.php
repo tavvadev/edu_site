@@ -55,6 +55,17 @@
                         <li class="nav-item">
                           <a  class="{{ request()->is('orders') ? 'nav-link active' : 'nav-link' }}" href="{{ route('orders.index') }}">Orders</a>
                         </li>
+                          <li class="nav-item">
+                          <a  class="{{ request()->is('reports') ? 'nav-link active' : 'nav-link' }}" href="{{ route('orders.trackorder') }}">Reports
+
+                          </a>
+                          <ul>
+                            <li >
+                            <a  href="/districtlevelreports">District Level Report</a>
+                             </li>
+                            <li > <a  href="/mandallevelreports">Mandal Level Report</a></li>
+                          </ul>
+                        </li>
 
                         <li class="nav-item">
                           <a  class="{{ request()->is('trackorder') ? 'nav-link active' : 'nav-link' }}" href="{{ route('orders.trackorder') }}">Track Order</a>
@@ -127,8 +138,7 @@
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
 
                                 <a class="dropdown-item" href="/change-password">Change Password </a>
-                                <a class="dropdown-item" href="/districtlevelreports">District Level Report</a>
-                                <a class="dropdown-item" href="/mandallevelreports">Mandal Level Report</a>
+
 
                                 <a class="dropdown-item" href="/profile">Profile</a>
 
