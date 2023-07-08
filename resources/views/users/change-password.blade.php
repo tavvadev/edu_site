@@ -3,6 +3,17 @@
 <div class="main-bg">
 <h1 class="display-5 pt-5 text-center fw-bold title-clr lh-base text-capitalize mb-2">
         <small>Change password</small></h1>
+        @if (session('error'))
+                        <div class="alert alert-danger">
+                            {{ session('error') }}
+                        </div>
+                    @endif
+                        @if (session('success'))
+                            <div class="alert alert-success">
+                                {{ session('success') }}
+                            </div>
+                        @endif
+
 
 <div class="container py-4">
     <div class="row justify-content-center">
@@ -14,7 +25,7 @@
                 <h2 class="fs-5 fw-bold mb-0 lh-base text-body">Chang your Password here? </h2>
             <h3 class="fs-6 fw-normal mb-4 text-muted"> changing password freequently will protect your account from scammers. </h3>
             </div>
-
+            
                 <div class="card-body">
 
                         <div class="row">
@@ -31,7 +42,7 @@
                                  class="form-control" name="current-password" placeholder="Current Password" required>
                                 @if ($errors->has('current-password'))
                                     <span class="help-block">
-                                        <strong>{{ $errors->first('current-password') }}</strong>
+                                        <strong style="color:red">{{ $errors->first('current-password') }}</strong>
                                     </span>
                                 @endif
                             </div>
@@ -43,7 +54,7 @@
                                 <input id="new-password" type="password" placeholder="New Password" class="form-control" name="new-password" required>
                                 @if ($errors->has('new-password'))
                                     <span class="help-block">
-                                        <strong>{{ $errors->first('new-password') }}</strong>
+                                        <strong style="color:red">{{ $errors->first('new-password') }}</strong>
                                     </span>
                                 @endif
                                 </div>
@@ -68,24 +79,18 @@
             <div class="row justify-content-center">
             <h4 class="fs-5 fw-bold mb-4 title-clr pt-5 pt-md-0">Password must contain:</h4>
 
-            <p class="mb-2 fs-6 fw-normal text-muted ps-3"><i class="bi bi-check-lg text-success me-2"></i>At least 8 characters</p>
+            <p class="mb-2 fs-6 fw-normal text-muted ps-3"><i class="bi bi-check-lg text-success me-2"></i>At least 6 characters</p>
             <p class="mb-2 fs-6 fw-normal text-muted ps-3"><i class="bi bi-check-lg text-success me-2"></i>At least 1 uppercase letter</p>
             <p class="mb-2 fs-6 fw-normal text-muted ps-3"><i class="bi bi-check-lg text-success me-2"></i>At least 1 lowercase letter</p>
-            <p class="mb-2 fs-6 fw-normal text-muted ps-3"><i class="bi bi-check-lg text-success me-2"></i>At least 1 number </p>
+            <p class="mb-2 fs-6 fw-normal text-muted ps-3"><i class="bi bi-check-lg text-success me-2"></i>At least 1 number</p>
+            <p class="mb-2 fs-6 fw-normal text-muted ps-3"><i class="bi bi-check-lg text-success me-2"></i>At least 1 special character</p>
+
+            
             </div>
         </div>
                 </div>
 
-                @if (session('error'))
-                        <div class="alert alert-danger">
-                            {{ session('error') }}
-                        </div>
-                    @endif
-                        @if (session('success'))
-                            <div class="alert alert-success">
-                                {{ session('success') }}
-                            </div>
-                        @endif
+               
                 </div>
             </div>
         </div>
