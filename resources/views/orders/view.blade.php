@@ -4,16 +4,19 @@
 <div class="contianer-fluid ed-inner-pg ">
 
 
-    <div class="top-banner">
+    <div class="top-banner ">
+
+<div class="container">
 
 
-<!--<nav aria-label="breadcrumb">
+
+<nav aria-label="breadcrumb">
   <ol class="breadcrumb">
-    <li class="breadcrumb-item"><a href="#">Home</a></li>
-    <li class="breadcrumb-item"><a href="#">Library</a></li>
-    <li class="breadcrumb-item active" aria-current="page">Data</li>
+    <li class="breadcrumb-item"><a href="/orders">Orders</a></li>
+     <li class="breadcrumb-item active" aria-current="page">{{$orderDetails->cat_name}} Order Details </li>
   </ol>
-</nav>-->
+</nav>
+</div>
               <!--   <h2 class="fw-bold text-white fs-4 ">Orders</h2> -->
 
               <?php
@@ -46,19 +49,40 @@
     </div>
 
 
-    <form action="/order/updateorder" class="card cat-crd pt-4 px-4 pb-3 p-md-5 pb-md-4" method="POST" enctype="multipart/form-data">
+    <form action="/order/updateorder" class=" " method="POST" enctype="multipart/form-data">
         @csrf
         <input type="hidden" name="order_id" value="{{$orderDetails->orderId}}" />
     <div class="tb-sec">
+   <div class="table-responsive ">
 
 
-    <div class="table-responsive ">
-        <h1>{{$orderDetails->cat_name}} Order Details </h1>
-    <p><b>Order Id:</b> {{$orderDetails->invoice_num}}</p>
-    <p><b>School:</b>  {{$orderDetails->school_name}}</p>
-    <p><b>Head Master:</b>  {{$orderDetails->hm_name}}</p>
-    <p><b>Head Master Contact:</b>  {{$orderDetails->hm_contact_num}}</p>
-    <p><b>Indent Items:</b></p>
+
+    <h2 class="fs-5 fw-bold mb-2">Order Details</h2>
+   <div class="d-flex mb-4 flex-wrap justify-content-start">
+    <div class="col-auto mb-2 me-4">
+    <p><b> {{$orderDetails->invoice_num}}</b></p>
+    <p class="col-auto pe-4 lh-base mb-1 fs-6 fw-normal"><small>Order Id:</small></p>
+
+    </div>
+
+    <div class="col-auto mb-2 me-4">
+    <p class="col-auto pe-4 lh-base mb-1 fs-6 fw-normal"><small>School:</small></p>
+    <p><b>  {{$orderDetails->school_name}}</b></p>
+    </div>
+    <div class="col-auto mb-2 me-4">
+    <p class="col-auto pe-4 lh-base mb-1 fs-6 fw-normal"><small>Head Master:</small></p>
+    <p><b>  {{$orderDetails->hm_name}}</b></p>
+    </div>
+    <div class="col-auto mb-2 me-4">
+    <p class="col-auto pe-4 lh-base mb-1 fs-6 fw-normal"><small>Head Master Contact:</small></p>
+    <p><b>  {{$orderDetails->hm_contact_num}}</b></p>
+    </div>
+    <div class="col-auto mb-2 me-4">
+    <p class="col-auto pe-4 lh-base mb-1 fs-6 fw-normal"><small>Indent Items:</small></p>
+    <p><b></b></p>
+    </div>
+    </div>
+
     <table class="table table-bordered ">
         <thead class="table-dark">
         <tr>
@@ -122,34 +146,25 @@
                   <td>{{$product->bill_qty}}</td>
                   @endif
 
-                
+
                   @if($user['role'] == 'Supplier' && $orderDetails->invoice_status==0)
                   <td><input type="number" value="" id="ack_qty_price_{{$product->pid}}" name="ack_qty_price_[{{$product->pid}}]"  min="0" readonly /></td>
                   @else
                   <td>@php echo $product->bill_qty*$product->productPrice @endphp</td>
                   @endif
               @endif
-           
+
 	    </tr>
 	    @endforeach
         </tbody>
     </table>
-
-
     @if($user['role'] == 'Supplier' && $orderDetails->invoice_status==0)
-    <p>Invoice No: <input type='text' name="invoice_no" id="invoice_no" value="" /></p>
-    <p>Upload File: <input type='file' name="invoice" id="invoice" /></p>
-    <p>Invoice Date: <input type='date' name="invoice_date" id="invoice_date" /></p>
-
     <div class="col-xs-12 col-sm-12 col-md-12 text-center">
         <button type="submit" class="btn btn-primary mt-3 px-4 py-3">Update</button>
 </div>
-    @elseif(($user['role'] == 'Supplier' || $user['role'] == 'HM' || $user['role'] == 'APC') && $orderDetails->invoice_status>0)
-    <p>Invoice No: {{$orderDetails->invoice_no}}</p>
-    <p>Invoice File: <a style="color: blue;text-decoration:underline;" href="{{asset($orderDetails->invoice_file_path)}}" target="_blank">Download Inovice</a></p>
-    <p>Invoice Date: {{$orderDetails->invoice_date}}</p>
-    @endif
-    @if($user['role'] == 'HM' && $orderDetails->invoice_status==1)
+@endif
+
+@if($user['role'] == 'HM' && $orderDetails->invoice_status==1)
     <div class="col-xs-12 col-sm-12 col-md-12 text-center">
         <button type="submit" class="btn btn-primary mt-3 px-4 py-3">Acknowledge Order</button>
 </div>
@@ -160,6 +175,21 @@
         <button type="submit" class="btn btn-primary mt-3 px-4 py-3">Acknowledge Order</button>
 </div>
 @endif
+
+   </div>
+
+    @if($user['role'] == 'Supplier' && $orderDetails->invoice_status==0)
+    <p>Invoice No: <input type='text' name="invoice_no" id="invoice_no" value="" /></p>
+    <p>Upload File: <input type='file' name="invoice" id="invoice" /></p>
+    <p>Invoice Date: <input type='date' name="invoice_date" id="invoice_date" /></p>
+
+
+    @elseif(($user['role'] == 'Supplier' || $user['role'] == 'HM' || $user['role'] == 'APC') && $orderDetails->invoice_status>0)
+    <p>Invoice No: {{$orderDetails->invoice_no}}</p>
+    <p>Invoice File: <a style="color: blue;text-decoration:underline;" href="{{asset($orderDetails->invoice_file_path)}}" target="_blank">Download Inovice</a></p>
+    <p>Invoice Date: {{$orderDetails->invoice_date}}</p>
+    @endif
+
 
 
 

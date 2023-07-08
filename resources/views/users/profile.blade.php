@@ -60,20 +60,20 @@
             <div class="form-group col-md-12  mb-4">
                     <label class="fw-bold text-muted">First Name </label>
 
-                       <input type="text" class="form-control" id="name" name="name" value="<?php if(isset($user->name) && $user->name!=""){ echo $user->name;} ?>" >
+                       <input type="text" class="form-control" required="required" id="name" name="name" value="<?php if(isset($user->name) && $user->name!=""){ echo $user->name;} ?>" >
 
                 </div>
 
                 <div class="form-group col-md-12  mb-4">
                     <label class="fw-bold text-muted">Email</label>
 
-                        <input type="email" class="form-control" id="email" name="email" value="<?php if(isset($user->email) && $user->email!=""){ echo $user->email;} ?>" >
+                        <input type="email" required="required" class="form-control" id="email" name="email" value="<?php if(isset($user->email) && $user->email!=""){ echo $user->email;} ?>" >
 
                 </div>
                 <div class="form-group col-md-12  mb-4">
                     <label class="fw-bold text-muted">Contact Number</label>
 
-                    <input type="text" class="form-control" id="contact_number" name="contact_number" value="<?php if(isset($user->contact_number) && $user->contact_number!=""){ echo $user->contact_number;} ?>" >
+                    <input type="text" required="required" class="form-control" id="contact_number" name="contact_number" value="<?php if(isset($user->contact_number) && $user->contact_number!=""){ echo $user->contact_number;} ?>" >
 
                 </div>
 
@@ -104,7 +104,7 @@
 
                     <label class="fw-bold text-muted">Answer </label>
 
-                    <input type="text" class="form-control" id="answer" name="answer" value="<?php if(isset($user->answer) && $user->answer!=""){ echo $user->answer;} ?>" >
+                    <input type="text" required="required" class="form-control" id="answer" name="answer" value="<?php if(isset($user->answer) && $user->answer!=""){ echo $user->answer;} ?>" >
 
 
                 </div>
@@ -112,7 +112,7 @@
 
                     <label class="fw-bold text-muted">Confirm Answer </label>
 
-                    <input type="text" class="form-control" id="confirm_ans" name="confirm_ans" value="<?php if(isset($user->answer) && $user->answer!=""){ echo $user->answer;} ?>" >
+                    <input type="text" required="required" class="form-control" id="confirm_ans" name="confirm_ans" value="<?php if(isset($user->answer) && $user->answer!=""){ echo $user->answer;} ?>" >
 
                 </div>
 
