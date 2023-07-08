@@ -163,14 +163,15 @@ class UserController extends Controller
             'school_category' => 'required',
             'latitude' => 'required',
             'longitude' => 'required',
-            'hm_name' => 'required',
-            'hm_contact_num' => 'required',
-            'total_strength' => 'required',
-            'no_of_teachers' => 'required',
-            'no_of_class_rooms' => 'required',
+            'hm_name' => 'required|alpha',
+            'hm_contact_num' => 'required|numeric|min:10|max:10',
+            'eng_contact' => 'numeric|min:10|max:10',
+            'total_strength' => 'required|numeric',
+            'no_of_teachers' => 'required|numeric',
+            'no_of_class_rooms' => 'required|numeric',
             'school_address' => 'required',
-            'no_of_girls' => 'required',
-            'no_of_boys' => 'required',
+            'no_of_girls' => 'required|numeric',
+            'no_of_boys' => 'required|numeric',
             'pin_code' => 'required|digits:6'
         ]);
 
@@ -250,8 +251,8 @@ class UserController extends Controller
 
         $userId = session('user.info.id');
         $validatedData = $request->validate([
-            'current-password' => 'required',
-            'new-password' => 'required|string|min:6|confirmed',
+            'current-password' => 'required|string|min:6|regex:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{6,}$/',
+            'new-password' => 'required|string|min:6|confirmed|regex:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{6,}$/',
         ]);
 
         if(strcmp($request->get('current-password'), $request->get('new-password')) == 0){
