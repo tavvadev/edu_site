@@ -222,9 +222,9 @@
           @yield('content')
         <footer>
           <div class="container text-center">
-            <p class="text-white fs-6 fw-normal mb-1">
+            <!--<p class="text-white fs-6 fw-normal mb-1">
               <small>Copyright © Department of School Education,
-                <b>Andhra Pradesh</b></small></p>
+                <b>Andhra Pradesh</b></small></p> -->
 
           </div>
         </footer>

@@ -354,7 +354,7 @@ class OrderController extends Controller
                     $order->save();
 
                     return redirect()->route('orders.index')
-                    ->with('success','Order created successfully.Order ID:'.$invoice_id);
+                    ->with('success','Order created successfully.Order ID:'.$data['user']['info']->login_id.$invoice_id);
                 }else{
                     return response()->json(['status' => 401, 'error' => $validator->errors()]);
 
