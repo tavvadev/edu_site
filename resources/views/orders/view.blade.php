@@ -12,8 +12,8 @@
 
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb">
-    <li class="breadcrumb-item"><a href="/orders">Orders</a></li>
-     <li class="breadcrumb-item active" aria-current="page">{{$orderDetails->cat_name}} Order Details </li>
+    <li class="breadcrumb-item fs-5"><a href="/orders">Orders</a></li>
+     <li class="breadcrumb-item active fs-5" aria-current="page">{{$orderDetails->cat_name}} Order Details </li>
   </ol>
 </nav>
 </div>
@@ -57,29 +57,33 @@
 
 
 
-    <h2 class="fs-5 fw-bold mb-2">Order Details</h2>
+    <h2 class="fs-5 fw-bold title-clr mb-2">Order Details</h2>
    <div class="d-flex mb-4 flex-wrap justify-content-start">
-    <div class="col-auto mb-2 me-4">
-    <p><b> {{$orderDetails->invoice_num}}</b></p>
-    <p class="col-auto pe-4 lh-base mb-1 fs-6 fw-normal"><small>Order Id:</small></p>
+    <div class="col-auto mt-3 mb-2 me-4">
+    <p class="mb-0"><b> {{$orderDetails->invoice_num}}</b></p>
+    <p class=" pe-4 lh-base mb-1 fs-6 fw-normal text-muted"><small>Order Id:</small></p>
 
     </div>
 
-    <div class="col-auto mb-2 me-4">
-    <p class="col-auto pe-4 lh-base mb-1 fs-6 fw-normal"><small>School:</small></p>
-    <p><b>  {{$orderDetails->school_name}}</b></p>
+    <div class="col-auto mt-3 mb-2 me-4">
+    <p class="mb-0"><b>  {{$orderDetails->school_name}}</b></p>
+    <p class=" pe-4 lh-base mb-1 fs-6 fw-normal text-muted"><small>School:</small></p>
+
     </div>
-    <div class="col-auto mb-2 me-4">
-    <p class="col-auto pe-4 lh-base mb-1 fs-6 fw-normal"><small>Head Master:</small></p>
-    <p><b>  {{$orderDetails->hm_name}}</b></p>
+    <div class="col-auto mt-3 mb-2 me-4">
+    <p class="mb-0"><b>  {{$orderDetails->hm_name}}</b></p>
+    <p class=" pe-4 lh-base mb-1 fs-6 fw-normal text-muted"><small>Head Master:</small></p>
+
     </div>
-    <div class="col-auto mb-2 me-4">
-    <p class="col-auto pe-4 lh-base mb-1 fs-6 fw-normal"><small>Head Master Contact:</small></p>
-    <p><b>  {{$orderDetails->hm_contact_num}}</b></p>
+    <div class="col-auto mt-3 mb-2 me-4">
+    <p class="mb-0"><b>  {{$orderDetails->hm_contact_num}}</b></p>
+    <p class=" pe-4 lh-base mb-1 fs-6 fw-normal text-muted"><small>Head Master Contact:</small></p>
+
     </div>
-    <div class="col-auto mb-2 me-4">
-    <p class="col-auto pe-4 lh-base mb-1 fs-6 fw-normal"><small>Indent Items:</small></p>
-    <p><b></b></p>
+    <div class="col-auto mt-3 mb-2 me-4">
+    <p class="mb-0"><b>Nil</b></p>
+    <p class=" pe-4 lh-base mb-1 fs-6 fw-normal text-muted"><small>Indent Items:</small></p>
+
     </div>
     </div>
 
@@ -178,19 +182,23 @@
 
    </div>
 
+   <div class="pt-5 ">
+
+
     @if($user['role'] == 'Supplier' && $orderDetails->invoice_status==0)
-    <p>Invoice No: <input type='text' name="invoice_no" id="invoice_no" value="" /></p>
-    <p>Upload File: <input type='file' name="invoice" id="invoice" /></p>
-    <p>Invoice Date: <input type='date' name="invoice_date" id="invoice_date" /></p>
+    <p class="mb-1"><span class="text-muted">Invoice No: </span><input type='text' name="invoice_no" id="invoice_no" value="" /></p>
+    <p class="mb-1"><span class="text-muted">Upload File: </span><input type='file' name="invoice" id="invoice" /></p>
+    <p class="mb-1"><span class="text-muted">Invoice Date:</span> <input type='date' name="invoice_date" id="invoice_date" /></p>
 
 
     @elseif(($user['role'] == 'Supplier' || $user['role'] == 'HM' || $user['role'] == 'APC') && $orderDetails->invoice_status>0)
-    <p>Invoice No: {{$orderDetails->invoice_no}}</p>
-    <p>Invoice File: <a style="color: blue;text-decoration:underline;" href="{{asset($orderDetails->invoice_file_path)}}" target="_blank">Download Inovice</a></p>
-    <p>Invoice Date: {{$orderDetails->invoice_date}}</p>
+    <p class="mb-1"><span class="text-muted">Invoice No:</span> <span class="ps-2">{{$orderDetails->invoice_no}}</span></p>
+    <p class="mb-1"><span class="text-muted">Invoice File:</span> <span class="ps-2"><a href="{{asset($orderDetails->invoice_file_path)}}"
+     target="_blank">Download Inovice</a></span></p>
+    <p class="mb-1"><span class="text-muted">Invoice Date:</span> <span class="ps-2">{{$orderDetails->invoice_date}}</span></p>
     @endif
 
-
+    </div>
 
 
     @if($user['role'] != 'Supplier')
