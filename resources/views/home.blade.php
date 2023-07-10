@@ -19,7 +19,7 @@
                 </div>
                 <div class="row justify-content-center">
                     <div class="col-md-7 text-center mt-3 mb-3">
-                    <button class="btn btn-primary py-2 px-4 ">check ordered list</button>
+                    <a class="btn btn-default py-3 px-4 " role="button" href="/orders">check ordered list</a>
                     </div>
                 </div>
             </div>

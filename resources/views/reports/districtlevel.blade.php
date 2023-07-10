@@ -1,30 +1,14 @@
 @extends('layouts.master')
-
 @section('content')
-
 <?php
-
         ?>
-        <div class="main-bg">
-
-
+<div class="main-bg">
 <div class="contianer-fluid ed-inner-pg">
-
-
-
-
-
-
 <div class="card form-crd-bg border-bottom rounded-0 p-5">
-
 <div class="container ">
-
 <div class="row justify-content-center">
-  <div class="col-md-8">
-
-
+<div class="col-md-8">
 <form class="row g-3 align-items-center ">
-
   <div class="col-sm-6">
   <div class="form-group">
     <label >Districts</label>
@@ -35,35 +19,27 @@
         ?>
         <option value="{{$district->id}}">{{$district->dist_name}}</option>
         <?php } ?>
-
       </select>
-
   </div>
   </div>
   <div class="col-sm-6">
   <div class="form-group">
   <label >Mandals</label>
-      <select class="form-select" id="mandalOptionsList" name="mandalOptionsList" onchange="villagesList();">
-
-    </select>
-
+  <select class="form-select" id="mandalOptionsList" name="mandalOptionsList" onchange="villagesList();">
+  </select>
   </div>
   </div>
-
-
   <div class="col-sm-6">
   <div class="form-group">
     <label >Villages</label>
       <select class="form-select" id="village_id" name="village_id" onchange="schoolsList();" >
-
       </select>
     </div>
   </div>
-
   <div class="col-sm-6">
   <div class="form-group">
     <label >School Category</label>
-      <select class="form-select" id="school_category" name="school_category">
+    <select class="form-select" id="school_category" name="school_category">
           <option selected>Choose...</option>
           <option value="PRIMARY">PRIMARY</option>
           <option value="UPPER PRIMARY">UPPER PRIMARY</option>
@@ -71,19 +47,15 @@
     </select>
     </div>
   </div>
-
   <div class="col-sm-6">
   <div class="form-group">
     <label >Schools</label>
-      <select class="form-select" id="school_id" name="school_id" >
-
-      </select>
+    <select class="form-select" id="school_id" name="school_id" >
+    </select>
   </div>
-    </div>
-
-
+  </div>
   <div class="col-sm-6">
-    <button type="button" class="btn w-100   p-2 btn-secondary" onClick="Reports();" >Submit</button>
+  <button type="button" class="btn w-100   p-2 btn-secondary" onClick="Reports();" >Submit</button>
   </div>
 </form>
 </div>
@@ -91,16 +63,9 @@
 </div>
 </div>
 
-
-
-<div class="px-4 py-5 mt-5 ">
-
-
-
-
-<div class="table-responsive ">
-<table class="table table-bordered" >
-    <thead class="table-dark">
+<div class="table-responsive rounded-0">
+<table class="table table-bordered rounded-0" >
+    <thead class="table-dark border-0">
       <tr>
         <th>S.No</th>
         <th>District</th>
@@ -115,21 +80,15 @@
       </tr>
     </thead>
     <tbody id="districtreporttable">
-
     </tbody>
-
 </table>
 </div>
 
 </div>
 </div>
-</div>
-
 <script>
-
 function mandalsList(){
   var mandalsoptions ="";
-
   $.ajax({
       type: "POST",
       url: 'http://3.91.54.205/api/mandals',

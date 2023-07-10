@@ -118,7 +118,7 @@
 
 
 		    <div class="col-xs-12 col-sm-12 col-md-12 text-center">
-		            <button type="submit" class="btn btn-primary mt-3 px-4 py-3">Submit</button>
+		            <button type="submit" class="btn btn-default mt-3 px-5 py-3">Submit</button>
 		    </div>
 
     </form>

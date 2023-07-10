@@ -656,6 +656,7 @@ border-radius:2px ;
       .btn-default    {
 background: var(--primary);
 color: var(--white);
+box-shadow: 0px 8px 32px -4px #ccc;
       }
       .btn-default:hover {
         background: var(--teritary-clr);
@@ -666,6 +667,11 @@ color: var(--white);
         background: #ffb836 !important;
         color: var(--white) !important
 
+      }
+      .btn-disabled{
+        background: #cfcfcf !important;
+        color:#a5a5a5 !important;
+        pointer-events: none;
       }
 .btn-secondary, .btn-secondary:hover{
     background: var(--secondary);
@@ -835,7 +841,6 @@ background-blend-mode: luminosity;
     color: var(--primary);
     background: var(--teritary-clr);
     border: 1px solid var(--teritary-clr);
-
 }
 /* table styles */
 .tb-sec {
@@ -850,7 +855,7 @@ background-blend-mode: luminosity;
     width: 100%;
     height: auto;
     background: var(--white);
-    border-radius: 16px !important;
+    border-radius: 16px ;
 
 }
 .table-responsive {
@@ -858,10 +863,10 @@ background-blend-mode: luminosity;
 overflow-x: auto;
 background: var(--white);
 box-shadow: 0px 12px 24px -6px #ccc;
-border-radius: 16px !important;
+border-radius: 16px ;
 }
 .table-responsive table {
-    border-radius: 16px !important;
+    border-radius: 16px ;
 
 overflow: hidden;
 }
@@ -939,6 +944,13 @@ color: var(--teritary-clr);
 .tb-sec .table-responsive table > tbody > tr > td span.pending{
     color: var(--teritary-clr);
     background: #fff6dc;
+    padding: 6px 16px;
+    position: relative;
+    border-radius: 16px;
+}
+.tb-sec .table-responsive table > tbody > tr > td span.acknowledge{
+    color: var(--white);
+    background: #02b888;
     padding: 6px 16px;
     position: relative;
     border-radius: 16px;

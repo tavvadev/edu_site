@@ -15,18 +15,17 @@
         </div>
     @endif
 
-    <div class="row">
+    <div class="row flex-wrap">
     @foreach ($categories as $category)
-        <div class="col-md-3">
+        <div class="col-lg-3 col-md-4 col-sm-6">
 <div class="card cat-crd ">
     <div class="circle">
         F
     </div>
 <h2 class="pt-4">{{ $category->cat_name }}</h2>
 
-
-
-<a class="btn btn-primary " role="button"  href="/orders/{{$category->id}}/edit">Add Order</a>
+<a class="btn btn-default w-auto mt-3 p-3" role="button"  href="/orders/{{$category->id}}/edit">Add Order</a>
+<!-- <a class="btn btn-disabled w-auto mt-3 p-3" role="button"  href="/orders/{{$category->id}}/edit">Add Order</a> -->
 
 </div>
         </div>
