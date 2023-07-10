@@ -74,7 +74,7 @@ class="px-1" width="48" height="48" alt="backarrow"/> Back
             @endforeach
 
 		    <div class="col-xs-12 col-sm-12 col-md-12 text-center">
-		            <button type="submit" class="btn btn-primary mt-3 px-4 py-3">Submit</button>
+		            <button type="submit" class="btn btn-default mt-3 px-5 py-3">Submit</button>
 		    </div>
 		</div>
     </form>

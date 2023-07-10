@@ -9,29 +9,38 @@
 <div class="container">
 
 
-
-<nav aria-label="breadcrumb">
-  <ol class="breadcrumb">
+<div class="row justify-content-between align-items-center">
+  <div class="col-auto flex-grow-1">
+  <nav aria-label="breadcrumb">
+  <ol class="breadcrumb mb-0">
     <li class="breadcrumb-item fs-5"><a href="/orders">Orders</a></li>
      <li class="breadcrumb-item active fs-5" aria-current="page">{{$orderDetails->cat_name}} Order Details </li>
   </ol>
 </nav>
-</div>
-              <!--   <h2 class="fw-bold text-white fs-4 ">Orders</h2> -->
+  </div>
 
-              <?php
+  <div class="col-auto ">
+  <?php
                 if(session('user.info.role_id')==2 || session('user.info.role_id')==3){
               ?>
-              <div class="row justify-content-end pt-3 pb-2">
-                <div class="col-md-3 text-end">
+
+
 
 
               <a class="btn btn-warning text-white py-3 px-4" href="/orders/category"> Create your New Order</a>
-              </div>
+
 
               <?php
                 }
                 ?>
+  </div>
+</div>
+
+
+
+              <!--   <h2 class="fw-bold text-white fs-4 ">Orders</h2> -->
+
+
 
                </div>
                 @if ($message = Session::get('success'))
@@ -60,30 +69,31 @@
     <h2 class="fs-5 fw-bold title-clr mb-2">Order Details</h2>
    <div class="d-flex mb-4 flex-wrap justify-content-start">
     <div class="col-auto mt-3 mb-2 me-4">
-    <p class="mb-0"><b> {{$orderDetails->invoice_num}}</b></p>
     <p class=" pe-4 lh-base mb-1 fs-6 fw-normal text-muted"><small>Order Id:</small></p>
+    <p class="mb-0 fs-5"><b> {{$orderDetails->invoice_num}}</b></p>
+
 
     </div>
 
-    <div class="col-auto mt-3 mb-2 me-4">
-    <p class="mb-0"><b>  {{$orderDetails->school_name}}</b></p>
+    <div class="col-auto mt-3 mb-2 me-5">
+
     <p class=" pe-4 lh-base mb-1 fs-6 fw-normal text-muted"><small>School:</small></p>
-
+    <p class="mb-0 fs-5"><b>  {{$orderDetails->school_name}}</b></p>
     </div>
-    <div class="col-auto mt-3 mb-2 me-4">
-    <p class="mb-0"><b>  {{$orderDetails->hm_name}}</b></p>
+    <div class="col-auto mt-3 mb-2 me-5">
+
     <p class=" pe-4 lh-base mb-1 fs-6 fw-normal text-muted"><small>Head Master:</small></p>
-
+    <p class="mb-0 fs-5"><b>  {{$orderDetails->hm_name}}</b></p>
     </div>
-    <div class="col-auto mt-3 mb-2 me-4">
-    <p class="mb-0"><b>  {{$orderDetails->hm_contact_num}}</b></p>
+    <div class="col-auto mt-3 mb-2 me-5">
+
     <p class=" pe-4 lh-base mb-1 fs-6 fw-normal text-muted"><small>Head Master Contact:</small></p>
-
+    <p class="mb-0 fs-5"><b>  {{$orderDetails->hm_contact_num}}</b></p>
     </div>
-    <div class="col-auto mt-3 mb-2 me-4">
-    <p class="mb-0"><b>Nil</b></p>
-    <p class=" pe-4 lh-base mb-1 fs-6 fw-normal text-muted"><small>Indent Items:</small></p>
+    <div class="col-auto mt-3 mb-2 me-5">
 
+    <p class=" pe-4 lh-base mb-1 fs-6 fw-normal text-muted"><small>Indent Items:</small></p>
+    <p class="mb-0 fs-5"><b>Nil</b></p>
     </div>
     </div>
 
@@ -207,7 +217,7 @@
     @elseif($orderDetails->invoice_status == 1)
     Status: <span class="pending">Invoiced</span>
     @elseif($orderDetails->invoice_status == 2)
-    Status: <span class="pending">Acknowledged</span>
+    Status: <span class="pending">Acknowledged fffddfgg</span>
     @endif
     @endif
     <div>

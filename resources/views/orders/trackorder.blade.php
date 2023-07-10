@@ -31,7 +31,7 @@
             <input type="text" class="form-control" id="order_id" name="order_id" placeholder="Enter Order ID" value="<?php if(isset($searchOrderId) && $searchOrderId!=""){ echo $searchOrderId;} ?>">
             </div>
             <div class="col-auto">
-            <button type="submit" class="btn btn-primary w-100 my-3 px-4 " style="height:45px;">Search</button>
+            <button type="submit" class="btn btn-default w-100 my-3 px-4 " style="height:45px;">Search</button>
             </div>
             </div>
         </form>
