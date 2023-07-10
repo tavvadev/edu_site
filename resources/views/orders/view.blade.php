@@ -192,34 +192,50 @@
 
    </div>
 
-   <div class="pt-5 ">
+   <div class="pt-5 row justify-content-start">
+
+<div class="col-md-4">
 
 
     @if($user['role'] == 'Supplier' && $orderDetails->invoice_status==0)
-    <p class="mb-1"><span class="text-muted">Invoice No: </span><input type='text' name="invoice_no" id="invoice_no" value="" /></p>
-    <p class="mb-1"><span class="text-muted">Upload File: </span><input type='file' name="invoice" id="invoice" /></p>
-    <p class="mb-1"><span class="text-muted">Invoice Date:</span> <input type='date' name="invoice_date" id="invoice_date" /></p>
+    <p class="mb-2"><span class="text-muted">Invoice No: </span><input type='text' name="invoice_no" id="invoice_no" value="" /></p>
+    <p class="mb-2"><span class="text-muted">Upload File: </span><input type='file' name="invoice" id="invoice" /></p>
+    <p class="mb-2"><span class="text-muted">Invoice Date:</span> <input type='date' name="invoice_date" id="invoice_date" /></p>
 
 
     @elseif(($user['role'] == 'Supplier' || $user['role'] == 'HM' || $user['role'] == 'APC') && $orderDetails->invoice_status>0)
-    <p class="mb-1"><span class="text-muted">Invoice No:</span> <span class="ps-2">{{$orderDetails->invoice_no}}</span></p>
-    <p class="mb-1"><span class="text-muted">Invoice File:</span> <span class="ps-2"><a href="{{asset($orderDetails->invoice_file_path)}}"
-     target="_blank">Download Inovice</a></span></p>
-    <p class="mb-1"><span class="text-muted">Invoice Date:</span> <span class="ps-2">{{$orderDetails->invoice_date}}</span></p>
+    <p class="mb-2"><span class="text-muted">Invoice No:</span> <span class="ps-2 text-body  fw-bold">{{$orderDetails->invoice_no}}</span></p>
+    <p class="mb-2"><span class="text-muted">Invoice File:</span> <span class="ps-2 text-primary fw-bold"><a href="{{asset($orderDetails->invoice_file_path)}}"
+     target="_blank">Download Invoice</a></span></p>
+    <p class="mb-2"><span class="text-muted">Invoice Date:</span> <span class="ps-2 text-body fw-bold">{{$orderDetails->invoice_date}}</span></p>
     @endif
 
     </div>
-
-
-    @if($user['role'] != 'Supplier')
+    <div class="col-md-4">
+      <div class="d-flex">
+      @if($user['role'] != 'Supplier')
     @if($orderDetails->invoice_status == 0)
-    Status: <span class="pending">Pending</span>
+    <span class="text-muted pending col-auto me-2">Status:</span>
+     <span class="title-color col-auto fw-bold">Pending</span>
+
     @elseif($orderDetails->invoice_status == 1)
-    Status: <span class="pending">Invoiced</span>
+    <span class="text-muted pending col-auto me-2">Status:</span>
+     <span class="title-color col-auto fw-bold">Invoiced</span>
+
     @elseif($orderDetails->invoice_status == 2)
-    Status: <span class="pending">Acknowledged fffddfgg</span>
+    <span class="text-muted pending col-auto me-2">Status:</span>
+     <span class="title-color col-auto fw-bold">Acknowledged</span>
+
     @endif
     @endif
+      </div>
+
+    </div>
+    </div>
+
+
+
+
     <div>
     @if($user['role'] == 'APC' && ($orderDetails->apc_approved_status==0))
     <button type="submit" class="btn btn-primary mt-3 px-4 py-3">Approve</button>
