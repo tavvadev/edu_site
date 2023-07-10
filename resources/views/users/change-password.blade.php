@@ -25,7 +25,7 @@
                 <h2 class="fs-5 fw-bold mb-0 lh-base text-body">Chang your Password here? </h2>
             <h3 class="fs-6 fw-normal mb-4 text-muted"> changing password freequently will protect your account from scammers. </h3>
             </div>
-            
+
                 <div class="card-body">
 
                         <div class="row">
@@ -68,7 +68,7 @@
                         </div>
                         <div class="col-md-12">
                         <div class="form-group mt-4">
-                                <button type="submit" class="btn btn-primary p-3 w-100">
+                                <button type="submit" class="btn btn-default p-3 w-100">
                                     Change Password
                                 </button>
                             </div>
@@ -85,12 +85,12 @@
             <p class="mb-2 fs-6 fw-normal text-muted ps-3"><i class="bi bi-check-lg text-success me-2"></i>At least 1 number</p>
             <p class="mb-2 fs-6 fw-normal text-muted ps-3"><i class="bi bi-check-lg text-success me-2"></i>At least 1 special character</p>
 
-            
+
             </div>
         </div>
                 </div>
 
-               
+
                 </div>
             </div>
         </div>

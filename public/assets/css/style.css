@@ -653,6 +653,20 @@ border-radius:2px ;
             margin: 16px auto;
         }
       }
+      .btn-default    {
+background: var(--primary);
+color: var(--white);
+      }
+      .btn-default:hover {
+        background: var(--teritary-clr);
+        color: var(--white);
+
+      }
+      .btn-default:active {
+        background: #ffb836 !important;
+        color: var(--white) !important
+
+      }
 .btn-secondary, .btn-secondary:hover{
     background: var(--secondary);
     color: var(--white);
@@ -1456,7 +1470,7 @@ margin:auto;
   margin-bottom: 16px;
   text-align: center;
   }
-  .cat-crd .btn, .cat-crd .btn:hover{
+/*   .cat-crd .btn, .cat-crd .btn:hover{
     max-width: 136px;
     margin:12px auto 0px;
     background: #222933;
@@ -1466,7 +1480,7 @@ margin:auto;
     width: 100%;
 
 
-    }
+    } */
     /* form for inner pages */
  .form-group label {
     font-size: 14px;
@@ -1474,19 +1488,22 @@ margin:auto;
     font-weight: 600;
     color: var(--primary);
  }
-.form-group input[type="text"], .form-group select, .form-group input[type="email"], input[type="password"]{
-     border: none !important;
+.form-group input[type="text"], .form-group input[type="number"], .form-group select, .form-group input[type="email"], input[type="password"], input[type="text"]:empty{
+    border: 1px solid var(--title-color) !important;
      height: 45px !important;
      background:rgb(215 214 214 / 26%) !important;
      border-radius: 8px !important;
      font-size: 16px;
      font-weight: 600;
+     width: 100%;
  }
+
+
 /*  .form-group input[type="text"]:focus, .form-group select:focus, .form-group input[type="email"]:focus, input[type="password"]:focus{
     border: 1px solid var(--teritary-clr) !important;
     box-shadow: none;
  } */
- .form-group input[type="text"]:required, .form-group select:required, .form-group input[type="email"]:required, input[type="password"]:required{
+  .form-group input[type="text"]:required, .form-group select:required, .form-group input[type="email"]:required, input[type="password"]:required, .form-group input[type="text"], .form-group select, .form-group input[type="email"], input[type="password"]{
     border: 1px solid var(--title-color) !important;
     box-shadow: none;
  }
@@ -1495,7 +1512,12 @@ margin:auto;
     box-shadow: none;
     background: var(--white) !important;
  }
- .form-group input[type="text"]:valid, .form-group select:valid, .form-group input[type="email"]:valid, input[type="password"]:valid{
+/*  .form-group input[type="text"]:user-invalid, .form-group select:valid, .form-group input[type="email"]:valid, input[type="password"]:valid{
+    border: 1px solid var(--title-color) !important;
+    box-shadow: none;
+    background: var(--white) !important;
+ } */
+  .form-group input[type="text"]:valid, .form-group input[type="number"]:valid, .form-group select:valid, .form-group input[type="email"]:valid, input[type="password"]:valid{
     border: 1px solid var(--success) !important;
     box-shadow: none;
     background: var(--white) !important;
