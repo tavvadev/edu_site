@@ -65,7 +65,6 @@
    <div class="table-responsive ">
 
 
-
     <h2 class="fs-5 fw-bold title-clr mb-2">Order Details</h2>
    <div class="d-flex mb-4 flex-wrap justify-content-start">
     <div class="col-auto mt-3 mb-2 me-4">
@@ -239,12 +238,42 @@
     <div>
     @if($user['role'] == 'APC' && ($orderDetails->apc_approved_status==0))
     <button type="submit" class="btn btn-primary mt-3 px-4 py-3">Approve</button>
-    <button type="button" class="btn btn-primary mt-3 px-4 py-3">Reject</button>
+    <button type="button" onClick="rejectedOrder();"  class="btn btn-primary mt-3 px-4 py-3">Reject</button>
     @endif
     </div>
     </div>
     </div>
 </form>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+    <form >
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Order Rejected?</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        
+              <div class="form-group">
+                <label for="recipient-name" class="col-form-label">Reason</label>
+                <input type="text" class="form-control" id="reject_reason" name="reject_reason" value="" >
+                <input type="hidden" class="form-control" id="reject_order_id" name="reject_order_id" value="{{$orderDetails->orderId}}" >
+
+              </div>
+              
+      </div>
+      <div class="modal-footer">
+        <button type="button" onClick="closeOrder();" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" onClick="saveRejectedOrder();" class="btn btn-primary">Save changes</button>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 
 
@@ -256,5 +285,35 @@
     var qty = $("#delivered_qty_"+id).val();
     $("#ack_qty_price_"+id).val(qty * price);
   }
+
+  function rejectedOrder(){
+    $('#exampleModalCenter').modal('show');
+  }
+
+  function closeOrder(){
+    $('#exampleModalCenter').modal('hide');
+  }
+
+  function saveRejectedOrder(){
+    var reject_reason = $('#reject_reason').val();
+    var order_id = $('#reject_order_id').val();
+
+    $.ajax({
+        type: "POST",
+        url: '/rejectedorder',
+        success: function(response) {
+           alert(response);
+        },
+        error: function(response) {
+            console.log(response);
+        }
+    });
+
+
+
+
+
+  }
+
   </script>
 @endsection
