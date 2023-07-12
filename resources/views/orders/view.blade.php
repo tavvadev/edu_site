@@ -257,7 +257,7 @@
         </button>
       </div>
       <div class="modal-body">
-        
+      @csrf
               <div class="form-group">
                 <label for="recipient-name" class="col-form-label">Reason</label>
                 <input type="text" class="form-control" id="reject_reason" name="reject_reason" value="" >
