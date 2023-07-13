@@ -744,14 +744,14 @@ box-shadow: 0px 8px 32px -4px #ccc;
     float: left;
     /* background: #475267; */
 }
-.login-pg .card {
+/* .login-pg .card {
     max-width: 85% !important;
     margin:auto !important;
     border-radius: 16px;
     overflow: hidden;
     background: transparent;
     box-shadow:0px 12px 64px -6px #dedede;
-}
+} */
 
 
 .login-pg .form-container {
@@ -762,6 +762,8 @@ align-items: center;
 background: var(--white);
 justify-content: center;
 width: 100%;
+border-radius: 16px;
+box-shadow: 0px 24px 32px -6px #eaeaea;
 }
 .login-pg .form-container .inner-cont {
 flex: 1 auto;
@@ -778,6 +780,29 @@ padding: 42px 64px;
 
 
 }
+/* .login-pg .img-cont {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    min-height: 540px;
+
+} */
+/* .login-pg .img-cont::before {
+    position: absolute;
+    content: '';
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url(../images/campus.jpg) no-repeat;
+    width: auto;
+    height: 100%;
+    min-height: 540px;
+
+    background-position: center;
+    background-size: contain;
+
+} */
 .login-pg .form-container .inner-cont .form-check .form-check-label{
  font-size: 14px;
  font-weight: 600;
@@ -832,48 +857,51 @@ background-blend-mode: luminosity;
 }
 /* table styles */
 .tb-sec {
-    padding:12px 48px 24px;
-    width: 100%;
+    padding:32px 24px 16px;
+    width: 94%;
     height: auto;
     margin-top: -80px;
-
+    background: var(--white);
+    box-shadow: 0px 12px 24px -6px #ccc;
+    border-radius: 16px ;
+    margin:-96px  auto 24px;
 }
 .tb-sec .table-responsive{
-    padding:48px 48px 32px;
+    padding:0px;
     width: 100%;
     height: auto;
-    background: var(--white);
-    border-radius: 16px ;
+    overflow-x: auto;
+
 
 }
-.table-responsive {
+/* .table-responsive table {
 
-overflow-x: auto;
-background: var(--white);
-box-shadow: 0px 12px 24px -6px #ccc;
-border-radius: 16px ;
-}
-.table-responsive table {
-    border-radius: 16px ;
 
 overflow: hidden;
-}
-.table-responsive table thead {
+} */
+/* .table-responsive table thead {
 border-top-left-radius: 16px !important;
 border-top-right-radius: 16px !important;
 
-}
-.table-responsive table thead tr th, .table-responsive table tbody tr td  {
+} */
+.table-responsive table > tbody > tr:nth-child(odd) > td  {
+    background: #fff;
+
+            }
+.table-responsive table > tbody > tr:nth-child(even) > td  {
+background: #f0f0f0;
+
+        }
+/* .table-responsive table thead tr th, .table-responsive table tbody tr td  {
 font-size: 14px;
 padding:16px 12px;
 background: var(--primary);
+max-width: 100%;
+font-weight: 600;
+white-space: nowrap;
 
-    }
- .table-responsive table tbody tr td  {
+    } */
 
-        background: var(--white);
-
-            }
 
 .form-crd-bg {
     position: relative;
@@ -911,13 +939,17 @@ background: var(--primary);
     margin-top: 26px;
 }
 
-.tb-sec .table-responsive table > thead > tr > th, .tb-sec .table-responsive table > tbody > tr > td {
+ .table-responsive table > thead > tr > th, .tb-sec .table-responsive table > tbody > tr > td {
 vertical-align: middle;
 display: table-cell;
 font-size: 14px;
 font-weight: 600;
 padding: 12px;
-color: var(--teritary-clr);
+color: #343535;
+white-space: nowrap;
+}
+.table-responsive table > thead > tr > th {
+    color: var(--teritary-clr);
 }
 .btn-link {
     color: #399CE4;
@@ -925,25 +957,29 @@ color: var(--teritary-clr);
     padding: 0px;
 }
 
-.tb-sec .table-responsive table > tbody > tr > td{
+ .table-responsive table > tbody > tr > td{
     color: #484d54;
-    font-weight: 500;
+
 }
-.tb-sec .table-responsive table > tbody > tr > td span.pending{
+.table-responsive table > tbody > tr:hover > td{
+    color: #22252a;
+
+}
+ .table-responsive table > tbody > tr > td span.pending{
     color: var(--teritary-clr);
     background: #fff6dc;
     padding: 6px 16px;
     position: relative;
     border-radius: 16px;
 }
-.tb-sec .table-responsive table > tbody > tr > td span.acknowledge{
+ .table-responsive table > tbody > tr > td span.acknowledge{
     color: var(--white);
     background: #02b888;
     padding: 6px 16px;
     position: relative;
     border-radius: 16px;
 }
-.tb-sec .table-responsive table > tbody > tr > td span.pending::before{
+.table-responsive table > tbody > tr > td span.pending::before{
    width: 6px;
    height: 6px;
    background: var(--teritary-clr);

@@ -5,18 +5,18 @@
 
         <div class="container pt-5 pb-5 mb-4">
 
-        <div class="card" >
+
 
 
         <div class="row justify-content-center ">
-        <div class="col-md-6 p-0 d-none d-md-block">
-            <img src="assets/images/campus.jpg" style="width:100%;min-height:554px;object-fit:cover;" width="400" height="400" class="img-fluid "/>
-        </div>
-        <div class="col-md-6 ">
+
+        <div class="col-md-5 ">
 
         <div class="form-container">
         <div class="inner-cont">
-        <h2 class="fs-4 fw-bold title-clr text-center pb-5">{{ __('Login') }}</h2>
+
+        <h1 class="fs-6 fw-normal text-muted text-center lh-base">Welcome to our Edutech </h1>
+        <h2 class="fs-4 fw-bold title-clr text-center pb-5">{{ __('Login Screen') }}</h2>
                     <form method="POST" action="{{ route('login') }}">
                         @csrf
 
@@ -78,7 +78,7 @@
         </div>
         </div>
         </div>
-        </div>
+
         </div>
 </div>
 @endsection
