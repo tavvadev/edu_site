@@ -189,14 +189,9 @@
         <button type="submit" class="btn btn-primary mt-3 px-4 py-3">Acknowledge Order</button>
 </div>
 @endif
-
    </div>
-
    <div class="pt-5 row justify-content-start">
-
 <div class="col-md-4">
-
-
     @if($user['role'] == 'Supplier' && $orderDetails->invoice_status==0)
     <p class="mb-2"><span class="text-muted">Invoice No: </span><input type='text' name="invoice_no" id="invoice_no" value="" /></p>
     <p class="mb-2"><span class="text-muted">Upload File: </span><input type='file' name="invoice" id="invoice" /></p>
