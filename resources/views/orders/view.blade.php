@@ -153,23 +153,7 @@
 	    @endforeach
         </tbody>
     </table>
-    @if($user['role'] == 'Supplier' && $orderDetails->invoice_status==0)
-    <div class="col-xs-12 col-sm-12 col-md-12 text-center">
-        <button type="submit" class="btn btn-primary mt-3 px-4 py-3">Update</button>
-</div>
-@endif
-
-@if($user['role'] == 'HM' && $orderDetails->invoice_status==1)
-    <div class="col-xs-12 col-sm-12 col-md-12 text-center">
-        <button type="submit" class="btn btn-primary mt-3 px-4 py-3">Acknowledge Order</button>
-</div>
-@endif
-
-@if( $user['role'] == 'EE' && $orderDetails->is_acknowledge_ee==1)
-    <div class="col-xs-12 col-sm-12 col-md-12 text-center">
-        <button type="submit" class="btn btn-primary mt-3 px-4 py-3">Acknowledge Order</button>
-</div>
-@endif
+   
    </div>
    <div class="pt-5 row justify-content-start">
 <div class="col-md-4">
@@ -206,10 +190,28 @@
     @endif
       </div>
 
+       
     </div>
     </div>
 
 
+@if($user['role'] == 'Supplier' && $orderDetails->invoice_status==0)
+    <div class="col-xs-12 col-sm-12 col-md-12 text-center">
+        <button type="submit" class="btn btn-primary mt-3 px-4 py-3">Update</button>
+</div>
+@endif
+
+@if($user['role'] == 'HM' && $orderDetails->invoice_status==1)
+    <div class="col-xs-12 col-sm-12 col-md-12 text-center">
+        <button type="submit" class="btn btn-primary mt-3 px-4 py-3">Acknowledge Order</button>
+</div>
+@endif
+
+@if( $user['role'] == 'EE' && $orderDetails->is_acknowledge_ee==1)
+    <div class="col-xs-12 col-sm-12 col-md-12 text-center">
+        <button type="submit" class="btn btn-primary mt-3 px-4 py-3">Acknowledge Order</button>
+</div>
+@endif
 
 
     <div>
