@@ -50,8 +50,6 @@ Route::any('trackorder', [OrderController::class, 'trackorder'])->name('orders.t
 Route::get('districtlevelreports', [ReportsController::class, 'districtlevelreports'])->name('reports.districtlevel');
 Route::get('mandallevelreports', [ReportsController::class, 'mandallevelreports'])->name('reports.mandallevel');
 
-
-
 Route::post('/generatebill', [OrderController::class, 'generatebill'])->name('orders.generatebill');
 
 Route::get('profile', [UserController::class, 'profile'])->name('users.profile');

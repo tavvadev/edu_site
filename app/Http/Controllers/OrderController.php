@@ -393,6 +393,13 @@ class OrderController extends Controller
             
 
         }
+
+        public function rejectedorder() {
+            echo "<pre>";print_r('gggggggggggg');exit;
+            
+        }
+    
+
         public function generatebill(Request $request): RedirectResponse {
             if($request->order_id!=''){
                 $orderId = $request->order_id;

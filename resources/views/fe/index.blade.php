@@ -204,8 +204,7 @@
                   </div>
                 </div>
 
-
-                <div class="row justify-content-between align-items-center">
+                {{-- <div class="row justify-content-between align-items-center">
                   <div class="col-md-12">
                     <div class="container">
                      
@@ -247,7 +246,7 @@
                       </div>
                     </div>
                     </div>
-                    </div>
+                    </div> --}}
                 
 
             </div>
