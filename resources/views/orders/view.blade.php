@@ -46,13 +46,7 @@
         @csrf
         <input type="hidden" name="order_id" value="{{$orderDetails->orderId}}" />
     <div class="tb-sec">
-
-
-
    <!--  <h2 class="fs-5 fw-bold title-clr mb-2">Order Details</h2> -->
-
-
-
     <div class="table-responsive ">
     <table class="table table-bordered " >
         <thead class="table-dark">
@@ -146,62 +140,40 @@
     </table>
     </div>
 
-    <div class=" row justify-content-center pt-5 pb-4 mb-3 border-bottom">
-
-
-
+    <div class=" row justify-content-start pt-4 pb-4 mb-3 border-bottom">
 <div class="col-md-6">
-
-
-
-    <div class="col-md-4 mt-3 mb-2 ">
-    <p class=" pe-4 lh-base mb-1 fs-6 fw-normal text-muted"><small>Order Id:</small></p>
-    <p class="mb-0 fs-5"><b> {{$orderDetails->invoice_num}}</b></p>
-
-
-    </div>
-
-    <div class="col-md-4 mt-3 mb-2 ">
-
-    <p class=" pe-4 lh-base mb-1 fs-6 fw-normal text-muted"><small>School:</small></p>
-    <p class="mb-0 fs-5"><b>  {{$orderDetails->school_name}}</b></p>
-    </div>
-    <div class="col-md-4 mt-3 mb-2 ">
-
-    <p class=" pe-4 lh-base mb-1 fs-6 fw-normal text-muted"><small>Head Master:</small></p>
-    <p class="mb-0 fs-5"><b>  {{$orderDetails->hm_name}}</b></p>
-    </div>
-    <div class="col-md-4 mt-3 mb-2 ">
-
-    <p class=" pe-4 lh-base mb-1 fs-6 fw-normal text-muted"><small>Head Master Contact:</small></p>
-    <p class="mb-0 fs-5"><b>  {{$orderDetails->hm_contact_num}}</b></p>
-    </div>
-    <div class="col-md-4 mt-3 mb-2 ">
-
-    <p class=" pe-4 lh-base mb-1 fs-6 fw-normal text-muted"><small>Indent Items:</small></p>
-    <p class="mb-0 fs-5"><b>Nil</b></p>
-
-
-
-
-    </div>
-    <div class="col-md-4 mt-3 mb-2">
+<p class="mt-2 mb-3 pt-2 fw-bold title-clr fs-6">Order Details</p>
+   <p class="mb-2"><span class="text-muted">Order Id:</span>
+   <span class="ps-2 text-body  fw-bold"> {{$orderDetails->invoice_num}}</span>
+  </p>
+  <p class="mb-2"><span class="text-muted">School:</span>
+  <span class="ps-2 text-body  fw-bold">  {{$orderDetails->school_name}}</span></p>
+ <p class="mb-2"><span class="text-muted">Head Master:</span>
+  <span class="ps-2 text-body  fw-bold"> {{$orderDetails->hm_name}}</span></p>
+  <p class="mb-2"><span class="text-muted">Head Master Contact:</span>
+  <span class="ps-2 text-body  fw-bold"> {{$orderDetails->hm_contact_num}}</span></p>
+  <p class="mb-2"><span class="text-muted">Indent Items:</span>
+  <span class="ps-2 text-body  fw-bold">Nil</span></p>
   @if($user['role'] != 'Supplier')
 @if($orderDetails->invoice_status == 0)
-<p class=" pe-4 lh-base mb-1 fs-6 fw-normal text-muted"><small>Status:</small></p>
-<p class="mb-0 fs-5 lh-base fw-bold p-2 bg-status">Pending</span>
+<p class="mb-2"><span class="text-muted">Status:</span>
+<span class="ps-2 text-body  fw-bold">Pending</span>
+</p>
 
 @elseif($orderDetails->invoice_status == 1)
-<p class=" pe-4 lh-base mb-1 fs-6 fw-normal text-muted"><small>Status:</small></p>
-<p class="mb-0 fs-5 lh-base fw-bold p-2 bg-status">Invoiced</span>
+<p class="mb-2"><span class="text-muted">Status:</span>
+<span class="ps-2 text-body  fw-bold">Invoiced</span>
+</p>
 
 @elseif($orderDetails->invoice_status == 2)
-<p class=" pe-4 lh-base mb-1 fs-6 fw-normal text-muted"><small>Status:</small></p>
-<p class="mb-0 fs-5 lh-base fw-bold p-2 bg-status"> Acknowledged</p>
+<p class="mb-2"><span class="text-muted">Status:</span>
+<span class="ps-2 text-body  fw-bold"> Acknowledged
+</span>
+</p>
 
 @endif
 @endif
-  </div>
+
 
     </div>
 
@@ -210,45 +182,42 @@
 
 
     <!--   <p class="fw-bold fs-6 title-clr mb-2 lh-base">Invoice Details</p> -->
-    <div class="col-md-4">
+    <div class="col-md-6">
+    <p class="mt-2 mb-3 pt-2 fw-bold title-clr fs-6">Invoice Details</p>
       <div class="row">
-      <div class="col-md-12">
-    @if($user['role'] == 'Supplier' && $orderDetails->invoice_status==0)
-  <div class="form-group mb-3">
+
+
+
+      @if($user['role'] == 'Supplier' && $orderDetails->invoice_status==0)
+      <div class="col-md-4">
+      <div class="form-group mb-3">
     <label class="text-body">Invoice No: </label>
     <input type='text' name="invoice_no" id="invoice_no" value="" />
     </div>
-</div>
-<div class="col-md-12">
+      </div>
+
+<div class="col-md-4">
   <div class="form-group mb-3">
   <label class="text-body">Invoice Date:</label>
    <input type='date' name="invoice_date" id="invoice_date" />
     </div>
 </div>
-<div class="col-md-12">
+<div class="col-md-8">
    <div class="form-group mb-3">
    <label class="text-body">Upload File: </label>
    <input type='file' name="invoice" id="invoice" />
     </div>
 </div>
-      </div>
-    </div>
 
-
-
-    @elseif(($user['role'] == 'Supplier' || $user['role'] == 'HM' || $user['role'] == 'APC') && $orderDetails->invoice_status>0)
+@elseif(($user['role'] == 'Supplier' || $user['role'] == 'HM' || $user['role'] == 'APC') && $orderDetails->invoice_status>0)
     <p class="mb-2"><span class="text-muted">Invoice No:</span> <span class="ps-2 text-body  fw-bold">{{$orderDetails->invoice_no}}</span></p>
     <p class="mb-2"><span class="text-muted">Invoice File:</span> <span class="ps-2 text-primary fw-bold"><a href="{{asset($orderDetails->invoice_file_path)}}"
      target="_blank">Download Invoice</a></span></p>
     <p class="mb-2"><span class="text-muted">Invoice Date:</span> <span class="ps-2 text-body fw-bold">{{$orderDetails->invoice_date}}</span></p>
     @endif
-
+      </div>
     </div>
-
-
-
-
-
+    </div>
     @if($user['role'] == 'Supplier' && $orderDetails->invoice_status==0)
     <div class="col-xs-12 col-sm-12 col-md-12 mt-4 text-center">
         <button type="submit" class="btn btn-default  px-5 mb-2 py-3">Update</button>
@@ -266,18 +235,12 @@
         <button type="submit" class="btn btn-default mt-4 px-5 mb-2 py-3">Acknowledge Order</button>
 </div>
 @endif
-   </div>
 
-
-
-
-
-    <div>
     @if($user['role'] == 'APC' && ($orderDetails->apc_approved_status==0))
     <button type="submit" class="btn btn-primary mt-3 px-4 py-3">Approve</button>
     <button type="button" onClick="rejectedOrder();"  class="btn btn-primary mt-3 px-4 py-3">Reject</button>
     @endif
-    </div>
+ </div>
     </div>
     </div>
 </form>
