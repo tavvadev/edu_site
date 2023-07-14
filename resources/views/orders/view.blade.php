@@ -54,7 +54,7 @@
 
 
     <div class="table-responsive ">
-    <table class="table table-bordered " style="table-layout:fixed;">
+    <table class="table table-bordered " >
         <thead class="table-dark">
         <tr>
             <th>Product Name</th>
