@@ -185,7 +185,7 @@ class OrderController extends Controller
     public function updateorder(Request $request){
 
         $data = request()->session()->all();
-
+        // echo '<pre>';print_r($data['user']);exit;
         if($data['user']['role'] == 'Supplier') {
             // Validate the uploaded file
 /*
@@ -224,7 +224,7 @@ class OrderController extends Controller
             $order->invoice_status = 1;
             $order->save();
             
-        } else if($data['user']['role'] == 'HM' ||  $user['role'] == 'EE') {
+        } else if($data['user']['role'] == 'HM' ||  $data['user']['role'] == 'EE') {
             $totalnetpayable_price = 0;
             // echo '<pre>';print_r($request->ack_qty);exit;
             foreach($request->ack_qty as $product_id=>$del_qty) {
