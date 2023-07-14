@@ -8,7 +8,7 @@
 <div class="container ">
 <div class="row justify-content-center">
 <div class="col-md-8">
-<form class="row g-3 align-items-center ">
+<form class="row g-3 align-items-center">
   <div class="col-sm-6">
   <div class="form-group">
     <label >Districts</label>
