@@ -337,9 +337,16 @@
 
     $.ajax({
         type: "POST",
-        url: '/rejectedorder',
+        url: 'http://3.91.54.205/api/rejectedorder',
+        contentType: "application/json",
+        dataType: "json",
+        data: JSON.stringify({
+          reason: $("#reason").val(),
+          order_id: $("#order_id").val()
+        }),
         success: function(response) {
-           alert(response);
+          alert('Order rejected successfully.');
+          window.location.reload();
         },
         error: function(response) {
             console.log(response);
@@ -350,7 +357,7 @@
 
 
 
-  }
 
+  }
   </script>
 @endsection

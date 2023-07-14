@@ -474,6 +474,27 @@ class ApiController extends Controller
     }
 
 
+    public function schoolprofile(Request $request){
+        $params = (array) json_decode(file_get_contents('php://input'), TRUE);
+
+        if(isset($params['order_id']) && $params['order_id']==""){
+            return response()->json(['status' => '200', 'message' => 'Please enter order id']);
+        } 
+        
+        if(isset($params['reason']) && $params['reason']==""){
+            return response()->json(['status' => '200', 'message' => 'Please enter rejected reason']);
+        }
+       
+        $order = Invoices::find($params['order_id']);
+        $order->invoice_status = 3;
+        $order->reason = $params['reason'];
+        $order->ack_date = date('Y-m-d H:i:s');
+        $order->save();
+        return response()->json(['status' => '200', 'message' => 'Order rejected successfully.']);
+       
+    }
+
+
 
 
 }
