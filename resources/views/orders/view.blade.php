@@ -1,10 +1,11 @@
 @extends('layouts.master')
 
 @section('content')
-<div class="contianer-fluid ed-inner-pg ">
+<div class="contianer-fluid main-bg ">
     <div class="top-banner ">
 
-<div class="row justify-content-between align-items-center">
+    <div class="row justify-content-between align-items-center">
+    <div class="col-md-8 text-end">
 
   <nav aria-label="breadcrumb">
   <ol class="breadcrumb mb-0">
@@ -12,8 +13,9 @@
      <li class="breadcrumb-item active fs-5" aria-current="page">{{$orderDetails->cat_name}} Order Details </li>
   </ol>
 </nav>
+    </div>
 
-  <div class="col-auto ">
+    <div class="col-md-4 text-end">
   <?php
                 if(session('user.info.role_id')==2 || session('user.info.role_id')==3){
               ?>
@@ -44,41 +46,9 @@
         @csrf
         <input type="hidden" name="order_id" value="{{$orderDetails->orderId}}" />
     <div class="tb-sec">
-   <div class="table-responsive ">
-
-
    <!--  <h2 class="fs-5 fw-bold title-clr mb-2">Order Details</h2> -->
-   <div class="row mb-5 flex-wrap justify-content-start">
-    <div class="col-md-4 mt-3 mb-2 ">
-    <p class=" pe-4 lh-base mb-1 fs-6 fw-normal text-muted"><small>Order Id:</small></p>
-    <p class="mb-0 fs-5"><b> {{$orderDetails->invoice_num}}</b></p>
-
-
-    </div>
-
-    <div class="col-md-4 mt-3 mb-2 ">
-
-    <p class=" pe-4 lh-base mb-1 fs-6 fw-normal text-muted"><small>School:</small></p>
-    <p class="mb-0 fs-5"><b>  {{$orderDetails->school_name}}</b></p>
-    </div>
-    <div class="col-md-4 mt-3 mb-2 ">
-
-    <p class=" pe-4 lh-base mb-1 fs-6 fw-normal text-muted"><small>Head Master:</small></p>
-    <p class="mb-0 fs-5"><b>  {{$orderDetails->hm_name}}</b></p>
-    </div>
-    <div class="col-md-4 mt-3 mb-2 ">
-
-    <p class=" pe-4 lh-base mb-1 fs-6 fw-normal text-muted"><small>Head Master Contact:</small></p>
-    <p class="mb-0 fs-5"><b>  {{$orderDetails->hm_contact_num}}</b></p>
-    </div>
-    <div class="col-md-4 mt-3 mb-2 ">
-
-    <p class=" pe-4 lh-base mb-1 fs-6 fw-normal text-muted"><small>Indent Items:</small></p>
-    <p class="mb-0 fs-5"><b>Nil</b></p>
-    </div>
-    </div>
-
-    <table class="table table-bordered ">
+    <div class="table-responsive ">
+    <table class="table table-bordered " >
         <thead class="table-dark">
         <tr>
             <th>Product Name</th>
@@ -106,7 +76,11 @@
             <td>{{$product->productPrice}}</td>
             @if($user['role'] == 'HM' )
                 @if($user['role'] == 'HM' && $orderDetails->invoice_status==1)
-                <td><input type="number" value="{{$product->bill_qty}}" name="ack_qty[{{$product->pid}}]" max="{{$product->quantity}}" min="0" /></td>
+                <td>
+                <div class="form-group">
+                  <input type="number" value="{{$product->bill_qty}}"
+                  name="ack_qty[{{$product->pid}}]" max="{{$product->quantity}}" min="0" /></div>
+                </td>
                 @else
                 <td>{{$product->bill_qty}}</td>
                 @endif
@@ -118,7 +92,14 @@
 
             @if($user['role'] == 'EE' )
                 @if($user['role'] == 'EE' && $orderDetails->invoice_status==1)
-                <td><input type="number" value="{{$product->bill_qty}}" name="ack_qty[{{$product->pid}}]" max="{{$product->quantity}}" min="0" /></td>
+                <td>
+                <div class="form-group">
+                <input type="number" value="{{$product->bill_qty}}"
+                name="ack_qty[{{$product->pid}}]"
+                max="{{$product->quantity}}"
+                min="0"/>
+                </div>
+                </td>
                 @else
                 <td>{{$product->bill_qty}}</td>
                 @endif
@@ -136,14 +117,18 @@
               @if($user['role'] == 'Supplier')
 
                   @if($user['role'] == 'Supplier' && $orderDetails->invoice_status==0)
-                  <td><input type="number" onChange="ProductPriceChange({{$product->pid}}, {{$product->productPrice}});" id="delivered_qty_{{$product->pid}}"  name="delivered_qty[{{$product->pid}}]" max="{{$product->quantity}}" min="0" /></td>
+                  <td>   <div class="form-group w-auto">
+                    <input type="number" onChange="ProductPriceChange({{$product->pid}},
+                    {{$product->productPrice}});" id="delivered_qty_{{$product->pid}}"
+                    name="delivered_qty[{{$product->pid}}]" max="{{$product->quantity}}" min="0" /></div></td>
                   @else
                   <td>{{$product->bill_qty}}</td>
                   @endif
 
 
                   @if($user['role'] == 'Supplier' && $orderDetails->invoice_status==0)
-                  <td><input type="number" value="" id="ack_qty_price_{{$product->pid}}" name="ack_qty_price_[{{$product->pid}}]"  min="0" readonly /></td>
+                  <td>   <div class="form-group"><input type="number" value="" id="ack_qty_price_{{$product->pid}}" name="ack_qty_price_[{{$product->pid}}]"  min="0" readonly />
+                </div></td>
                   @else
                   <td>@php echo $product->bill_qty*$product->productPrice @endphp</td>
                   @endif
@@ -153,73 +138,109 @@
 	    @endforeach
         </tbody>
     </table>
-   
-   </div>
-   <div class="pt-5 row justify-content-start">
+    </div>
+
+    <div class=" row justify-content-start pt-4 pb-4 mb-3 border-bottom">
+<div class="col-md-6">
+<p class="mt-2 mb-3 pt-2 fw-bold title-clr fs-6">Order Details</p>
+   <p class="mb-2"><span class="text-muted">Order Id:</span>
+   <span class="ps-2 text-body  fw-bold"> {{$orderDetails->invoice_num}}</span>
+  </p>
+  <p class="mb-2"><span class="text-muted">School:</span>
+  <span class="ps-2 text-body  fw-bold">  {{$orderDetails->school_name}}</span></p>
+ <p class="mb-2"><span class="text-muted">Head Master:</span>
+  <span class="ps-2 text-body  fw-bold"> {{$orderDetails->hm_name}}</span></p>
+  <p class="mb-2"><span class="text-muted">Head Master Contact:</span>
+  <span class="ps-2 text-body  fw-bold"> {{$orderDetails->hm_contact_num}}</span></p>
+  <p class="mb-2"><span class="text-muted">Indent Items:</span>
+  <span class="ps-2 text-body  fw-bold">Nil</span></p>
+  @if($user['role'] != 'Supplier')
+@if($orderDetails->invoice_status == 0)
+<p class="mb-2"><span class="text-muted">Status:</span>
+<span class="ps-2 text-body  fw-bold">Pending</span>
+</p>
+
+@elseif($orderDetails->invoice_status == 1)
+<p class="mb-2"><span class="text-muted">Status:</span>
+<span class="ps-2 text-body  fw-bold">Invoiced</span>
+</p>
+
+@elseif($orderDetails->invoice_status == 2)
+<p class="mb-2"><span class="text-muted">Status:</span>
+<span class="ps-2 text-body  fw-bold"> Acknowledged
+</span>
+</p>
+
+@endif
+@endif
+
+
+    </div>
+
+
+
+
+
+    <!--   <p class="fw-bold fs-6 title-clr mb-2 lh-base">Invoice Details</p> -->
+    <div class="col-md-6">
+    <p class="mt-2 mb-3 pt-2 fw-bold title-clr fs-6">Invoice Details</p>
+      <div class="row">
+
+
+
+      @if($user['role'] == 'Supplier' && $orderDetails->invoice_status==0)
+      <div class="col-md-4">
+      <div class="form-group mb-3">
+    <label class="text-body">Invoice No: </label>
+    <input type='text' name="invoice_no" id="invoice_no" value="" />
+    </div>
+      </div>
+
 <div class="col-md-4">
-    @if($user['role'] == 'Supplier' && $orderDetails->invoice_status==0)
-    <p class="mb-2"><span class="text-muted">Invoice No: </span><input type='text' name="invoice_no" id="invoice_no" value="" /></p>
-    <p class="mb-2"><span class="text-muted">Upload File: </span><input type='file' name="invoice" id="invoice" /></p>
-    <p class="mb-2"><span class="text-muted">Invoice Date:</span> <input type='date' name="invoice_date" id="invoice_date" /></p>
+  <div class="form-group mb-3">
+  <label class="text-body">Invoice Date:</label>
+   <input type='date' name="invoice_date" id="invoice_date" />
+    </div>
+</div>
+<div class="col-md-8">
+   <div class="form-group mb-3">
+   <label class="text-body">Upload File: </label>
+   <input type='file' name="invoice" id="invoice" />
+    </div>
+</div>
 
-
-    @elseif(($user['role'] == 'Supplier' || $user['role'] == 'HM' || $user['role'] == 'APC') && $orderDetails->invoice_status>0)
+@elseif(($user['role'] == 'Supplier' || $user['role'] == 'HM' || $user['role'] == 'APC') && $orderDetails->invoice_status>0)
     <p class="mb-2"><span class="text-muted">Invoice No:</span> <span class="ps-2 text-body  fw-bold">{{$orderDetails->invoice_no}}</span></p>
     <p class="mb-2"><span class="text-muted">Invoice File:</span> <span class="ps-2 text-primary fw-bold"><a href="{{asset($orderDetails->invoice_file_path)}}"
      target="_blank">Download Invoice</a></span></p>
     <p class="mb-2"><span class="text-muted">Invoice Date:</span> <span class="ps-2 text-body fw-bold">{{$orderDetails->invoice_date}}</span></p>
     @endif
-
-    </div>
-    <div class="col-md-4">
-      <div class="d-flex">
-      @if($user['role'] != 'Supplier')
-    @if($orderDetails->invoice_status == 0)
-    <span class="text-muted pending col-auto me-2">Status:</span>
-     <span class="title-color col-auto fw-bold">Pending</span>
-
-    @elseif($orderDetails->invoice_status == 1)
-    <span class="text-muted pending col-auto me-2">Status:</span>
-     <span class="title-color col-auto fw-bold">Invoiced</span>
-
-    @elseif($orderDetails->invoice_status == 2)
-    <span class="text-muted pending col-auto me-2">Status:</span>
-     <span class="title-color col-auto fw-bold">Acknowledged</span>
-
-    @endif
-    @endif
       </div>
-
-       
     </div>
     </div>
-
-
-@if($user['role'] == 'Supplier' && $orderDetails->invoice_status==0)
-    <div class="col-xs-12 col-sm-12 col-md-12 text-center">
-        <button type="submit" class="btn btn-primary mt-3 px-4 py-3">Update</button>
+    @if($user['role'] == 'Supplier' && $orderDetails->invoice_status==0)
+    <div class="col-xs-12 col-sm-12 col-md-12 mt-4 text-center">
+        <button type="submit" class="btn btn-default  px-5 mb-2 py-3">Update</button>
 </div>
 @endif
 
 @if($user['role'] == 'HM' && $orderDetails->invoice_status==1)
     <div class="col-xs-12 col-sm-12 col-md-12 text-center">
-        <button type="submit" class="btn btn-primary mt-3 px-4 py-3">Acknowledge Order</button>
+        <button type="submit" class="btn btn-default mt-4 px-5 mb-2 py-3">Acknowledge Order</button>
 </div>
 @endif
 
 @if( $user['role'] == 'EE' && $orderDetails->is_acknowledge_ee==1)
     <div class="col-xs-12 col-sm-12 col-md-12 text-center">
-        <button type="submit" class="btn btn-primary mt-3 px-4 py-3">Acknowledge Order</button>
+        <button type="submit" class="btn btn-default mt-4 px-5 mb-2 py-3">Acknowledge Order</button>
 </div>
 @endif
 
-
-    <div>
     @if($user['role'] == 'APC' && ($orderDetails->apc_approved_status==0))
     <button type="submit" class="btn btn-primary mt-3 px-4 py-3">Approve</button>
     <button type="button" onClick="rejectedOrder();"  class="btn btn-primary mt-3 px-4 py-3">Reject</button>
     @endif
-    </div>
+ </div>
     </div>
     </div>
 </form>
@@ -275,7 +296,8 @@
 
   function saveRejectedOrder(){
     var reject_reason = $('#reject_reason').val();
-    var order_id = $('#reject_order_id').val(); 
+    var order_id = $('#reject_order_id').val();
+
     $.ajax({
         type: "POST",
         url: 'http://3.91.54.205/api/rejectedorder',

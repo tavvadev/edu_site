@@ -831,9 +831,10 @@ padding: 42px 64px;
     background: var(--primary) url(../images/campus.jpg) no-repeat;
     object-fit: cover;
     width: 100%;
-    min-height: 220px;
+
     height: auto;
 padding: 48px;
+min-height: 220px;
 background-blend-mode: luminosity;
 }
 .btn-light {
@@ -864,7 +865,7 @@ background-blend-mode: luminosity;
     background: var(--white);
     box-shadow: 0px 12px 24px -6px #ccc;
     border-radius: 16px ;
-    margin:-96px  auto 24px;
+    margin:-96px  auto 0px;
 }
 .tb-sec .table-responsive{
     padding:0px;
@@ -947,6 +948,7 @@ font-weight: 600;
 padding: 12px;
 color: #343535;
 white-space: nowrap;
+min-width: 120px;
 }
 .table-responsive table > thead > tr > th {
     color: var(--teritary-clr);
@@ -1455,12 +1457,18 @@ background-blend-mode: soft-light;
                 color: #06255c !important;
               }
 
+              .bg-status {
+
+            color: #1e487a;
+
+              }
               /* product page css */
               .main-bg{
                 width: 100%;
                 height: auto;
                 min-height: 100vh;
                 position: relative;
+                padding-bottom: 32px;
               }
               .main-bg::before{
                 content: '';
@@ -1524,7 +1532,7 @@ margin:auto;
     font-weight: 600;
     color: var(--primary);
  }
-.form-group input[type="text"], .form-group input[type="number"], .form-group select, .form-group input[type="email"], input[type="password"], input[type="text"]:empty{
+.form-group input[type="text"], .form-group input[type="number"], .form-group select, .form-group input[type="file"], .form-group input[type="date"], .form-group input[type="email"], input[type="password"], input[type="text"]:empty{
     border: 1px solid var(--title-color) !important;
      height: 45px !important;
      background:rgb(215 214 214 / 26%) !important;
@@ -1532,6 +1540,7 @@ margin:auto;
      font-size: 16px;
      font-weight: 600;
      width: 100%;
+     padding: 6px 12px;
  }
 
 
@@ -1554,7 +1563,7 @@ margin:auto;
     background: var(--white) !important;
  } */
   .form-group input[type="text"]:valid, .form-group input[type="number"]:valid, .form-group select:valid, .form-group input[type="email"]:valid, input[type="password"]:valid{
-    border: 1px solid var(--success) !important;
-    box-shadow: none;
+   /*  border: 1px solid var(--success) !important;
+    box-shadow: none; */
     background: var(--white) !important;
  }

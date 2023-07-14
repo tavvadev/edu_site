@@ -1,9 +1,10 @@
 @extends('layouts.master')
 
 @section('content')
-<div class="contianer-fluid ed-inner-pg ">
+<div class="contianer-fluid main-bg ">
     <div class="top-banner">
-
+    <div class="row justify-content-between align-items-center">
+    <div class="col-md-8 text-end">
     <nav aria-label="breadcrumb">
   <ol class="breadcrumb mb-0">
     <li class="breadcrumb-item fs-5"><a href="/">Home</a></li>
@@ -11,13 +12,14 @@
        Orders </li>
   </ol>
 </nav>
+    </div>
               <!--   <h2 class="fw-bold text-white fs-4 ">Orders</h2> -->
 
               <?php
                 if(session('user.info.role_id')==2 || session('user.info.role_id')==3){
               ?>
-              <div class="row justify-content-end pt-4">
-                  <div class="col-md-3 text-end">
+
+                  <div class="col-md-4 text-end">
                     <a class="btn btn-warning text-white py-3 px-4" href="/orders/category"> Create your New Order</a>
                   </div>
 
@@ -25,7 +27,8 @@
                 }
                 ?>
 
-            </div>
+
+    </div>
               @if ($message = Session::get('success'))
               <div class="alert alert-success">
               {{ $message }}
