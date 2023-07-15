@@ -40,8 +40,6 @@
                 @endif
 
     </div>
-
-
     <form action="/order/updateorder" class=" " method="POST" enctype="multipart/form-data">
         @csrf
         <input type="hidden" name="order_id" value="{{$orderDetails->orderId}}" />
@@ -140,6 +138,126 @@
     </table>
     </div>
 
+    @if($user['role'] == 'Supplier')
+  
+    @if($user['role'] == 'Supplier' && $orderDetails->invoice_status!=0 && $orderDetails->delivered_qty!=$orderDetails->total_qty)
+    <div class="table-responsive ">
+      <table class="table table-bordered " >
+          <thead class="table-dark">
+          <tr>
+              <th>Product Name</th>
+              <th>Ordered Qty</th>
+              <th>Price</th>
+              <th>Deilvered Qty</th>
+              <th>Amount</th>
+              @if($user['role'] == 'HM' && ($orderDetails->invoice_status==1 || $orderDetails->invoice_status==2))
+              <th>Ack Qty</th>
+              @endif
+              @if($user['role'] == 'EE' && ($orderDetails->invoice_status==1 || $orderDetails->invoice_status==2))
+              <th>Ack Qty</th>
+              @endif
+          </tr>
+          </thead>
+          <tbody>
+              @foreach ($orderDetails->products as $product)
+
+  @if($product->pending_qty!=0)
+        <tr>
+              <td>{{$product->product_name}}</td>
+              <td>{{$product->quantity}} {{$product->units}}</td>
+              <td>{{$product->productPrice}}</td>
+              @if($user['role'] == 'HM' )
+                  @if($user['role'] == 'HM' && $orderDetails->invoice_status==1)
+                  <td>
+                  <div class="form-group">
+                    <input type="number" value="{{$product->bill_qty}}"
+                    name="ack_qty[{{$product->pid}}]" max="{{$product->quantity}}" min="0" /></div>
+                  </td>
+                  @else
+                  <td>{{$product->bill_qty}}</td>
+                  @endif
+                  <td>@php echo $product->bill_qty*$product->productPrice @endphp</td>
+                  @if($user['role'] == 'HM' && $orderDetails->invoice_status==2)
+                  <td>{{$product->ack_qty}}</td>
+                  @endif
+              @endif
+  
+              @if($user['role'] == 'EE' )
+                  @if($user['role'] == 'EE' && $orderDetails->invoice_status==1)
+                  <td>
+                  <div class="form-group">
+                  <input type="number" value="{{$product->bill_qty}}"
+                  name="ack_qty[{{$product->pid}}]"
+                  max="{{$product->quantity}}"
+                  min="0"/>
+                  </div>
+                  </td>
+                  @else
+                  <td>{{$product->bill_qty}}</td>
+                  @endif
+                  <td>@php echo $product->bill_qty*$product->productPrice @endphp</td>
+                  @if($user['role'] == 'EE' && $orderDetails->invoice_status==2)
+                  <td>{{$product->ack_qty}}</td>
+                  @endif
+              @endif
+  
+                @if($user['role'] == 'APC' || $user['role'] == 'FAO' )
+                  <td>{{$product->bill_qty}}</td>
+                  <td>@php echo $product->bill_qty*$product->productPrice @endphp</td>
+                @endif
+  
+                @if($user['role'] == 'Supplier')
+  
+                    @if($user['role'] == 'Supplier' && $orderDetails->invoice_status!=0)
+                    <td>   <div class="form-group w-auto">
+                      <input type="number" onChange="ProductPriceChange({{$product->pid}},
+                      {{$product->productPrice}});" value="{{$product->pending_qty}}" id="delivered_qty_{{$product->pid}}"
+                      name="delivered_qty[{{$product->pid}}]" max="{{$product->quantity}}" min="0" /></div></td>
+                    @else
+                    <td>{{$product->bill_qty}}</td>
+                    @endif
+                    
+  
+                    @if($user['role'] == 'Supplier' && $orderDetails->invoice_status!=0)
+                    <td>   <div class="form-group"><input type="number" value="" id="ack_qty_price_{{$product->pid}}" name="ack_qty_price_[{{$product->pid}}]"  min="0" readonly />
+                  </div></td>
+                    @else
+                    <td>@php echo $product->bill_qty*$product->productPrice @endphp</td>
+                    @endif
+                @endif
+  
+        </tr>
+        @endif
+        @endforeach
+          </tbody>
+      </table>
+      </div>
+
+      <div class="col-md-4">
+        <div class="form-group mb-3">
+        <label class="text-body">Invoice No: </label>
+        <input type='text' name="invoice_no" id="invoice_no" value="" />
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="form-group mb-3">
+        <label class="text-body">Invoice Date:</label>
+         <input type='date' name="invoice_date" id="invoice_date" />
+          </div>
+      </div>
+      <div class="col-md-4">
+         <div class="form-group mb-3">
+         <label class="text-body">Upload File: </label>
+         <input type='file' name="invoice" id="invoice" />
+          </div>
+      </div>
+      <div class="col-xs-12 col-sm-12 col-md-12 mt-4 text-center">
+        <button type="submit" class="btn btn-default  px-5 mb-2 py-3">Update</button>
+</div>
+
+      @endif
+      @endif
+
     <div class=" row justify-content-start pt-4 pb-4 mb-3 border-bottom">
 <div class="col-md-6">
 <p class="mt-2 mb-3 pt-2 fw-bold title-clr fs-6">Order Details</p>
@@ -210,10 +328,12 @@
 </div>
 
 @elseif(($user['role'] == 'Supplier' || $user['role'] == 'HM' || $user['role'] == 'APC') && $orderDetails->invoice_status>0)
-    <p class="mb-2"><span class="text-muted">Invoice No:</span> <span class="ps-2 text-body  fw-bold">{{$orderDetails->invoice_no}}</span></p>
-    <p class="mb-2"><span class="text-muted">Invoice File:</span> <span class="ps-2 text-primary fw-bold"><a href="{{asset($orderDetails->invoice_file_path)}}"
+    @foreach ($orderDetails->invoices as $invoice)
+    <p class="mb-2"><span class="text-muted">Invoice No:</span> <span class="ps-2 text-body  fw-bold">{{$invoice->invoice_no}}</span></p>
+    <p class="mb-2"><span class="text-muted">Invoice File:</span> <span class="ps-2 text-primary fw-bold"><a href="{{asset($invoice->invoice_file_path)}}"
      target="_blank">Download Invoice</a></span></p>
-    <p class="mb-2"><span class="text-muted">Invoice Date:</span> <span class="ps-2 text-body fw-bold">{{$orderDetails->invoice_date}}</span></p>
+    <p class="mb-2"><span class="text-muted">Invoice Date:</span> <span class="ps-2 text-body fw-bold">{{$invoice->invoice_date}}</span></p>
+    @endforeach
     @endif
       </div>
     </div>

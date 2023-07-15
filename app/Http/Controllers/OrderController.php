@@ -13,6 +13,7 @@ use App\Models\InvoiceProducts;
 use App\Models\Orderproducts;
 use App\Models\DistrictSuppliers;
 use App\Models\Payments;
+use App\Models\OrderInvoices;
 use Illuminate\Support\Facades\DB;
 
 
@@ -185,14 +186,14 @@ class OrderController extends Controller
     public function updateorder(Request $request){
 
         $data = request()->session()->all();
-        // echo '<pre>';print_r($data['user']);exit;
+        // echo '<pre>';print_r($_POST);exit;
         if($data['user']['role'] == 'Supplier') {
             // Validate the uploaded file
-/*
+
             $request->validate([
             'invoice' => 'mimes:pdf|max:2048', // Adjust the allowed file types and size as needed
             ]);
-            */
+            
 
             if ($request->hasFile('invoice')) {
             $file = $request->file('invoice');
@@ -201,28 +202,34 @@ class OrderController extends Controller
 
             // echo '<pre>';print_r($file);
             }
+            $total_delivered = 0;
             foreach($request->delivered_qty as $product_id=>$del_qty) {
                 //echo '<pre>';print_r($_POST);exit;
-
+            $total_delivered = $total_delivered + $del_qty;
+            
             DB::table('order_products')
             ->where('invoice_id', $request->order_id)
             ->where('product_id', $product_id)
             ->update([
-            'bill_qty' => $del_qty
-
+            'bill_qty' => DB::raw("bill_qty + $del_qty"),
+            'pending_qty' => DB::raw("quantity -  (bill_qty)")
             ]);
 
             }
-
-
-            // echo '<pre>';print_r($request->all());exit;
+            $orderInvoice = new OrderInvoices();
+            $orderInvoice->order_id = $request->order_id;
+            $orderInvoice->invoice_date = $request->invoice_date;
+            $orderInvoice->invoice_no = $request->invoice_no;
+            $orderInvoice->total_invoice_qty = $total_delivered;
+            $orderInvoice->invoice_created_at = date('Y-m-d H:i:s');
+            $orderInvoice->invoice_file_path = $path;
+            $orderInvoice->save();
+            
             $order = Invoices::find($request->order_id);
-            $order->invoice_date = $request->invoice_date;
-            $order->invoice_no = $request->invoice_no;
-            $order->invoice_created_at = date('Y-m-d H:i:s');
-            $order->invoice_file_path = $path;
             $order->invoice_status = 1;
+            $order->delivered_qty = DB::raw("delivered_qty + $total_delivered");
             $order->save();
+            // echo '<pre>';print_r($request->all());exit;
             
         } else if($data['user']['role'] == 'HM' ||  $data['user']['role'] == 'EE') {
             $totalnetpayable_price = 0;
@@ -261,7 +268,7 @@ class OrderController extends Controller
                 $order->apc_approved_by = $data['user']['info']->id;
                 $order->save();
         }
-         
+        //  echo '<pre>';print_r($_POST);exit;
         return redirect()->route('orders.index')
         ->with('success','Order updated successfully.');
         
@@ -381,8 +388,11 @@ class OrderController extends Controller
             ->first();
 
                 $results = InvoiceProducts::leftjoin('products as p',"order_products.product_id","=",'p.id')->where('invoice_id', $orderDetails->orderId)
-                ->select("p.name as product_name","p.units","order_products.product_id as pid","p.price as productPrice","order_products.*")->get();
+                ->select("p.name as product_name","p.units","order_products.product_id as pid","order_products.pending_qty as pending_qty","p.price as productPrice","order_products.*")->get();
+
+                $invoices = OrderInvoices::where('order_id', $orderDetails->orderId)->select("order_invoices.*")->get();
                 $orderDetails['products'] = $results;
+                $orderDetails['invoices'] = $invoices;
 
             // echo '<pre>';print_r($orderDetails);exit;
             if($data['user']['role'] == 'FAO') {
