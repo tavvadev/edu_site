@@ -192,9 +192,8 @@ class OrderController extends Controller
 
 
             $request->validate([
-                'invoice' => 'required|mimes:png,jpg,jpeg|max:2048'
+                'invoice' => 'required|mimes:png,jpg,jpeg,pdf|max:2048'
             ]);
-            */
 
             if ($request->hasFile('invoice')) {
             $file = $request->file('invoice');
