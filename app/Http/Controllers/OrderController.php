@@ -190,10 +190,11 @@ class OrderController extends Controller
         if($data['user']['role'] == 'Supplier') {
             // Validate the uploaded file
 
+
             $request->validate([
-            'invoice' => 'mimes:pdf|max:2048', // Adjust the allowed file types and size as needed
+                'invoice' => 'required|mimes:png,jpg,jpeg|max:2048'
             ]);
-            
+            */
 
             if ($request->hasFile('invoice')) {
             $file = $request->file('invoice');
@@ -403,12 +404,6 @@ class OrderController extends Controller
             
 
         }
-
-        public function rejectedorder() {
-            echo "<pre>";print_r('gggggggggggg');exit;
-            
-        }
-    
 
         public function generatebill(Request $request): RedirectResponse {
             if($request->order_id!=''){

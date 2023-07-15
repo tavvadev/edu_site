@@ -3,14 +3,16 @@
 @section('content')
 <br>
 <br>
-<?php
-        
-        ?>
-    <form class="row gx-3 gy-2 align-items-center">
-
-  <div class="col-sm-3">
-  <div class="input-group">
-    <div class="input-group-text">Districts</div>
+<div class="main-bg">
+<div class="contianer-fluid ed-inner-pg">
+<div class="card form-crd-bg border-bottom rounded-0 p-5">
+<div class="container ">
+<div class="row justify-content-center">
+<div class="col-md-8">
+<form class="row g-3 align-items-center">
+  <div class="col-sm-6">
+  <div class="form-group">
+    <label >Districts</label>
       <select class="form-select" id="district_id" name="district_id" onchange="mandalsList();">
         <option value="">Choose...</option>
         <?php
@@ -18,33 +20,27 @@
         ?>
         <option value="{{$district->id}}">{{$district->dist_name}}</option>
         <?php } ?>
-        
       </select>
-    </div>
   </div>
-  <div class="col-sm-3">
-    <div class="input-group">
-      <div class="input-group-text">Mandals</div>
-      <select class="form-select" id="mandalOptionsList" name="mandalOptionsList" onchange="villagesList();">
-     
-    </select>
-    </div>
   </div>
-
-  
-  <div class="col-sm-3">
-    <div class="input-group">
-      <div class="input-group-text">Villages</div>
+  <div class="col-sm-6">
+  <div class="form-group">
+  <label >Mandals</label>
+  <select class="form-select" id="mandalOptionsList" name="mandalOptionsList" onchange="villagesList();">
+  </select>
+  </div>
+  </div>
+  <div class="col-sm-6">
+  <div class="form-group">
+    <label >Villages</label>
       <select class="form-select" id="village_id" name="village_id" onchange="schoolsList();" >
-      
       </select>
     </div>
   </div>
-
-  <div class="col-sm-3">
-    <div class="input-group">
-      <div class="input-group-text">School Category</div>
-      <select class="form-select" id="school_category" name="school_category">
+  <div class="col-sm-6">
+  <div class="form-group">
+    <label >School Category</label>
+    <select class="form-select" id="school_category" name="school_category">
           <option selected>Choose...</option>
           <option value="PRIMARY">PRIMARY</option>
           <option value="UPPER PRIMARY">UPPER PRIMARY</option>
@@ -52,29 +48,25 @@
     </select>
     </div>
   </div>
-
-  <div class="col-sm-3">
-    <div class="input-group">
-      <div class="input-group-text">Schools</div>
-      <select class="form-select" id="school_id" name="school_id" >
-      
-      </select>
-    </div>
+  <div class="col-sm-6">
+  <div class="form-group">
+    <label >Schools</label>
+    <select class="form-select" id="school_id" name="school_id" >
+    </select>
   </div>
-
-  
-  
-  
-  <div class="col-auto">
-    <button type="button" class="btn btn-primary" onClick="Reports();" >Submit</button>
+  </div>
+  <div class="col-sm-6">
+  <button type="button" class="btn w-100   p-2 btn-secondary" onClick="Reports();" >Submit</button>
   </div>
 </form>
+</div>
+</div>
+</div>
+</div>
 
-<br>
-<br>
-
-<table class="table table-bordered" >
-    <thead>
+<div class="table-responsive rounded-0">
+<table class="table table-bordered rounded-0" >
+    <thead class="table-dark border-0">
       <tr>
         <th>S.No</th>
         <th>District</th>
@@ -99,9 +91,11 @@
     </tbody> 
 
 </table>
+</div>
 
+</div>
+</div>
 
-<br>
 <script>
   
 function mandalsList(){   

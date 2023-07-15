@@ -39,6 +39,7 @@
         <?php
 
         if(isset($orderDetails) && $orderDetails !=""){
+            //echo "<pre>";print_r($orderDetails);exit;
         ?>
 
         <!--<h2>{{$orderDetails->invoice_num}} Order Details </h2>-->
@@ -54,8 +55,15 @@
         <p class="card p-4 mb-2 d-flex flex-row justify-content-start"><span class="fw-normal col-md-6 text-muted">Order rises date:</span> <span class="fw-bold col-md-6 ps-4">{{$orderDetails->created_by}}</span></p>
         <p class="card p-4 mb-2 d-flex flex-row justify-content-start"><span class="fw-normal col-md-6 text-muted">Order Component:</span> <span class="fw-bold col-md-6 ps-4">{{$orderDetails->cat_name}}</span></p>
         <p class="card p-4 mb-2 d-flex flex-row justify-content-start"><span class="fw-normal col-md-6 text-muted">Order supply company Name:</span><span class="fw-bold col-md-6 ps-4">{{$orderDetails->supplierName}}</span></p>
-        <p class="card p-4 mb-2 d-flex flex-row justify-content-start"><span class="fw-normal col-md-6 text-muted">Status of Order:</span> <span class="fw-bold col-md-6 ps-4">{{$orderDetails->invoice_status}}</span></p>
+
+        <p class="card p-4 mb-2 d-flex flex-row justify-content-start"><span class="fw-normal col-md-6 text-muted">Invoice/supply date:</span> <span class="fw-bold col-md-6 ps-4">{{$orderDetails->invoice_date}}</span></p>
+        <p class="card p-4 mb-2 d-flex flex-row justify-content-start"><span class="fw-normal col-md-6 text-muted">Order quantity:</span> <span class="fw-bold col-md-6 ps-4">{{$orderDetails->total_qty}}</span></p>
+        <p class="card p-4 mb-2 d-flex flex-row justify-content-start"><span class="fw-normal col-md-6 text-muted">Invoice quantity:</span><span class="fw-bold col-md-6 ps-4">{{$orderDetails->delivered_qty}}</span></p>
+        
+
+        <p class="card p-4 mb-2 d-flex flex-row justify-content-start"><span class="fw-normal col-md-6 text-muted">Status of Order:</span> <span class="fw-bold col-md-6 ps-4">{{ $orderDetails->invoice_status==0?"Pending":($orderDetails->invoice_status==1?"Completed":"Acknoledged") }} @if($orderDetails->invoice_status==0) / {{ $orderDetails->apc_approved_status==0?"Yet to Approve":"Approved by APC" }}</span>@endif</p>
             </div>
+
         </div>
 
         <?php
