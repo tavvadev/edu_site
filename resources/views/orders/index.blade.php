@@ -111,7 +111,7 @@
             <td class="fw-bold">{{ $order->supplierName }}</td>
             <td>{{ $order->supplierNumber }}</td>
 
-            <td><span class="pending ">{{ $order->invoice_status==0?"Pending":($order->invoice_status==1?"Completed":"Acknowledged") }}</span> @if($order->invoice_status==0) / <span class="acknowledge ">{{ $order->apc_approved_status==0?"Yet to Approve":"Approved by APC" }}</span>@endif</td>
+            <td><span class="pending ">{{ $order->invoice_status==0?"Pending":($order->invoice_status==1?"Completed":"Acknowledged") }}</span> @if($order->invoice_status==0)  <span class="acknowledge ">{{ $order->apc_approved_status==0?"Yet to Approve":"Approved by APC" }}</span>@endif</td>
             <td ><a class=" btn btn-link" role="button" href="/order/view/{{ $order->oid }}">{{ $order->order_num }}</a></td>
 
             <?php
