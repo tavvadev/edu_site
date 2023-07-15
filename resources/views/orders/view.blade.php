@@ -270,8 +270,6 @@
   <span class="ps-2 text-body  fw-bold"> {{$orderDetails->hm_name}}</span></p>
   <p class="mb-2"><span class="text-muted">Head Master Contact:</span>
   <span class="ps-2 text-body  fw-bold"> {{$orderDetails->hm_contact_num}}</span></p>
-  <p class="mb-2"><span class="text-muted">Indent Items:</span>
-  <span class="ps-2 text-body  fw-bold">Nil</span></p>
   @if($user['role'] != 'Supplier')
 @if($orderDetails->invoice_status == 0)
 <p class="mb-2"><span class="text-muted">Status:</span>
