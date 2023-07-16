@@ -270,6 +270,7 @@
   <span class="ps-2 text-body  fw-bold"> {{$orderDetails->hm_name}}</span></p>
   <p class="mb-2"><span class="text-muted">Head Master Contact:</span>
   <span class="ps-2 text-body  fw-bold"> {{$orderDetails->hm_contact_num}}</span></p>
+
   @if($user['role'] != 'Supplier')
 @if($orderDetails->invoice_status == 0)
 <p class="mb-2"><span class="text-muted">Status:</span>
@@ -283,8 +284,11 @@
 
 @elseif($orderDetails->invoice_status == 2)
 <p class="mb-2"><span class="text-muted">Status:</span>
-<span class="ps-2 text-body  fw-bold"> Acknowledged
-</span>
+<span class="ps-2 text-body  fw-bold"> Acknowledged</span>
+</p>
+@elseif($orderDetails->invoice_status == 3)
+<p class="mb-2"><span class="text-muted">Status:</span>
+<span class="ps-2 text-body  fw-bold"> Rejected</span>
 </p>
 
 @endif
