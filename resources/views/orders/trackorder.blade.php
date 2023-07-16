@@ -59,9 +59,27 @@
         <p class="card p-4 mb-2 d-flex flex-row justify-content-start"><span class="fw-normal col-md-6 text-muted">Invoice/supply date:</span> <span class="fw-bold col-md-6 ps-4">{{$orderDetails->invoice_date}}</span></p>
         <p class="card p-4 mb-2 d-flex flex-row justify-content-start"><span class="fw-normal col-md-6 text-muted">Order quantity:</span> <span class="fw-bold col-md-6 ps-4">{{$orderDetails->total_qty}}</span></p>
         <p class="card p-4 mb-2 d-flex flex-row justify-content-start"><span class="fw-normal col-md-6 text-muted">Invoice quantity:</span><span class="fw-bold col-md-6 ps-4">{{$orderDetails->delivered_qty}}</span></p>
-        
+        <?php
+        if(isset($orderDetails->reason) && $orderDetails->reason!=""){
+        ?>
+        <p class="card p-4 mb-2 d-flex flex-row justify-content-start"><span class="fw-normal col-md-6 text-muted">Rejected Reason:</span><span class="fw-bold col-md-6 ps-4">{{$orderDetails->reason}}</span></p>
+        <?php
+        }
+        ?>
 
-        <p class="card p-4 mb-2 d-flex flex-row justify-content-start"><span class="fw-normal col-md-6 text-muted">Status of Order:</span> <span class="fw-bold col-md-6 ps-4">{{ $orderDetails->invoice_status==0?"Pending":($orderDetails->invoice_status==1?"Completed":"Acknoledged") }} @if($orderDetails->invoice_status==0) / {{ $orderDetails->apc_approved_status==0?"Yet to Approve":"Approved by APC" }}</span>@endif</p>
+        <p class="card p-4 mb-2 d-flex flex-row justify-content-start"><span class="fw-normal col-md-6 text-muted">Status of Order:</span> <span class="fw-bold col-md-6 ps-4">
+        <?php
+              if($orderDetails->invoice_status==0){
+                echo "Pending";
+              }else if($orderDetails->invoice_status==1){
+                echo "Completed";
+              }else if($orderDetails->invoice_status==3){
+                echo "Rejected";
+              }else{
+                echo "Acknowledged";
+              }
+              ?>    
+        @if($orderDetails->invoice_status==0) / {{ $orderDetails->apc_approved_status==0?"Yet to Approve":"Approved by APC" }}</span>@endif</p>
             </div>
 
         </div>

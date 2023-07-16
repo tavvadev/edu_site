@@ -469,6 +469,7 @@ class ApiController extends Controller
         $order->reason = $params['reason'];
         $order->ack_date = date('Y-m-d H:i:s');
         $order->save();
+       
         return response()->json(['status' => '200', 'message' => 'Order rejected successfully.']);
        
     }

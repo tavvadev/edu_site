@@ -110,8 +110,24 @@
             <td>{{ $order->cat_name }}</td>
             <td class="fw-bold">{{ $order->supplierName }}</td>
             <td>{{ $order->supplierNumber }}</td>
-
-            <td><span class="pending ">{{ $order->invoice_status==0?"Pending":($order->invoice_status==1?"Completed":"Acknowledged") }}</span> @if($order->invoice_status==0)  <span class="acknowledge ">{{ $order->apc_approved_status==0?"Yet to Approve":"Approved by APC" }}</span>@endif</td>
+            <td><span class="acknowledge ">
+            <?php
+              if($order->invoice_status==0){
+                echo "Pending";
+              }else if($order->invoice_status==1){
+                echo "Completed";
+              }else if($order->invoice_status==3){
+                echo "Rejected";
+              }else{
+                echo "Acknowledged";
+              }
+              ?>
+              
+            </span>
+             @if($order->invoice_status==0) / 
+             <span class="pending ">{{ $order->apc_approved_status==0?"Yet to Approve":"Approved by APC" }}</span>
+             @endif
+            </td>
             <td ><a class=" btn btn-link" role="button" href="/order/view/{{ $order->oid }}">{{ $order->order_num }}</a></td>
 
             <?php
@@ -126,8 +142,25 @@
             <td>{{ $order->order_num }}</td>
             <td>{{ $order->hm_name }}</td>
             <td>{{ $order->hm_contact_num }}</td>
-            <td><span class="acknowledge ">{{ $order->invoice_status==0?"Pending":($order->invoice_status==1?"Completed":"Acknoledged") }}</span> @if($order->invoice_status==0) / <span class="acknowledge ">{{ $order->apc_approved_status==0?"Yet to Approve":"Approved by APC" }}</span>@endif</td>
-             <?php
+            <td><span class="acknowledge ">
+            <?php
+              if($order->invoice_status==0){
+                echo "Pending";
+              }else if($order->invoice_status==1){
+                echo "Completed";
+              }else if($order->invoice_status==3){
+                echo "Rejected";
+              }else{
+                echo "Acknowledged";
+              }
+              ?>
+              
+            </span>
+             @if($order->invoice_status==0) / 
+             <span class="pending ">{{ $order->apc_approved_status==0?"Yet to Approve":"Approved by APC" }}</span>
+             @endif
+            </td>
+            <?php
             } else if(session('user.info.role_id')==6){
             ?>
              <td>{{ $i }}</td>
@@ -143,7 +176,25 @@
             <td>{{ $order->hm_name }}</td>
             <td>{{ $order->hm_contact_num }}</td>
             <td ><a class=" btn btn-link" role="button" href="/order/view/{{ $order->oid }}">{{ $order->order_num }}</a></td>
-            <td><span class="acknowledge ">{{ $order->invoice_status==0?"Pending":($order->invoice_status==1?"Completed":"Acknoledged") }}</span> @if($order->invoice_status==0) / <span class="pending ">{{ $order->apc_approved_status==0?"Yet to Approve":"Approved by APC" }}</span>@endif</td>
+            
+            <td><span class="acknowledge ">
+              <?php
+              if($order->invoice_status==0){
+                echo "Pending";
+              }else if($order->invoice_status==1){
+                echo "Completed";
+              }else if($order->invoice_status==3){
+                echo "Rejected";
+              }else{
+                echo "Acknowledged";
+              }
+              ?>
+              
+            </span>
+             @if($order->invoice_status==0) / 
+             <span class="pending ">{{ $order->apc_approved_status==0?"Yet to Approve":"Approved by APC" }}</span>
+             @endif
+            </td>
 
 
             <?php

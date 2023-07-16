@@ -354,7 +354,7 @@
 </div>
 @endif
 
-    @if($user['role'] == 'APC' && ($orderDetails->apc_approved_status==0))
+    @if($user['role'] == 'APC' && ($orderDetails->apc_approved_status==0 && $orderDetails->invoice_status!=3))
     <button type="submit" class="btn btn-primary mt-3 px-4 py-3">Approve</button>
     <button type="button" onClick="rejectedOrder();"  class="btn btn-primary mt-3 px-4 py-3">Reject</button>
     @endif
@@ -409,21 +409,22 @@
   }
 
   function closeOrder(){
+    $('#reject_reason').val('');
     $('#exampleModalCenter').modal('hide');
   }
 
   function saveRejectedOrder(){
     var reject_reason = $('#reject_reason').val();
     var order_id = $('#reject_order_id').val();
-
+  
     $.ajax({
         type: "POST",
         url: 'http://3.91.54.205/api/rejectedorder',
         contentType: "application/json",
         dataType: "json",
         data: JSON.stringify({
-          reason: $("#reason").val(),
-          order_id: $("#order_id").val()
+          reason: reject_reason,
+          order_id: order_id
         }),
         success: function(response) {
           alert('Order rejected successfully.');
