@@ -282,44 +282,36 @@ class OrderController extends Controller
         if(count($orders) !=0){
             return redirect()->back()->with("error","Already this order category placed.");
         }else{
-        // echo $data['user'];exit;
-        // echo '<pre>';print_r($data['user']['schools'][0]);
-        // // print_r($data['user']['role']);
-        //  echo '<pre>';print_r($data['user']);
-   
+      
             $validator = \Validator::make($request->all(),
             [
-              //   'invoice_num'         =>     'required|min:1|regex:/^[a-zA-Z\s]*$/',
-              //   'supplier_id'          =>     'required|min:1|',
-                // 'school_id'            =>     'required|min:1|',
-              //   'requester_id'         =>   'required|min:1|',
-              //  'approved_by'          => 'required|min:1|',
-              //  'total_qty'        => 'required|min:1|',
-              //   'invoice_status'    =>'required|min:1|',
+              
             ],
             [
                 'invoice_num.required' => 'invoice_num is required',
-              //   'supplier_id.required' => 'supplier_id format is invalid',
-                // 'school_id.required' => 'school_id is required',
+                'item_qty.required' => 'Qty is not empty',
                 'requester_id.required' => 'requester_id is required',
-              //   'approved_by.required' => 'approved_by is required',
                 'total_qty.required' => 'total_qty is required',
                 'invoice_status.required' => 'invoice_status is required'
             ]
         );
-
         //dd($request->invoice_data);
+        $flag = true;
         if ($validator->passes()) {
             $total = 0;
             $total_price=0;
-            // echo '<pre>';print_r($request['products']);exit;
-           // return response()->json(['status' => 200, 'Success' => 'Success']);
            foreach($request['products'] as $key =>$val){
+
             if($val['quantity']!='') {
+                $flag = false;
                 $product = Product::find($val['product_id']);
                 $total_price+=$product['price']*$val['quantity'];
                 $total+=$val['quantity'];
             }
+        }
+
+        if($flag == true){
+            return redirect()->back()->with("error","Quantity is empty");
         }
 
                 // echo $request->category;exit;
@@ -329,10 +321,16 @@ class OrderController extends Controller
                     $is_acknowledge_ee = 0;
                 }
 
+                if($data['user']['role'] == 'EE') {
+                    $school_id_order = $request['school_id'];
+                }else{
+                    $school_id_order = $data['user']['schools'][0];
+                }
+
                     $invoice_data = [
                                     'invoice_data'=>$request->invoice_data,
                                     'supplier_id'=>$request->supplier_id,
-                                    'school_id'=>$data['user']['schools'][0],
+                                    'school_id'=>$school_id_order,
                                     'requester_id'=>$data['user']['info']->id,
                                     // 'approved_by'=>$request->approved_by,
                                     'total_qty'=>$total,
@@ -342,7 +340,7 @@ class OrderController extends Controller
                                     'invoice_status'=>0
                                     ];
                 //   echo '<pre>';print_r($request['products']); exit;
-                    $invoice_data = Invoices::create($invoice_data);
+                  $invoice_data = Invoices::create($invoice_data);
                     $invoice_id =  $invoice_data->id;
                     $total = 0;
                     foreach($request['products'] as $key =>$val){
@@ -360,11 +358,13 @@ class OrderController extends Controller
                     $order->invoice_num = $data['user']['info']->login_id.$invoice_id;
                     $order->save();
 
+                    
+
                     return redirect()->route('orders.index')
                     ->with('success','Order created successfully.Order ID:'.$data['user']['info']->login_id.$invoice_id);
+                   
                 }else{
                     return response()->json(['status' => 401, 'error' => $validator->errors()]);
-
                 }
 
             }    

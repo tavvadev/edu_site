@@ -49,11 +49,20 @@ class LoginController extends Controller
                     $schools[] = $school->id;
                 }
                 // echo '<pre>';print_r($schools);exit;
+            } else if($role->roleName == 'EE') {
+                $schoolResults = Schools::get();
+                $jo =0;
+                foreach($schoolResults as $school) {
+                    $schools[$jo]['school_id'] = $school->id;
+                    $schools[$jo]['school_name'] = $school->school_name;
+                    $request->session()->put('user.schools', $schools);
+                    $jo++;
+                }    
             } else {
 
                 $results = Schoolusers::where('user_id', $user->id)->get();
                 foreach ($results as $res) {
-                    $schools[] = $res->school_id;
+                    $schools[] = $res->id;
                 }
                 $request->session()->put('user.schools', $schools);
             }
@@ -91,4 +100,10 @@ class LoginController extends Controller
         Auth::logout();
         return redirect('/login');
     }
+
+    public function forgotpassword()
+    {
+        return view('auth.passwords.email');
+    }
+
 }

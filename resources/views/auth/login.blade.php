@@ -46,7 +46,7 @@
                                 @enderror
 
 
-                                <p class="text-muted text-end pt-1"><a style="cursor:pointer;">Forgot Password?</a></p>
+                                <p class="text-muted text-end pt-1"><a href="/forgotpassword" style="cursor:pointer;">Forgot Password?</a></p>
                         </div>
 
                                 <div class="form-check">
