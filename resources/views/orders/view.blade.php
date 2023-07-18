@@ -74,6 +74,8 @@
             <td>{{$product->productPrice}}</td>
             @if($user['role'] == 'HM' )
                 @if($user['role'] == 'HM' && $orderDetails->invoice_status==1)
+                <td>{{$product->quantity}} {{$product->units}}</td>
+                <td>@php echo $product->bill_qty*$product->productPrice @endphp</td>
                 <td>
                 <div class="form-group">
                   <input type="number" value="{{$product->bill_qty}}"
@@ -82,7 +84,6 @@
                 @else
                 <td>{{$product->bill_qty}}</td>
                 @endif
-                <td>@php echo $product->bill_qty*$product->productPrice @endphp</td>
                 @if($user['role'] == 'HM' && $orderDetails->invoice_status==2)
                 <td>{{$product->ack_qty}}</td>
                 @endif
