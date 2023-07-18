@@ -49,11 +49,35 @@ class="px-1" width="48" height="48" alt="backarrow"/> Back
 
     @csrf
          <div class="row">
+            
+                <?php
+                if(session('user.role')=="EE"){
+                ?>
+                <div class="form-group  pb-3 pt-3 d-flex align-items-center justify-content-between mb-2">
+                    <label class="fw-normal text-body col-md-6">Select School</label>
+                    <div class="col-md-6 d-flex align-items-center">
+                        <select id="school_id"  name="school_id" class="form-control">
+                            <?php
+
+                                foreach(session('user.schools') AS $school){
+                                   ?>
+                                   <option value="<?php echo $school['school_id'];?>" ><?php echo $school['school_name'];?></option>
+                                   <?php 
+                                }
+                                ?>
+
+                        </select>
+                    </div>
+                </div>
+                <?php
+                }
+                ?>
+
             <?php $i=0; ?>
             <input type="hidden" name="category" value="{{$category->id}}" />
             @foreach ($product as $product)
             <?php
-         //   echo "<pre>";print_r(Session::all());exit;
+           //echo "<pre>";print_r(Session::all());exit;
             ?>
                 <div class="col-md-12">
                     <div class="form-group border-bottom pb-3 pt-3 d-flex align-items-center justify-content-between mb-2">
