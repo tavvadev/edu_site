@@ -59,9 +59,9 @@ class="px-1" width="48" height="48" alt="backarrow"/> Back
                         <select id="school_id"  name="school_id" class="form-control">
                             <?php
 
-                                foreach(session('user.schools') AS $school){
+                                foreach($schools AS $school){
                                    ?>
-                                   <option value="<?php echo $school['school_id'];?>" ><?php echo $school['school_name'];?></option>
+                                   <option value="<?php echo $school['id'];?>" ><?php echo $school['school_name'];?></option>
                                    <?php 
                                 }
                                 ?>

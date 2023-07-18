@@ -304,7 +304,7 @@
 
     <!--   <p class="fw-bold fs-6 title-clr mb-2 lh-base">Invoice Details</p> -->
     <div class="col-md-6">
-    <p class="mt-2 mb-3 pt-2 fw-bold title-clr fs-6">Invoice Details</p>
+    
       <div class="row">
 
 
@@ -331,7 +331,8 @@
 </div>
 
 @elseif(($user['role'] == 'Supplier' || $user['role'] == 'HM' || $user['role'] == 'APC') && $orderDetails->invoice_status>0)
-    @foreach ($orderDetails->invoices as $invoice)
+<p class="mt-2 mb-3 pt-2 fw-bold title-clr fs-6">Invoice Details</p>    
+@foreach ($orderDetails->invoices as $invoice)
     <p class="mb-2"><span class="text-muted">Invoice No:</span> <span class="ps-2 text-body  fw-bold">{{$invoice->invoice_no}}</span></p>
     <p class="mb-2"><span class="text-muted">Invoice File:</span> <span class="ps-2 text-primary fw-bold"><a href="{{asset($invoice->invoice_file_path)}}"
      target="_blank">Download Invoice</a></span></p>

@@ -133,12 +133,16 @@ class OrderController extends Controller
 
     public function edit($id): View
     {
+        $data = request()->session()->all();
+        //echo '<pre>';print_r($data['user']['schools']);exit;
+        $schools = Schools::select('id','school_name')->whereIn('id',$data['user']['schools'])->get();
+        //echo '<pre>';print_r($schools);exit;
         $category = Category::find($id);
         $product = Product::select('*')
                 ->where('category_id', '=', $id)
                 ->get();
         // echo "<pre>";print_r($category);exit;
-        return view('orders.create',compact('product','category'));
+        return view('orders.create',compact('product','category','schools'));
     }
 
 
@@ -276,8 +280,16 @@ class OrderController extends Controller
     public function createOrder(Request $request){
 
         $data = request()->session()->all();
+        // echo '<pre>';print_r($_POST);
+        // print_r($data['user']['schools']);
+        // exit;
+        if($data['user']['role'] == 'EE') {
+            $school_id = $request['school_id'];
+        } else {
+            $school_id = $data['user']['schools'][0];
+        }
 
-        $orders = DB::select('SELECT * FROM orders where order_category = "'.$request->category.'" and school_id ="'.$data['user']['schools'][0].'"');
+        $orders = DB::select('SELECT * FROM orders where order_category = "'.$request->category.'" and school_id ="'.$school_id.'"');
 
         if(count($orders) !=0){
             return redirect()->back()->with("error","Already this order category placed.");
