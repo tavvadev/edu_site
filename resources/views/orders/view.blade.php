@@ -72,7 +72,7 @@
             <td>{{$product->product_name}}</td>
             <td>{{$product->quantity}} {{$product->units}}</td>
             <td>{{$product->productPrice}}</td>
-            @if($user['role'] == 'HM' )
+            @if($user['role'] == 'HM' && $orderDetails->invoice_status==1 )
                 @if($user['role'] == 'HM' && $orderDetails->invoice_status==1)
                 <td>{{$product->quantity}} {{$product->units}}</td>
                 <td>@php echo $product->bill_qty*$product->productPrice @endphp</td>
@@ -89,7 +89,7 @@
                 @endif
             @endif
 
-            @if($user['role'] == 'EE' )
+            @if($user['role'] == 'EE' || $user['role'] == 'HM' && $orderDetails->invoice_status==2)
                 @if($user['role'] == 'EE' && $orderDetails->invoice_status==1)
                 <td>
                 <div class="form-group">
@@ -103,7 +103,7 @@
                 <td>{{$product->bill_qty}}</td>
                 @endif
                 <td>@php echo $product->bill_qty*$product->productPrice @endphp</td>
-                @if($user['role'] == 'EE' && $orderDetails->invoice_status==2)
+                @if(($user['role'] == 'EE' || $user['role'] == 'HM') && $orderDetails->invoice_status==2)
                 <td>{{$product->ack_qty}}</td>
                 @endif
             @endif
