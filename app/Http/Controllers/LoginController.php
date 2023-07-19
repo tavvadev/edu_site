@@ -130,7 +130,6 @@ class LoginController extends Controller
 
     public function resetpassword()
     {
-        echo "<pre>";print_r($_POST);exit;
         if(isset($_POST['user_id']) && $_POST['user_id']!="" ){
             //Change Password
             $user = User::find($_POST['user_id']);
