@@ -32,6 +32,10 @@ Route::post('/schools', [ApiController::class, 'schools']);
 Route::post('/districtlevelreport', [ApiController::class, 'districtlevelreport']);
 Route::post('/mandallevelreport', [ApiController::class, 'mandallevelreport']);
 Route::any('/rejectedorder', [ApiController::class, 'rejectedorder']);
+Route::post('/schooldetails', [ApiController::class, 'schooldetails']);
+Route::post('/updateschoolprofile', [ApiController::class, 'schoolprofile']);
+
+
 
 
 

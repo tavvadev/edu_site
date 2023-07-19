@@ -478,21 +478,47 @@ class ApiController extends Controller
     public function schoolprofile(Request $request){
         $params = (array) json_decode(file_get_contents('php://input'), TRUE);
 
-        if(isset($params['order_id']) && $params['order_id']==""){
-            return response()->json(['status' => '200', 'message' => 'Please enter order id']);
+        if(isset($params['school_id']) && $params['school_id']!=""){
+            $params['school_id'] = $params['school_id'];
         } 
-        
-        if(isset($params['reason']) && $params['reason']==""){
-            return response()->json(['status' => '200', 'message' => 'Please enter rejected reason']);
+
+        $school_data = array(
+            'school_category' => $params['school_category'],
+            'UDISE_code' => $params['school_code'],
+            'latitude' => $params['latitude'],
+            'longitude' => $params['longitude'],
+            'hm_name' => $params['hm_name'],
+            'hm_contact_num' => $params['hm_contact_num'],
+            'eng_name' => $params['eng_name'],
+            'eng_contact' => $params['eng_contact'],
+            'no_of_teachers' => $params['no_of_teachers'],
+            'no_of_class_rooms' => $params['no_of_class_rooms'],
+            'school_address' => $params['school_address'],
+            'pin_code' => $params['pin_code'],
+            'total_strength' => $params['total_strength'],
+            'no_of_girls' => $params['no_of_girls'],
+            'no_of_boys' => $params['no_of_boys']
+        ); 
+
+        DB::table('schools')
+        ->where('id', $params['school_id'])
+        ->update($school_data);
+
+        return response()->json(['status' => '200', 'message' => 'School details updated successfully.']);
+       
+    }
+
+    public function schooldetails() {
+        $params = (array) json_decode(file_get_contents('php://input'), TRUE);
+
+        if(isset($params['school_id']) && $params['school_id']==""){
+            return response()->json(['status' => '200', 'message' => 'Please enter school id']);
         }
-       
-        $order = Invoices::find($params['order_id']);
-        $order->invoice_status = 3;
-        $order->reason = $params['reason'];
-        $order->ack_date = date('Y-m-d H:i:s');
-        $order->save();
-        return response()->json(['status' => '200', 'message' => 'Order rejected successfully.']);
-       
+
+        $schools = DB::table('schools')
+        ->where('id', $params['school_id'])->first();
+         return response()->json(['status' => '200', 'message' => 'success',  'schools' => $schools]);
+        
     }
 
 
