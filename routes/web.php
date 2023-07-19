@@ -63,6 +63,10 @@ Route::post('updateChangePassword', [UserController::class, 'updateChangePasswor
 Route::get('suppilerprofile', [UserController::class, 'suppilerprofile'])->name('users.suppilerprofile');
 Route::post('updatesuppilerprofile', [UserController::class, 'updatesuppilerprofile'])->name('users.updatesuppilerprofile');
 Route::any('forgotpassword', [LoginController::class, 'forgotpassword']);
+Route::any('forgotquestion', [LoginController::class, 'forgotquestion']);
+Route::any('resetpassword', [LoginController::class, 'resetpassword']);
+
+
 
 
 

@@ -5,7 +5,11 @@ use App\Models\User;
 use App\Models\Schoolusers;
 use App\Models\Schools;
 
-
+use DB;
+use Hash;
+use Illuminate\Support\Arr;
+use Illuminate\View\View;
+use Illuminate\Http\RedirectResponse;
 
 use Illuminate\Http\Request;
 
@@ -94,7 +98,50 @@ class LoginController extends Controller
 
     public function forgotpassword()
     {
-        return view('auth.passwords.email');
+        if(isset($_POST['user_id']) && $_POST['user_id']!=""){
+
+            $user = DB::select('SELECT * FROM users where login_id = "'.$_POST['user_id'].'"');
+
+            $userAnswers = DB::select('SELECT * FROM user_answers where user_id = "'.$user[0]->id.'"');
+            
+            $question = DB::select('SELECT * FROM questions where id = "'.$userAnswers[0]->question_id.'"');
+
+            return view('auth.passwords.forgotquestion',compact('user','userAnswers', 'question'));
+        }else{
+            return view('auth.passwords.email');
+        }
+       
+    }
+
+    public function forgotquestion()
+    {
+        if(isset($_POST['user_id']) && $_POST['user_id']!="" && isset($_POST['user_answer']) && $_POST['user_answer']!=""){
+
+            $user_answers = DB::select('SELECT * FROM user_answers where user_id = "'.$_POST['user_id'].'" and answer = "'.$_POST['user_answer'].'"');
+
+            if(count($user_answers) ==1){
+                return view('auth.passwords.reset',compact('user_answers'));
+            }
+        }else{
+            return view('auth.passwords.email');
+        }
+       
+    }
+
+    public function resetpassword()
+    {
+        echo "<pre>";print_r($_POST);exit;
+        if(isset($_POST['user_id']) && $_POST['user_id']!="" ){
+            //Change Password
+            $user = User::find($_POST['user_id']);
+            $user->password =  Hash::make($request->get('new-password'));
+            $user->password_changed =  1;
+            $user->save();
+
+        }else{
+            return view('auth.passwords.email');
+        }
+       
     }
 
 }
