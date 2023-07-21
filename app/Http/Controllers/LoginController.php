@@ -136,6 +136,7 @@ class LoginController extends Controller
             $user->password =  Hash::make($_POST['password']);
             $user->password_changed =  1;
             $user->save();
+            return redirect()->intended('/home');
 
         }else{
             return view('auth.passwords.email');
