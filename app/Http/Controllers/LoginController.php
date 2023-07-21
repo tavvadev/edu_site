@@ -133,7 +133,7 @@ class LoginController extends Controller
         if(isset($_POST['user_id']) && $_POST['user_id']!="" ){
             //Change Password
             $user = User::find($_POST['user_id']);
-            $user->password =  Hash::make($request->get('new-password'));
+            $user->password =  Hash::make($_POST['password']);
             $user->password_changed =  1;
             $user->save();
 
