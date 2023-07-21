@@ -376,7 +376,7 @@
     <form >
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLongTitle">Order Rejected?</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <button type="button" onClick="closeOrder();" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
@@ -385,6 +385,7 @@
               <div class="form-group">
                 <label for="recipient-name" class="col-form-label">Reason</label>
                 <input type="text" class="form-control" id="reject_reason" name="reject_reason" value="" >
+                <span id="reason_error" name="reason_error" style="color:red"></span>
                 <input type="hidden" class="form-control" id="reject_order_id" name="reject_order_id" value="{{$orderDetails->orderId}}" >
 
               </div>
@@ -420,26 +421,33 @@
   }
 
   function saveRejectedOrder(){
+    var flag=true;
     var reject_reason = $('#reject_reason').val();
     var order_id = $('#reject_order_id').val();
-  
-    $.ajax({
-        type: "POST",
-        url: 'http://3.91.54.205/api/rejectedorder',
-        contentType: "application/json",
-        dataType: "json",
-        data: JSON.stringify({
-          reason: reject_reason,
-          order_id: order_id
-        }),
-        success: function(response) {
-          alert('Order rejected successfully.');
-          window.location.reload();
-        },
-        error: function(response) {
-            console.log(response);
-        }
-    });
+    if(reject_reason==""){
+      flag=false;
+      $('#reason_error').html('Please enter reason.');
+    }
+
+    if(flag==true){
+      $.ajax({
+          type: "POST",
+          url: 'http://3.91.54.205/api/rejectedorder',
+          contentType: "application/json",
+          dataType: "json",
+          data: JSON.stringify({
+            reason: reject_reason,
+            order_id: order_id
+          }),
+          success: function(response) {
+            alert('Order rejected successfully.');
+            window.location.reload();
+          },
+          error: function(response) {
+              console.log(response);
+          }
+      });
+  }
 
 
 

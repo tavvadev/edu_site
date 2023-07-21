@@ -5,7 +5,17 @@
 
         <div class="container pt-5 pb-5 mb-4">
 
-
+        @if ($errors->any())
+        <div class="alert alert-danger">
+            <span class="fw-normal text-body py-4 text-center"><span class="fw-bold">Whoops!</span>
+             There were some problems with your input.</span>
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
 
 
         <div class="row justify-content-center ">
