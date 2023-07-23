@@ -94,7 +94,7 @@ class OrderController extends Controller
                 $query->where('invoice_status', 2);
                 $query->whereIn('school_id', $schools);
             }
-            if($role->roleName == 'HM') {
+            if($role->roleName == 'HM' || $role->roleName == 'EE') {
                 $query->whereIn('school_id', $schools);
             }
             if($role->roleName == 'APC') {
