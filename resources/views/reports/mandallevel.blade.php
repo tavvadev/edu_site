@@ -97,13 +97,14 @@
 </div>
 
 <script>
-  
+    var serverUrl = 'http://3.84.196.148';
+
 function mandalsList(){   
   var mandalsoptions =""; 
 
   $.ajax({
       type: "POST",
-      url: 'http://3.91.54.205/api/mandals',
+      url: serverUrl+'/api/mandals',
       contentType: "application/json",
       dataType: "json",
       data: JSON.stringify({
@@ -129,7 +130,7 @@ function villagesList(){
 
   $.ajax({
       type: "POST",
-      url: 'http://3.91.54.205/api/villages',
+      url: serverUrl+'/api/villages',
       contentType: "application/json",
       dataType: "json",
       data: JSON.stringify({
@@ -159,7 +160,7 @@ function schoolsList(){
 
   $.ajax({
       type: "POST",
-      url: 'http://3.91.54.205/api/schools',
+      url: serverUrl+'/api/schools',
       contentType: "application/json",
       dataType: "json",
       data: JSON.stringify({
@@ -206,7 +207,7 @@ function Reports(){
 
   $.ajax({
       type: "POST",
-      url: 'http://3.91.54.205/api/mandallevelreport',
+      url: serverUrl+'/api/mandallevelreport',
       contentType: "application/json",
       dataType: "json",
       data: JSON.stringify({

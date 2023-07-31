@@ -233,6 +233,7 @@ class UserController extends Controller
                 'no_of_class_rooms' => $request->no_of_class_rooms,
                 'school_address' => $request->school_address,
                 'pin_code' => $request->pin_code,
+                'total_strength' => $request->total_strength,
                 'no_of_girls' => $request->no_of_girls,
                 'no_of_boys' => $request->no_of_boys,
             );
