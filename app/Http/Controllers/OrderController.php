@@ -326,7 +326,7 @@ class OrderController extends Controller
         if($flag == true){
             return redirect()->back()->with("error","Quantity is empty");
         }
-
+                
                 // echo $request->category;exit;
                 if($data['user']['role'] == 'EE') {
                     $is_acknowledge_ee = 1;
