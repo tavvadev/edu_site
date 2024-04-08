@@ -125,7 +125,7 @@ class OrderController extends Controller
 
     public function category(Request $request): View
     {
-        $categories = Category::orderBy('id','DESC')->paginate(10);
+        $categories = Category::where('type', 2)->orderBy('id','DESC')->paginate(10);
         return view('orders.category',compact('categories'))
             ->with('i', ($request->input('page', 1) - 1) * 10);
 
