@@ -78,6 +78,7 @@ class OrderController extends Controller
                 }
             }
             
+            
             // echo '<pre>';print_r($schools);exit;
             $query = Orders::leftjoin('schools as s',"orders.school_id","=",'s.id')
             ->leftjoin('categories as c',"c.id","=",'orders.order_category')
