@@ -126,6 +126,24 @@
                                 </li>
                             @endif
                         @else
+
+                        <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                {{ session('user.info.name') }} ({{ session('user.role') }} )
+                                </a>
+                          <ul>
+                            <li > <a class="dropdown-item" href="/change-password">Change Password </a></li>
+                            <li> <a class="dropdown-item" href="/profile">Profile</a></li>
+                            <li>
+
+                                <a class="dropdown-item" href="{{ route('logout') }}"
+                                  onclick="event.preventDefault();
+                                                document.getElementById('logout-form').submit();">
+                                    {{ __('Logout') }}
+                                </a>
+                          </li>
+                          </ul>
+                        </li>
         <!--
                             <li><a class="nav-link" href="{{ route('users.index') }}">Manage Users</a></li>
                             <li><a class="nav-link" href="{{ route('roles.index') }}">Manage Role</a></li>
